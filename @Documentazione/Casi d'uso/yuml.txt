@@ -1,0 +1,22 @@
+(note: Twitter Client{bg:beige})
+(Mostra i Tweet ricercati dall’utente)<(Aggiorna in tempo reale)
+(Analizza i Tweet ricercati dall’utente)<(Aggiorna in tempo reale)
+//
+[Sistema]-(Mostra i Tweet ricercati dall’utente)
+[Sistema]-(Analizza i Tweet ricercati dall’utente)
+[Utente]-(Ricerca nei Tweet)
+//
+(Analizza i Tweet ricercati dall’utente)>(Mostra l'analisi dei sentimenti)
+(Analizza i Tweet ricercati dall’utente)>(Mostra sulla mappa i Tweet geolocalizzati)
+(Analizza i Tweet ricercati dall’utente)>(Mostra i tag aggregati nella "nuvola di tag")
+//
+(Ricerca nei Tweet)<(Ricerca per area geografica)
+(Ricerca nei Tweet)<(Ricerca per punto d'interesse)
+(Ricerca nei Tweet)<(Ricerca per intervallo date)
+(Ricerca nei Tweet)<(Ricerca per nome utente)
+(Ricerca nei Tweet)<(Ricerca per tag)
+(Ricerca nei Tweet)<(Ricerca per testo libero)
+//
+(Analizza i Tweet ricercati dall’utente)>(Utilizza Dashboard)
+(Mostra i Tweet ricercati dall’utente)>(Utilizza Dashboard)
+(Ricerca nei Tweet)>(Utilizza Dashboard)
