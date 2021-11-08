@@ -1,0 +1,82 @@
+id,ref,subject,description,user_story,sprint_id,sprint,sprint_estimated_start,sprint_estimated_finish,owner,owner_full_name,assigned_to,assigned_to_full_name,status,is_iocaine,is_closed,us_order,taskboard_order,attachments,external_reference,tags,watchers,voters,created_date,modified_date,finished_date,due_date,due_date_reason
+36,3,Iscrizione su Taiga di tutti i membri del Team,Creazione del progetto su Taiga già effettuata dagli amministratori,86,41,Sprint 1,2021-11-02,2021-11-19,Carmine,Carmine Olivo,Carmine,Carmine Olivo,Closed,False,True,0,0,0,,,[27],0,2021-10-18 08:51:09.529980+00:00,2021-10-28 13:27:07.909232+00:00,2021-10-22 14:01:27.467664+00:00,,
+37,5,Integrazione di Taiga con Gitlab,Vedi #6,86,41,Sprint 1,2021-11-02,2021-11-19,Carmine,Carmine Olivo,Mario,Mario Miccichè,Closed,False,True,1634547328572,5,0,,,[],0,2021-10-18 08:55:28.599181+00:00,2021-11-02 09:36:13.143498+00:00,2021-10-25 09:31:33.497735+00:00,,
+38,6,POC: Studio dell'integrazione di Taiga con GitLab,"Come membro del team voglio integrare le attività di Taiga con i servizi di comunicazione e sviluppo allo scopo di automatizzare la gestione delle attività
+
+Integrazione con GitLab  
+[https://aminsep.disi.unibo.it/project/admin-progetto-2021-team-13/admin/third-parties/gitlab](https://aminsep.disi.unibo.it/project/admin-progetto-2021-team-13/admin/third-parties/gitlab)",86,41,Sprint 1,2021-11-02,2021-11-19,Carmine,Carmine Olivo,Carmine,Carmine Olivo,Closed,False,True,1634547328574,3,0,,,[27],0,2021-10-18 08:55:36.074179+00:00,2021-10-28 14:06:04.755021+00:00,2021-10-22 14:04:41.937342+00:00,,
+41,10,Setup framework,Come membro del team voglio lavorare su un framework inizializzato e condiviso con il team per integrare lo sviluppo,11,41,Sprint 1,2021-11-02,2021-11-19,Carmine,Carmine Olivo,Carmine,Carmine Olivo,Ready for test,False,False,1634547421921,0,0,,,[27],0,2021-10-18 08:57:09.298929+00:00,2021-11-05 17:04:42.451131+00:00,,,
+43,13,Impostare il layout di tutti gli elementi dell'interfaccia utente come definiti nel Wireframe,,11,41,Sprint 1,2021-11-02,2021-11-19,Carmine,Carmine Olivo,Andrea,Andrea Capriotti,New,False,False,1634547578205,2,0,,,[],0,2021-10-18 08:59:38.226925+00:00,2021-11-05 15:09:30.117329+00:00,,,
+44,15,Setup condiviso per l'uso delle Twitter API,Vedere  #81,14,41,Sprint 1,2021-11-02,2021-11-19,Carmine,Carmine Olivo,,,New,False,False,1634547694777,1634547694777,0,,,[],0,2021-10-18 09:01:34.803975+00:00,2021-11-02 09:38:49.991828+00:00,,,
+45,17,Creazione gruppo privato Mattermost,,86,41,Sprint 1,2021-11-02,2021-11-19,Carmine,Carmine Olivo,Lo_Sghino,niccolo sghinolfi,Closed,False,True,1634547800922,2,0,,,[],0,2021-10-18 09:03:20.943282+00:00,2021-10-28 13:29:02.643563+00:00,2021-10-28 08:21:31.721147+00:00,,
+46,18,Iscrizione a Mattermost di tutti i membri del team,,86,41,Sprint 1,2021-11-02,2021-11-19,Carmine,Carmine Olivo,,,Closed,False,True,1634547808065,1,0,,,[],0,2021-10-18 09:03:28.084358+00:00,2021-11-02 09:35:07.276001+00:00,2021-10-22 13:23:20.825223+00:00,,
+47,19,Integrazione di Mattermost con Ms Teams per gli incontri video,,86,41,Sprint 1,2021-11-02,2021-11-19,Carmine,Carmine Olivo,,,Needs Info,False,False,1634547825835,6,0,,,[27],0,2021-10-18 09:03:45.853102+00:00,2021-10-29 13:53:39.375143+00:00,,,
+48,21,Integrazione di Mattermost con GitLab,,86,41,Sprint 1,2021-11-02,2021-11-19,Carmine,Carmine Olivo,Mario,Mario Miccichè,Needs Info,False,False,1634547929048,8,0,,,[37],0,2021-10-18 09:05:29.068742+00:00,2021-10-29 13:53:14.918837+00:00,,,
+49,22,Integrazione di Mattermost con Taiga,,86,41,Sprint 1,2021-11-02,2021-11-19,Carmine,Carmine Olivo,Mario,Mario Miccichè,Needs Info,False,False,1634547939752,7,0,,,[37],0,2021-10-18 09:05:39.773947+00:00,2021-10-29 13:52:25.036482+00:00,,,
+50,23,POC: Studio integrazione di Mattermost con gli altri servizi usati dal team,Come membro del team voglio ricevere su Mattermost le notifiche relative ai servizi di sviluppo per avere un punto di raccolta e notifica di queste informazioni,86,41,Sprint 1,2021-11-02,2021-11-19,Carmine,Carmine Olivo,,,New,False,False,1634547956307,1,0,,,[27],0,2021-10-18 09:05:56.328394+00:00,2021-10-29 13:21:12.499191+00:00,,,
+51,36,Iscrizione a GitLab di tutti i membri del Team,,86,41,Sprint 1,2021-11-02,2021-11-19,Carmine,Carmine Olivo,,,In progress,False,False,1634551876796,4,0,,,[27],0,2021-10-18 10:11:16.815647+00:00,2021-10-29 13:49:09.008917+00:00,,,
+52,37,Creazione del gruppo su GitLab,"Andrea Capriotti [andrea.capriotti2@studio.unibo.it](mailto:andrea.capriotti2@studio.unibo.it)
+
+Emanuele Corsi [emanuele.corsi3@studio.unibo.it](mailto:emanuele.corsi3@studio.unibo.it)
+
+Mario Miccichè [mario.micciche@studio.unibo.it](mailto:mario.micciche@studio.unibo.it)
+
+Carmine Olivo [carmine.olivo@studio.unibo.it](mailto:carmine.olivo@studio.unibo.it)
+
+Niccolò Sghinolfi [niccolo.sghinolfi@studio.unibo.it](mailto:niccolo.sghinolfi@studio.unibo.it)
+
+Gurjyot Wanga [gurjyot.wanga@studio.unibo.it](mailto:gurjyot.wanga@studio.unibo.it)",86,41,Sprint 1,2021-11-02,2021-11-19,Carmine,Carmine Olivo,Mario,Mario Miccichè,Closed,False,True,1634551903770,6,0,,,[],0,2021-10-18 10:11:43.788351+00:00,2021-10-29 13:14:39.306244+00:00,2021-10-29 13:14:39.310539+00:00,,
+53,38,Creazione del progetto su GitLab,,86,41,Sprint 1,2021-11-02,2021-11-19,Carmine,Carmine Olivo,Mario,Mario Miccichè,Closed,False,True,1634551914524,7,0,,,[],0,2021-10-18 10:11:54.542187+00:00,2021-10-29 13:15:00.390627+00:00,2021-10-29 13:15:00.394912+00:00,,
+54,39,Configurazione progetto su GitLab,,86,41,Sprint 1,2021-11-02,2021-11-19,Carmine,Carmine Olivo,,,New,False,False,1634551935088,0,0,,,[],0,2021-10-18 10:12:15.106775+00:00,2021-10-28 13:50:28.731656+00:00,,,
+55,40,Mostrare i tweet a front end,,14,41,Sprint 1,2021-11-02,2021-11-19,Carmine,Carmine Olivo,,,New,False,False,1634553966714,1634553966714,0,,,[],0,2021-10-18 10:46:06.741166+00:00,2021-10-18 10:46:06.758328+00:00,,,
+56,41,Acquisire l'isieme dei tweet a backend,,14,41,Sprint 1,2021-11-02,2021-11-19,Carmine,Carmine Olivo,Mario,Mario Miccichè,In progress,False,False,1634553990393,0,0,,,[],0,2021-10-18 10:46:30.420091+00:00,2021-11-05 15:21:25.832924+00:00,,,
+61,46,Logger installato sull'IDE di tutte le persone del Team,"Come membro del team voglio poter usare il Logger per raccogliere dati di sviluppo direttamente dai client IDE
+
+Statistiche visibili nella sezione Logger della Dashboard CAS (https://aminsep.disi.unibo.it/dashboard)
+
+[https://github.com/elPeroN](https://github.com/elPeroN)
+
+Plugin disponibile per Eclipse, Atom e IntelliJ.  
+\- Installare il plugin nel proprio IDE  
+\- Accedere alle impostazioni del plugin  
+\- Eseguire il login usando le credenziali della Dashboard CAS.
+
+Impostazioni del plugin:  
+Server Protocol: HTTPS  
+Server Address: aminsep.disi.unibo.it/logger",86,41,Sprint 1,2021-11-02,2021-11-19,Carmine,Carmine Olivo,Carmine,Carmine Olivo,Needs Info,False,False,1634557013476,9,0,,,[27],0,2021-10-18 11:37:37.891543+00:00,2021-10-29 13:50:06.252446+00:00,,,
+68,55,Integrazione della Dashboard CAS con Taiga per ogni persona del Team,"Come membro del team voglio integrare la Dashboard CAS con gli altri servizi di comunicazione e sviluppo per avere un ambiente integrato
+
+Integrazione con Taiga:  
+Effettuare il login dalla Dashboard con le credenziali di Taiga",86,41,Sprint 1,2021-11-02,2021-11-19,Carmine,Carmine Olivo,,,Closed,False,True,1634911657477,4,0,,,[27],0,2021-10-22 14:07:37.489220+00:00,2021-10-29 13:11:38.261455+00:00,2021-10-29 13:11:38.265581+00:00,,
+70,57,Integrazione della Dashboard CAS con SonarQube per ogni persona del Team,"Integrazione con SonaQube:  
+\- Creare un Token dalle impostazioni di SonarQube (http://aminsep.disi.unibo.it/sonarqube/)  
+\- Aggiungere il Personal Access Token alla Dashboard CAS (https://aminsep.disi.unibo.it/dashboard/sonar)",86,41,Sprint 1,2021-11-02,2021-11-19,Carmine,Carmine Olivo,,,Needs Info,False,False,1634911675491,5,0,,,[27],0,2021-10-22 14:07:55.499833+00:00,2021-10-29 13:52:20.617600+00:00,,,
+71,58,Integrazione della Dashboard CAS con GitLab per ogni persona del Team,"Integrazione con GitLab:  
+\- Creare un Personal Access Token su https://aminsep.disi.unibo.it/gitlab/-/profile/personal\_access\_tokens  
+\- Aggiungere il Personal Access Token alla Dashboard CAS (https://aminsep.disi.unibo.it/dashboard/gitlab)",86,41,Sprint 1,2021-11-02,2021-11-19,Carmine,Carmine Olivo,,,In progress,False,False,1634911681619,0,0,,,[27],0,2021-10-22 14:08:01.631584+00:00,2021-10-29 13:52:39.085615+00:00,,,
+75,62,Iscrizione su SonarQube per tutte le persone del Team,https://aminsep.disi.unibo.it/sonarqube,86,41,Sprint 1,2021-11-02,2021-11-19,Carmine,Carmine Olivo,,,Needs Info,False,False,1634913942517,0,0,,,[27],0,2021-10-22 14:45:42.543538+00:00,2021-10-29 13:53:06.460893+00:00,,,
+148,75,Glossario,Glossario comune di nomi di entità rilevanti per il progetto,74,41,Sprint 1,2021-11-02,2021-11-19,Carmine,Carmine Olivo,,,New,False,False,1635178070367,0,0,,,[],0,2021-10-25 16:07:50.389466+00:00,2021-10-30 07:45:44.305053+00:00,,,
+149,76,Criticità,,74,41,Sprint 1,2021-11-02,2021-11-19,Carmine,Carmine Olivo,,,New,False,False,1635178075186,5,0,,,[],0,2021-10-25 16:07:55.211870+00:00,2021-10-28 15:58:13.224724+00:00,,,
+150,77,Casi d'uso,,74,41,Sprint 1,2021-11-02,2021-11-19,Carmine,Carmine Olivo,,,New,False,False,1635178078942,1635178078947,0,,,[],0,2021-10-25 16:07:58.974065+00:00,2021-10-25 16:07:58.995060+00:00,,,
+151,78,Diagramma delle Classi,,74,41,Sprint 1,2021-11-02,2021-11-19,Carmine,Carmine Olivo,Carmine,Carmine Olivo,In progress,False,False,1635178084022,1635237689277,1,,,[27],0,2021-10-25 16:08:04.046535+00:00,2021-11-02 13:35:48.614696+00:00,,,
+152,79,Caso d'uso per il sistema Twitter Client,![](https://aminsep.disi.unibo.it/media/attachments/4/a/7/e/c4a5a7ac6a94988fd1970a360fd7447c0da3b7ed029d9b87a97e05abd5c5/cdce4d40.png#_taiga-refresh=task:81),74,41,Sprint 1,2021-11-02,2021-11-19,Carmine,Carmine Olivo,Carmine,Carmine Olivo,Closed,False,True,1635178207246,0,1,,,[],0,2021-10-25 16:10:07.276884+00:00,2021-11-02 09:37:34.035077+00:00,2021-10-28 14:11:49.594575+00:00,,
+153,80,Wireframe v2,[https://wireframe.cc/WSmfNz](https://wireframe.cc/WSmfNz),74,41,Sprint 1,2021-11-02,2021-11-19,Carmine,Carmine Olivo,Carmine,Carmine Olivo,Closed,False,True,1635178503530,2,1,,,[27],0,2021-10-25 16:15:03.567688+00:00,2021-11-05 14:45:53.820720+00:00,2021-11-05 14:45:53.824421+00:00,,
+176,81,Studio Twitter API v2,"Documentazione ed endpoints v2:  
+[https://developer.twitter.com/en/docs/twitter-api/early-access](https://developer.twitter.com/en/docs/twitter-api/early-access)
+
+Lista di tool e librerie:  
+[https://developer.twitter.com/en/docs/twitter-api/tools-and-libraries](https://developer.twitter.com/en/docs/twitter-api/tools-and-libraries)
+
+/2/tweets/search/recent:  
+[https://developer.twitter.com/en/docs/twitter-api/tweets/search/api-reference/get-tweets-search-recent](https://developer.twitter.com/en/docs/twitter-api/tweets/search/api-reference/get-tweets-search-recent)",74,41,Sprint 1,2021-11-02,2021-11-19,Carmine,Carmine Olivo,Carmine,Carmine Olivo,Closed,False,True,1635237689276,1,0,,,[27],0,2021-10-26 08:41:29.301871+00:00,2021-11-05 14:36:33.503952+00:00,2021-11-05 14:36:33.507779+00:00,,
+316,87,Iscrizione alla Dashboard CAS per tutte le persone del Team,,86,41,Sprint 1,2021-11-02,2021-11-19,Carmine,Carmine Olivo,,,Closed,False,True,1635428696631,8,0,,,[],0,2021-10-28 13:44:56.645910+00:00,2021-10-29 13:50:57.010647+00:00,2021-10-29 13:50:57.014634+00:00,,
+317,88,Scenari,,74,41,Sprint 1,2021-11-02,2021-11-19,Carmine,Carmine Olivo,,,New,False,False,1635430916845,1635178078948,0,,,[],0,2021-10-28 14:21:56.873730+00:00,2021-10-28 14:22:00.912585+00:00,,,
+319,89,Setup OpenStreetMap,,66,41,Sprint 1,2021-11-02,2021-11-19,Carmine,Carmine Olivo,emanuele.corsi3,Emanuele Corsi,New,False,False,1635516256506,1635516256506,0,,,"[37, 27]",0,2021-10-29 14:04:16.542217+00:00,2021-11-05 17:53:51.562946+00:00,,,
+320,90,Organizzare i Tweet nella mappa,,66,41,Sprint 1,2021-11-02,2021-11-19,Carmine,Carmine Olivo,,,New,False,False,1635516343831,1635516343831,0,,,[],0,2021-10-29 14:05:43.859551+00:00,2021-10-29 14:05:43.878339+00:00,,,
+321,91,Setup libreria tag-cloud,,65,41,Sprint 1,2021-11-02,2021-11-19,Carmine,Carmine Olivo,,,New,False,False,1635516786901,1635516786901,0,,,[],0,2021-10-29 14:13:06.934675+00:00,2021-10-29 14:13:06.958000+00:00,,,
+322,92,Visualizzazione tag-cloud,,65,41,Sprint 1,2021-11-02,2021-11-19,Carmine,Carmine Olivo,,,New,False,False,1635516920765,1635516920765,0,,,[],0,2021-10-29 14:15:20.794356+00:00,2021-10-29 14:15:20.821732+00:00,,,
+387,95,Flusso di sviluppo (git),Quale strategia usiamo?,74,41,Sprint 1,2021-11-02,2021-11-19,Carmine,Carmine Olivo,Carmine,Carmine Olivo,Ready for test,False,False,1635974797970,1635974797972,1,,,[27],0,2021-11-03 21:26:38.000652+00:00,2021-11-03 21:37:09.982389+00:00,,,
+388,96,Studio Twitter API v1.1,"[https://developer.twitter.com/en/docs/twitter-api/v1](https://developer.twitter.com/en/docs/twitter-api/v1)
+
+Strumenti e librerie  
+[https://developer.twitter.com/en/docs/twitter-api/tools-and-libraries](https://developer.twitter.com/en/docs/twitter-api/tools-and-libraries)",74,41,Sprint 1,2021-11-02,2021-11-19,Carmine,Carmine Olivo,Carmine,Carmine Olivo,In progress,False,False,1635975816276,1635975816276,0,,,[27],0,2021-11-03 21:43:36.305929+00:00,2021-11-03 21:47:58.954205+00:00,,,
