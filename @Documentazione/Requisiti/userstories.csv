@@ -1,0 +1,31 @@
+id,ref,subject,description,sprint_id,sprint,sprint_estimated_start,sprint_estimated_finish,owner,owner_full_name,assigned_to,assigned_to_full_name,assigned_users,assigned_users_full_name,status,is_closed,swimlane,devloper-points,total-points,backlog_order,sprint_order,kanban_order,created_date,modified_date,finish_date,client_requirement,team_requirement,attachments,generated_from_issue,generated_from_task,from_task_ref,external_reference,tasks,tags,watchers,voters,due_date,due_date_reason,Criteri di accettazione:
+87,11,Come utente voglio visualizzare la dashboard per interagire con le funzionalità dell'applicazione,Vedi Wireframe #80,41,Sprint 1,2021-11-02,2021-11-19,Carmine,Carmine Olivo,,,,,New,False,,5.0,5.0,10,11,1634547517628006,2021-10-18 08:58:37.628015+00:00,2021-11-02 22:13:05.859176+00:00,,False,False,0,,,,,"10,13",,[27],0,,,
+88,14,Come membro della Federazione Italiana Pubblici Esercizi voglio ricercare i Tweet tramite testo libero per avere notizie sulla pandemia,"Da parte dell'utente la richiesta avviene tramite testo libero inserito nel campo di ricerca.
+
+Mostrare tutte le pagine restituite dalle API di Twitter (seguire il _next\_token_).
+
+DOC: [https://twitter.com/search-advanced](https://twitter.com/search-advanced)  
+NOTA: La query di ricerca di Twitter è case-insensitive  
+VEDI: Studio Twitter API#96   
+VEDI: Wireframe#80",41,Sprint 1,2021-11-02,2021-11-19,Carmine,Carmine Olivo,,,,,New,False,,8.0,8.0,9,12,1634547678959824,2021-10-18 09:01:18.959835+00:00,2021-11-03 21:49:11.583793+00:00,,False,False,0,,,,,"15,40,41",,[27],0,,,"• È effettuato il minor numero possibile di richieste verso le Twitter API 
+• Sono mostrati tutti i risultati, non solo la prima pagina"
+109,51,Come comare di un paesino voglio potere attivare lo streaming dei tweett per avere notizie in tempo reale,"Mantenere i criteri di ricerca già eventualmente impostati
+
+VEDI: Twitter API  #96",,,,,Carmine,Carmine Olivo,,,,,New,False,,,,5,1634632811530799,1634632811552585,2021-10-19 08:40:11.552594+00:00,2021-11-03 21:46:07.343352+00:00,,False,False,0,,,,,,,[],0,,,
+198,65,Come VIP voglio vedere i tag dei tweet in una tag-cloud per analizzare quali sono i tag più popolari che mi riguardano,VEDI: Wireframe #80,41,Sprint 1,2021-11-02,2021-11-19,Carmine,Carmine Olivo,,,,,New,False,,3.0,3.0,1635151116069568,14,1635151116094493,2021-10-25 08:38:36.094503+00:00,2021-11-02 22:16:42.768361+00:00,,False,False,0,,,,,"91,92",,[],0,,,
+199,66,Come ufficiale del servizio meteorologico dell'Aeronautica voglio vedere la posizione dei Tweet su una mappa per analizzare la distribuzione geografica delle notizie sui fenomeni atmosferici,"La dimensione dei pin indica la concentrazione dei tweet nell'area specifica
+
+Lo zoom della mappa deve adattarsi per mostrare tutti i pin presenti
+
+L'utente può successivamente modificare il livello di zoom e la posizione
+
+VEDI: Wireframe #80",41,Sprint 1,2021-11-02,2021-11-19,Carmine,Carmine Olivo,,,,,New,False,,8.0,8.0,7,13,1635152362624777,2021-10-25 08:59:22.624788+00:00,2021-11-02 22:16:21.213012+00:00,,False,False,0,,,,,"89,90",,[],0,,,
+222,74,Storyless tasks di Analisi e progettazione,Come membro del Team voglio avere questa US-Calderone per tracciare le attività di analisi e progettazione,41,Sprint 1,2021-11-02,2021-11-19,Carmine,Carmine Olivo,,,,,New,False,,,,1635177847496224,0,1635177847496215,2021-10-25 16:04:07.496224+00:00,2021-10-29 14:18:49.263885+00:00,,False,False,0,,,,,"75,76,77,78,79,80,81,88,95,96",,[],0,,,
+340,86,Storyless tasks per Setup ambiente di gestione e sviluppo,"Come membro del Team voglio questa US-Calderone per tracciare le attività di Setup ambiente di sviluppo
+
+Il Setup comprende l'ambiente di sviluppo e i servizi di comunicazione e informazione usati dal Team per questo progetto",41,Sprint 1,2021-11-02,2021-11-19,Carmine,Carmine Olivo,,,,,New,False,,,,1635427365353097,1,1635427365379019,2021-10-28 13:22:45.379031+00:00,2021-10-29 14:18:49.443111+00:00,,False,True,0,,,,,"3,5,6,17,18,19,21,22,23,36,37,38,39,46,55,57,58,62,87",,[],0,,,
+341,93,Come membro del comitato scientifico internazionale voglio ricercare i tweet per intervallo date per vedere se tra ieri e oggi si è parlato di supersimmetria,,,,,,Carmine,Carmine Olivo,,,,,New,False,,,,0,1635580592796457,1635580592824910,2021-10-30 07:56:32.824920+00:00,2021-10-30 07:57:21.566441+00:00,,False,False,0,,,,,,,[],0,,,
+342,94,Come amministratore di condominio voglio ricercare i Tweet per nome utente per vedere se parla male di me,,,,,,Carmine,Carmine Olivo,,,,,New,False,,,,1,1635580663949609,1635580663975863,2021-10-30 07:57:43.975873+00:00,2021-10-30 07:58:23.056152+00:00,,False,False,0,,,,,,,[],0,,,
+357,97,Analisi dei sentimenti,(PLACEHOLDER),,,,,Carmine,Carmine Olivo,,,,,New,False,,,,4,1636114749796006,1636114749826989,2021-11-05 12:19:09.827003+00:00,2021-11-05 12:22:18.457535+00:00,,False,False,0,,,,,,,[],0,,,
+358,98,Ricerca per punto d'interesse,(PLACEHOLDER),,,,,Carmine,Carmine Olivo,,,,,New,False,,,,2,1636114771494810,1636114771524783,2021-11-05 12:19:31.524796+00:00,2021-11-05 12:20:24.794607+00:00,,False,False,0,,,,,,,[],0,,,
+359,99,Ricerca per area geografica,(PLACEHOLDER),,,,,Carmine,Carmine Olivo,,,,,New,False,,,,3,1636114794341555,1636114794375662,2021-11-05 12:19:54.375674+00:00,2021-11-05 12:20:41.299309+00:00,,False,False,0,,,,,,,[],0,,,

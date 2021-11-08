@@ -1,0 +1,17 @@
+// Diagramma delle Classi - Twitter Client
+
+// Relazioni
+[Ricerca]usa -.->[<<interface>>TwitterAPI {bg:dodgerblue}]
+[Dashboard]<>[Ricerca]->[Raccolta]
+[Dashboard]<>[Mappa]<-[Raccolta]
+[Dashboard]<>[TagCloud]<-[Raccolta]
+[Dashboard]<>[AnalisiSentimenti]<-[Raccolta]
+[Raccolta]1<>-0..*[Tweet]
+
+// Specifiche
+[Raccolta|t⟦⟧: Tweet|-aggiornaMappa();-aggiornaTagCloud();-aggiornaSentimenti()]
+[Ricerca|query: string|-fetchTweets();]
+[Tweet|id: string;u: User;text: string;g: Geo;m: Media]
+[Mappa|p⟦⟧: PinPoint]
+[TagCloud|tag⟦⟧: string]
+[AnalisiSentimenti|text⟦⟧: string]
