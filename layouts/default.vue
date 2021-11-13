@@ -1,5 +1,5 @@
 <template>
-	<v-app dark>
+	<v-app>
 		<v-navigation-drawer
 			v-model="drawer"
 			:mini-variant="miniVariant"
@@ -29,31 +29,35 @@
 			app
 		>
 			<v-app-bar-nav-icon @click.stop="drawer = !drawer" />
+			<v-toolbar-title v-text="title" />
+			<v-spacer></v-spacer>
+			<div class="mapicon">
+				<div id="vue-app">
+					<v-btn
+						icon
+					>
+						<input type="button" ref="input" />
+						<v-icon>mdi-map</v-icon>
+					</v-btn>
+				</div>
+			</div>
 			<v-btn
 				icon
-				@click.stop="miniVariant = !miniVariant"
+				@click.stop="clipped = !clipped"
 			>
-				<v-icon>mdi-{{ `chevron-${miniVariant ? 'right' : 'left'}` }}</v-icon>
+				<v-icon>mdi-image</v-icon>
 			</v-btn>
 			<v-btn
 				icon
 				@click.stop="clipped = !clipped"
 			>
-				<v-icon>mdi-application</v-icon>
+				<v-icon>mdi-cloud</v-icon>
 			</v-btn>
 			<v-btn
 				icon
-				@click.stop="fixed = !fixed"
+				@click.stop="clipped = !clipped"
 			>
-				<v-icon>mdi-minus</v-icon>
-			</v-btn>
-			<v-toolbar-title v-text="title" />
-			<v-spacer />
-			<v-btn
-				icon
-				@click.stop="rightDrawer = !rightDrawer"
-			>
-				<v-icon>mdi-menu</v-icon>
+				<v-icon>mdi-trending-up</v-icon>
 			</v-btn>
 		</v-app-bar>
 		<v-main>
@@ -114,7 +118,7 @@ export default {
 			miniVariant: false,
 			right: true,
 			rightDrawer: false,
-			title: 'Vuetify.js'
+			title: 'TED - Twitter Dashboard Extended'
 		}
 	}
 }
