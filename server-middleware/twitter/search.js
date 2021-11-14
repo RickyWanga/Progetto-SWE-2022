@@ -49,6 +49,7 @@ export default {
 		const query = twitter.getUrlApiParam( "query", req )
 		const tweets = await fetchTweets( query )
 		const tweets_json = JSON.stringify( tweets )
+		res.writeHead( 200, { "Content-Type": "application/json" })
 		res.end( tweets_json )
 	}
 }
