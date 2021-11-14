@@ -115,16 +115,5 @@ export default {
 			toggle_tagcloud: true,
 		}
 	},
-	created() {
-		this.$nuxt.$on( 'toggle-media', ( toggle ) => {
-			this.show_media = toggle
-		})
-		this.$nuxt.$on( 'toggle-map', ( toggle ) => {
-			this.show_map = toggle
-		})
-		this.$nuxt.$on( 'toggle-tagcloud', ( toggle ) => {
-			this.show_tagcloud = toggle
-		})
-	},
 }
 </script>
