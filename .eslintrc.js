@@ -21,6 +21,7 @@ module.exports = {
 		'no-tabs': 'off',
 		'space-before-function-paren': 'off',
 		'quote-props': 'off',
+		'space-in-parens': 'off',
 		'vue/html-indent': ['error', 'tab'],
 		'vue/singleline-html-element-content-newline': 'off',
 	}

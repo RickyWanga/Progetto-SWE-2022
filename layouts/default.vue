@@ -30,40 +30,31 @@
 		>
 			<v-app-bar-nav-icon @click.stop="drawer = !drawer" />
 			<v-toolbar-title v-text="title" />
-			<v-spacer></v-spacer>
-			<div class="mapicon">
-				<div id="vue-app">
-					<v-btn
-						icon
-					>
-						<input type="button" ref="input" />
-						<v-icon>mdi-map</v-icon>
-					</v-btn>
-				</div>
-			</div>
-			<v-btn
-				icon
-				@click.stop="clipped = !clipped"
-			>
-				<v-icon>mdi-image</v-icon>
-			</v-btn>
-			<v-btn
-				icon
-				@click.stop="clipped = !clipped"
-			>
-				<v-icon>mdi-cloud</v-icon>
-			</v-btn>
-			<v-btn
-				icon
-				@click.stop="clipped = !clipped"
-			>
-				<v-icon>mdi-trending-up</v-icon>
-			</v-btn>
+			<v-spacer />
+			<v-switch
+				v-model="toggle_media"
+				flat
+				label="Media"
+				:disabled="!( toggle_map || toggle_tagcloud )"
+				@click.stop="$nuxt.$emit( 'toggle-media', toggle_media )"
+			/>
+			<v-switch
+				v-model="toggle_map"
+				flat
+				label="Mappa"
+				:disabled="!(toggle_media || toggle_tagcloud)"
+				@click.stop="$nuxt.$emit( 'toggle-map', toggle_map )"
+			/>
+			<v-switch
+				v-model="toggle_tagcloud"
+				flat
+				label="Tag Cloud"
+				:disabled="!( toggle_media || toggle_map )"
+				@click.stop="$nuxt.$emit( 'toggle-tagcloud', toggle_tagcloud )"
+			/>
 		</v-app-bar>
 		<v-main>
-			<v-container>
-				<Nuxt />
-			</v-container>
+			<Nuxt />
 		</v-main>
 		<v-navigation-drawer
 			v-model="rightDrawer"
@@ -95,9 +86,9 @@
 export default {
 	data () {
 		return {
-			clipped: false,
+			clipped: true,
 			drawer: false,
-			fixed: false,
+			fixed: true,
 			items: [
 				{
 					icon: 'mdi-apps',
@@ -118,8 +109,22 @@ export default {
 			miniVariant: false,
 			right: true,
 			rightDrawer: false,
-			title: 'TED - Twitter Dashboard Extended'
+			title: 'TED - Twitter Dashboard Extended',
+			toggle_map: true,
+			toggle_media: true,
+			toggle_tagcloud: true,
 		}
-	}
+	},
+	created() {
+		this.$nuxt.$on( 'toggle-media', ( toggle ) => {
+			this.show_media = toggle
+		})
+		this.$nuxt.$on( 'toggle-map', ( toggle ) => {
+			this.show_map = toggle
+		})
+		this.$nuxt.$on( 'toggle-tagcloud', ( toggle ) => {
+			this.show_tagcloud = toggle
+		})
+	},
 }
 </script>
