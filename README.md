@@ -1,4 +1,4 @@
-# TED - Twitter Extended Dashboard
+# TED
 
 Twitter Extended Dashboard
 
