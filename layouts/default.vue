@@ -1,5 +1,5 @@
 <template>
-	<v-app dark>
+	<v-app>
 		<v-navigation-drawer
 			v-model="drawer"
 			:mini-variant="miniVariant"
@@ -8,20 +8,60 @@
 			app
 		>
 			<v-list>
-				<v-list-item
-					v-for="(item, i) in items"
-					:key="i"
-					:href="item.to"
-					target="_blank"
-				>
-					<v-list-item-action>
-						<v-icon>{{ item.icon }}</v-icon>
-					</v-list-item-action>
-					<v-list-item-content>
-						<v-list-item-title v-text="item.title" />
-					</v-list-item-content>
+				<v-list-item>
+					<v-switch
+						v-model="toggle_media"
+						color="blue"
+						flat
+						hide-details
+						inset
+						label="Media"
+						:disabled="!( toggle_map || toggle_tagcloud )"
+						@click.stop="$nuxt.$emit( 'toggle-media', toggle_media )"
+					/>
+				</v-list-item>
+				<v-list-item>
+					<v-switch
+						v-model="toggle_map"
+						color="red"
+						flat
+						hide-details
+						inset
+						label="Mappa"
+						:disabled="!(toggle_media || toggle_tagcloud)"
+						@click.stop="$nuxt.$emit( 'toggle-map', toggle_map )"
+					/>
+				</v-list-item>
+				<v-list-item>
+					<v-switch
+						v-model="toggle_tagcloud"
+						color="green"
+						flat
+						hide-details
+						inset
+						label="Tag Cloud"
+						:disabled="!( toggle_media || toggle_map )"
+						@click.stop="$nuxt.$emit( 'toggle-tagcloud', toggle_tagcloud )"
+					/>
 				</v-list-item>
 			</v-list>
+			<template #append>
+				<v-list>
+					<v-list-item
+						v-for="(item, i) in navigation_items"
+						:key="i"
+						:href="item.to"
+						target="_blank"
+					>
+						<v-list-item-action>
+							<v-icon>{{ item.icon }}</v-icon>
+						</v-list-item-action>
+						<v-list-item-content>
+							<v-list-item-title v-text="item.title" />
+						</v-list-item-content>
+					</v-list-item>
+				</v-list>
+			</template>
 		</v-navigation-drawer>
 		<v-app-bar
 			:clipped-left="clipped"
@@ -29,55 +69,14 @@
 			app
 		>
 			<v-app-bar-nav-icon @click.stop="drawer = !drawer" />
-			<v-btn
-				icon
-				@click.stop="miniVariant = !miniVariant"
-			>
-				<v-icon>mdi-{{ `chevron-${miniVariant ? 'right' : 'left'}` }}</v-icon>
-			</v-btn>
-			<v-btn
-				icon
-				@click.stop="clipped = !clipped"
-			>
-				<v-icon>mdi-application</v-icon>
-			</v-btn>
-			<v-btn
-				icon
-				@click.stop="fixed = !fixed"
-			>
-				<v-icon>mdi-minus</v-icon>
-			</v-btn>
-			<v-toolbar-title v-text="title" />
+			<nuxt-link to="/" style="text-decoration:none; color:inherit;">
+				<v-toolbar-title v-text="title" />
+			</nuxt-link>
 			<v-spacer />
-			<v-btn
-				icon
-				@click.stop="rightDrawer = !rightDrawer"
-			>
-				<v-icon>mdi-menu</v-icon>
-			</v-btn>
 		</v-app-bar>
 		<v-main>
-			<v-container>
-				<Nuxt />
-			</v-container>
+			<Nuxt />
 		</v-main>
-		<v-navigation-drawer
-			v-model="rightDrawer"
-			:right="right"
-			temporary
-			fixed
-		>
-			<v-list>
-				<v-list-item @click.native="right = !right">
-					<v-list-item-action>
-						<v-icon light>
-							mdi-repeat
-						</v-icon>
-					</v-list-item-action>
-					<v-list-item-title>Switch drawer (click me)</v-list-item-title>
-				</v-list-item>
-			</v-list>
-		</v-navigation-drawer>
 		<v-footer
 			:absolute="!fixed"
 			app
@@ -91,31 +90,22 @@
 export default {
 	data () {
 		return {
-			clipped: false,
+			clipped: true,
 			drawer: false,
-			fixed: false,
-			items: [
-				{
-					icon: 'mdi-apps',
-					title: 'Welcome',
-					to: '/'
-				},
+			fixed: true,
+			miniVariant: false,
+			navigation_items: [
 				{
 					icon: 'mdi-application-edit-outline',
 					title: 'Wireframe',
 					to: 'https://wireframe.cc/WSmfNz'
 				},
-				{
-					icon: 'mdi-application-edit',
-					title: 'Wireframes',
-					to: 'https://vuetifyjs.com/en/getting-started/wireframes/#examples'
-				},
 			],
-			miniVariant: false,
-			right: true,
-			rightDrawer: false,
-			title: 'Vuetify.js'
+			title: 'TED - Twitter Extended Dashboard',
+			toggle_map: true,
+			toggle_media: true,
+			toggle_tagcloud: true,
 		}
-	}
+	},
 }
 </script>
