@@ -43,7 +43,9 @@ export default {
 	],
 
 	// Auto import components: https://go.nuxtjs.dev/config-components
-	components: true,
+	components: [
+		{ path: '~/components', extensions: ['vue'] },
+	],
 
 	// Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
 	buildModules: [
@@ -56,7 +58,9 @@ export default {
 	// Modules: https://go.nuxtjs.dev/config-modules
 	modules: [
 		// https://go.nuxtjs.dev/axios
-		'@nuxtjs/axios'
+		'@nuxtjs/axios',
+		// https://github.com/schlunsen/nuxt-leaflet
+		'nuxt-leaflet',
 	],
 
 	// Axios module configuration: https://go.nuxtjs.dev/config-axios
