@@ -1,0 +1,22 @@
+.tweets-container {
+	height: 100%;
+	overflow: auto;
+	position: relative;
+	width: 100%;
+}
+
+.tweets-container--empty {
+	background: url("~assets/twitter-logo.png") no-repeat center center;
+	background-size: contain;
+}
+
+.tweets-list {
+	left: 0;
+	position: absolute;
+	top: 0;
+	width: 100%;
+}
+
+.tweet-avatar {
+	align-self: flex-start;
+}
