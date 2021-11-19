@@ -1,0 +1,2 @@
+id,ref,subject,description,sprint_id,sprint,sprint_estimated_start,sprint_estimated_finish,owner,owner_full_name,assigned_to,assigned_to_full_name,status,severity,priority,type,is_closed,attachments,external_reference,tags,watchers,voters,created_date,modified_date,finished_date,due_date,due_date_reason
+33,114,Scrivere gli unit test per la dashboard #11,,55,Sprint 2,2021-11-20,2021-12-10,Carmine,Carmine Olivo,Andrea,Andrea Capriotti,New,Normal,Normal,Enhancement,False,0,,,[],0,2021-11-19 16:21:20.154923+00:00,2021-11-19 16:21:20.213699+00:00,,,
