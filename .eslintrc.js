@@ -17,6 +17,7 @@ module.exports = {
 	// add your custom rules here
 	rules: {
 		'array-bracket-spacing': 'off',
+		'arrow-parens': 'off',
 		'camelcase': 'off',
 		'comma-dangle': 'off',
 		'computed-property-spacing': 'off',
