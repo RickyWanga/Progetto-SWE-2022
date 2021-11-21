@@ -28,6 +28,7 @@ module.exports = {
 		'one-var': 'off',
 		'padded-blocks': 'off',
 		'space-before-function-paren': 'off',
+		'space-infix-ops': 'off',
 		'quote-props': 'off',
 		'quotes': 'off',
 		'space-in-parens': 'off',
