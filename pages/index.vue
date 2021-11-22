@@ -35,6 +35,12 @@
 				</div>
 			</v-col>
 		</v-row>
+		<v-dialog
+			v-model="alert.show"
+			transition="dialog-top-transition"
+		>
+			<v-alert class="ma-0" :type="alert.type">{{ alert.message }}</v-alert>
+		</v-dialog>
 	</v-container>
 </template>
 

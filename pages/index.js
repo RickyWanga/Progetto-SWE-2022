@@ -1,11 +1,18 @@
 import Raccoglitore from "./Raccoglitore/Raccoglitore.js"
 
 const API_SEARCH_ENDPOINT = "twitter/search"
+const LABEL_INFO_EMPTY = "Sorry, there are no results for this search"
+const LABEL_ERROR_UNKNOWN = "Unknown error"
 
 export default {
 	name: "Page1",
 	data() {
 		return {
+			alert: {
+				message: "",
+				type: "",
+				show: false,
+			},
 			loading_tweets: false,
 			show_map: true,
 			show_media: true,
@@ -37,8 +44,24 @@ export default {
 			this.$axios.$get( API_SEARCH_ENDPOINT, { params: {
 				query: encodeURIComponent( query )
 			}}).then(( async_data ) => {
-				const raccoglitore = new Raccoglitore( async_data )
-				this.tweets = raccoglitore.tweets
+				if ( !async_data.error ) {
+					const raccoglitore = new Raccoglitore( async_data )
+					this.tweets = raccoglitore.tweets
+
+					if ( !this.tweets.length ) {
+						this.alert = {
+							message: LABEL_INFO_EMPTY,
+							type: "info",
+							show: true,
+						}
+					}
+				} else {
+					this.alert = {
+						message: async_data.error.message || LABEL_ERROR_UNKNOWN,
+						type: "error",
+						show: true,
+					}
+				}
 			}).finally(() => {
 				this.loading_tweets = false
 			})
