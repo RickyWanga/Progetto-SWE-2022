@@ -8,7 +8,7 @@
 			<v-col
 				cols="4"
 			>
-				<Tweets :loading="loading" :tweets="tweets" />
+				<Tweets :loading="loading_tweets" :tweets="tweets" />
 			</v-col>
 			<v-col
 				v-if="show_media"

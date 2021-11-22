@@ -2,7 +2,7 @@ export default {
 	props: [ "loading", "tweets" ],
 	data() {
 		return {
-			query: "",
+			query: null,
 			queryRules: [ v => !!v ],
 			valid: false,
 		}

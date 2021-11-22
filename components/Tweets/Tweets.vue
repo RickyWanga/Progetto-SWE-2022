@@ -10,13 +10,15 @@
 						<v-col class="flex-grow-1">
 							<v-text-field
 								v-model="query"
-								placeholder="Search Tweets"
 								class="expanding-search rounded-pill"
 								clearable
-								outlined
 								dense
+								outlined
+								persistent-placeholder
+								placeholder="Search Tweets"
 								required
 								:rules="queryRules"
+								@click:clear="$nuxt.$emit( 'query-cleared' )"
 							/>
 						</v-col>
 						<v-col class="flex-grow-0">
@@ -28,7 +30,7 @@
 								elevation="3"
 								:disabled="!valid"
 								:loading="loading"
-								@click="submit"
+								@click.stop="submit"
 							>
 								<v-icon>
 									mdi-magnify
@@ -57,24 +59,27 @@
 						tag="li"
 					>
 						<v-list-item-avatar
-							class="tweet-avatar pt-1"
+							class="tweet-avatar"
 						>
 							<v-img :src="tweet.user.picture" />
 						</v-list-item-avatar>
 						<v-list-item-content>
-							<p>
+							<p class="tweet-title">
 								<strong>{{ tweet.user.name }}</strong>
-								<em>@{{ tweet.user.account }}</em>
+								<span class="text--disabled font-weight-bold">@{{ tweet.user.account }}</span>
 							</p>
-							<p>
-								{{ tweet.text }}
-								<span class="badges">
+							<p class="tweet-text mb-0">
+								<span class="font-weight-regular">
+									{{ tweet.text }}
+								</span>
+								<span class="tweet-badges">
 									<v-icon
-										v-if="tweet.geo"
+										v-if="tweet.geo.target"
 										color="primary"
-										:title="tweet.geo.place.name + ' - ' + tweet.geo.place.country"
+										small
+										:title="tweet.tooltip"
 									>
-										mdi-map-marker-circle
+										mdi-map-marker
 									</v-icon>
 								</span>
 							</p>

@@ -1,106 +1,51 @@
-class Raccoglitore {
-	#geo = []
-	#media = []
-	#tweets = []
+import Raccoglitore from "./Raccoglitore/Raccoglitore.js"
 
-	#getCoordinates( status ) {
-		return ( status.geo && status.geo.coordinates ) || ( status.place && [
-			status.place.bounding_box.coordinates[ 0 ][ 0 ][ 1 ],
-			status.place.bounding_box.coordinates[ 0 ][ 0 ][ 0 ]
-		])
-	}
-
-	#geoModel( status ) {
-		const coordinates = this.#getCoordinates( status )
-		return coordinates && {
-			latlng: coordinates,
-			place: {
-				name: status.place.full_name,
-				country: status.place.country,
-			},
-			target: status.id,
-			tooltip: status.place.full_name + " - " + status.place.country
-		}
-	}
-
-	#mediaModel( status ) {
-		return status && null
-	}
-
-	#tweetModel( status ) {
-		return {
-			id: status.id,
-			geo: this.#geoModel( status ),
-			media: this.#mediaModel( status ),
-			text: status.text,
-			user: {
-				account: status.user.screen_name,
-				name: status.user.name,
-				picture: status.user.profile_image_url_https,
-			}
-		}
-	}
-
-	#tweetsMap( statuses ) {
-		return statuses.map( this.#tweetModel.bind( this ) )
-	}
-
-	constructor( data ) {
-		if ( data ) {
-			this.#tweets = this.#tweetsMap( data.statuses )
-			this.#geo = this.#tweets
-				.filter(( tweet ) => tweet.geo )
-				.map(( tweet ) => tweet.geo )
-		}
-	}
-
-	get geo() {
-		return this.#geo
-	}
-
-	get media() {
-		return this.#media
-	}
-
-	get tweets() {
-		return this.#tweets
-	}
-}
+const API_SEARCH_ENDPOINT = "twitter/search"
 
 export default {
 	name: "Page1",
 	data() {
 		return {
-			geo: [],
-			loading: false,
-			media: [],
+			loading_tweets: false,
 			show_map: true,
 			show_media: true,
 			show_tagcloud: true,
 			tweets: [],
 		}
 	},
+	computed: {
+		geo() {
+			return this.tweets
+				.filter(( tweet ) => tweet.geo )
+				.map(( tweet ) => tweet.geo )
+		},
+		media() {
+			return this.tweets && this.tweets.media
+		},
+	},
 	created() {
 		this.$nuxt.$on( "query", ({ query }) => {
-			this.loading = true
-			this.$axios.$get( "twitter/search", { params: {
+			this.loading_tweets = true
+			this.$axios.$get( API_SEARCH_ENDPOINT, { params: {
 				query: encodeURIComponent( query )
 			}}).then(( async_data ) => {
 				const raccoglitore = new Raccoglitore( async_data )
 				this.tweets = raccoglitore.tweets
-				this.geo = raccoglitore.geo
 			}).finally(() => {
-				this.loading = false
+				this.loading_tweets = false
 			})
 		})
-		this.$nuxt.$on( "toggle-map", ( toggle ) => {
-			this.show_map = toggle
-		})
-		this.$nuxt.$on( "toggle-media", ( toggle ) => {
-			this.show_media = toggle
-		})
-		this.$nuxt.$on( "toggle-tagcloud", ( toggle ) => {
-			this.show_tagcloud = toggle
-		})
+
+		// Toggle layout elements
+		// Mapping event to model
+		for ( const [ event, model ] of Object.entries({
+			"toggle-map": "show_map",
+			"toggle-media": "show_media",
+			"toggle-tagcloud": "show_tagcloud",
+		})) {
+			this.$nuxt.$on( event, ( toggle ) => {
+				this[ model ] = toggle
+			})
+		}
 	},
 }
