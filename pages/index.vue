@@ -31,7 +31,7 @@
 					:class="(show_map ? 'pt-6' : '')"
 					:style="'height:' + ( show_map ? 30 : 100 ) + '%'"
 				>
-					<TagCloud />
+					<TagCloud :tags="tags" />
 				</div>
 			</v-col>
 		</v-row>

@@ -22,6 +22,14 @@ export default {
 		media() {
 			return this.tweets && this.tweets.media
 		},
+		tags() {
+			const tags = {}
+			this.tweets.forEach(( tweet ) => tweet.tags.forEach( tag => {
+				const tag_slug = tag.toLowerCase()
+				tags[ tag_slug ] = tags[ tag_slug ] ? tags[ tag_slug ] + 1 : 1
+			}))
+			return Object.entries( tags )
+		},
 	},
 	created() {
 		this.$nuxt.$on( "query", ({ query }) => {
