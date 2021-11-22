@@ -1,29 +1,28 @@
-import Vue from 'vue'
-import { LMap, LTileLayer } from 'vue2-leaflet'
-import 'leaflet/dist/leaflet.css'
-Vue.component('l-map', LMap)
-Vue.component('l-tile-layer', LTileLayer)
 export default {
 	name: 'Map',
-	el: '#vue-app',
-	components: {
-		LMap,
-		LTileLayer
-	},
 	data () {
 		return {
 			url: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
 			attribution: '&copy; <a target="_blank" href="http://osm.org/copyright">OpenStreetMap</a> contributors',
-			zoom: 1,
-			center: [0, 0],
-			isShow: true,
+			zoom: 4,
+			center: [ 44.49801332451893, 11.355900447715872 ], // Bologna,
+			show: true,
 			loading: true
 		}
 	},
 	mounted() {
-		this.loading = true
-		setTimeout(() => {
-			this.loading = false
-		}, 1200)
-	}
+		this.show = true
+	},
+	created() {
+		this.$nuxt.$on( 'toggle-media', ( toggle ) => {
+			this.$nextTick(() => {
+				this.$refs.map && this.$refs.map.mapObject.invalidateSize( true )
+			})
+		})
+		this.$nuxt.$on( 'toggle-tagcloud', ( toggle ) => {
+			this.$nextTick(() => {
+				this.$refs.map && this.$refs.map.mapObject.invalidateSize( true )
+			})
+		})
+	},
 }
