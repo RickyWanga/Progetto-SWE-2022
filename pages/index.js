@@ -16,7 +16,7 @@ export default {
 	computed: {
 		geo() {
 			return this.tweets
-				.filter(( tweet ) => tweet.geo )
+				.filter(( tweet ) => tweet.geo.target )
 				.map(( tweet ) => tweet.geo )
 		},
 		media() {

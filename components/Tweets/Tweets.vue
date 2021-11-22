@@ -77,7 +77,7 @@
 										v-if="tweet.geo.target"
 										color="primary"
 										small
-										:title="tweet.tooltip"
+										:title="tweet.geo.tooltip"
 									>
 										mdi-map-marker
 									</v-icon>
