@@ -8,7 +8,7 @@
 			<v-col
 				cols="4"
 			>
-				<Tweets />
+				<Tweets :loading="loading_tweets" :tweets="tweets" />
 			</v-col>
 			<v-col
 				v-if="show_media"
@@ -24,40 +24,24 @@
 					v-if="show_map"
 					:style="'height:' + ( show_tagcloud ? 70 : 100 ) + '%'"
 				>
-					<Map />
+					<Map :geo="geo" />
 				</div>
 				<div
 					v-if="show_tagcloud"
 					:class="(show_map ? 'pt-6' : '')"
 					:style="'height:' + ( show_map ? 30 : 100 ) + '%'"
 				>
-					<TagCloud />
+					<TagCloud :tags="tags" />
 				</div>
 			</v-col>
 		</v-row>
+		<v-dialog
+			v-model="alert.show"
+			transition="dialog-top-transition"
+		>
+			<v-alert class="ma-0" :type="alert.type">{{ alert.message }}</v-alert>
+		</v-dialog>
 	</v-container>
 </template>
 
-<script>
-export default {
-	name: 'Page1',
-	data () {
-		return {
-			show_media: true,
-			show_map: true,
-			show_tagcloud: true,
-		}
-	},
-	created() {
-		this.$nuxt.$on('toggle-media', ( toggle ) => {
-			this.show_media = toggle
-		})
-		this.$nuxt.$on('toggle-map', ( toggle ) => {
-			this.show_map = toggle
-		})
-		this.$nuxt.$on('toggle-tagcloud', ( toggle ) => {
-			this.show_tagcloud = toggle
-		})
-	},
-}
-</script>
+<script src="./index.js"></script>
