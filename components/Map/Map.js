@@ -1,13 +1,13 @@
 export default {
-	name: 'Map',
+	props: [ "geo" ],
 	data () {
 		return {
 			url: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
 			attribution: '&copy; <a target="_blank" href="http://osm.org/copyright">OpenStreetMap</a> contributors',
 			zoom: 4,
 			center: [ 44.49801332451893, 11.355900447715872 ], // Bologna,
-			show: true,
-			loading: true
+			show: false,
+			loading: true,
 		}
 	},
 	mounted() {
@@ -25,4 +25,11 @@ export default {
 			})
 		})
 	},
+	methods: {
+		SetNewBounds() {
+			this.$nextTick(() => {
+				this.$refs.map.mapObject.fitBounds(this.geo.map(m => { return [m.lat, m.lng] }))
+			})
+		}
+	}
 }

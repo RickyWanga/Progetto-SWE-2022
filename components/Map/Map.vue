@@ -3,6 +3,15 @@
 		<client-only>
 			<l-map v-if="show" ref="map" :zoom="zoom" :center="center">
 				<l-tile-layer :url="url" :attribution="attribution" />
+				<l-marker
+					v-for="point in geo"
+					:key="point.target"
+					:lat-lng="point.latlng"
+				>
+					<l-tooltip>
+						{{ point.tooltip }}
+					</l-tooltip>
+				</l-marker>
 			</l-map>
 		</client-only>
 	</v-container>
