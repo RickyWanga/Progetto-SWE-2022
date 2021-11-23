@@ -1,3 +1,6 @@
+import GeoModel from "./GeoModel"
+import UserModel from "./UserModel"
+
 class TweetModel {
 	#id = 0
 	#geo = {}
@@ -6,12 +9,12 @@ class TweetModel {
 	#user = {}
 	#words = []
 
-	constructor( status, geoModel, userModel ) {
+	constructor( status ) {
 		this.#id = status.id
-		this.#geo = geoModel
+		this.#geo = new GeoModel( status )
 		this.#tags = status.entities.hashtags.map(( hashtag ) => hashtag.text )
 		this.#text = status.text
-		this.#user = userModel
+		this.#user = new UserModel( status )
 		this.#words = status.text.split( " " )
 	}
 
