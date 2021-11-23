@@ -1,14 +1,14 @@
 import axios from "axios"
 
 const TWITTER_API_PARAMS = {
-	baseUrl: "https://api.twitter.com",
+	baseUrl: process.env.TWITTER_API_BASEURL || "https://api.twitter.com",
 	bearer_token: process.env.TWITTER_BEARER_TOKEN,
 }
 
 export default {
 	api() {
 		return axios.create({
-			baseURL: TWITTER_API_PARAMS.baseUrl,
+			baseURL: TWITTER_API_PARAMS.baseUrl.replace(/\/$/, ""),
 			headers: {
 				Authorization: "Bearer " + TWITTER_API_PARAMS.bearer_token,
 			}

@@ -13,7 +13,7 @@ const TWITTER_SEARCH_PARAMS = {
  * @returns {Promise} tweets{}
  */
 const fetchTweets = ( query ) => {
-	var tweets = {}
+	let tweets = {}
 	return new Promise(( resolve ) => {
 		twitter.api().get( TWITTER_SEARCH_PARAMS.endpoint, { params: {
 			count: TWITTER_SEARCH_PARAMS.count,
@@ -23,18 +23,18 @@ const fetchTweets = ( query ) => {
 
 			tweets = response.data
 
-			//@TODO Handle error response in tweets.data
-
 			// HTTP Error
 			if ( 200 !== response.status ) {
 				tweets.error = {
 					status: response.status,
-					text: response.statusText,
+					message: response.statusText,
 				}
 			}
 		}).catch(( error ) => {
 			// All others errors
-			tweets.error = error.response || error.request || error.message
+			tweets.error = {
+				message: error.message
+			}
 		}).finally(() => {
 			resolve( tweets )
 		})
