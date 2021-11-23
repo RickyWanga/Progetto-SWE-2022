@@ -2,10 +2,11 @@
 	<v-app>
 		<v-navigation-drawer
 			v-model="drawer"
-			:mini-variant="miniVariant"
-			:clipped="clipped"
+			class="pt-16"
+			disable-route-watcher
 			fixed
-			app
+			:clipped="clipped"
+			:mini-variant="miniVariant"
 		>
 			<v-list>
 				<v-list-item>
@@ -53,7 +54,7 @@
 						:href="item.to"
 						target="_blank"
 					>
-						<v-list-item-action>
+						<v-list-item-action v-if="item.icon">
 							<v-icon>{{ item.icon }}</v-icon>
 						</v-list-item-action>
 						<v-list-item-content>
@@ -65,10 +66,11 @@
 		</v-navigation-drawer>
 		<v-app-bar
 			:clipped-left="clipped"
-			fixed
 			app
+			color="primary white--text"
+			fixed
 		>
-			<v-app-bar-nav-icon @click.stop="drawer = !drawer" />
+			<v-app-bar-nav-icon color="white" @click.stop="drawer = !drawer" />
 			<nuxt-link to="/" style="text-decoration:none; color:inherit;">
 				<v-toolbar-title v-text="title" />
 			</nuxt-link>
@@ -81,7 +83,7 @@
 			:absolute="!fixed"
 			app
 		>
-			<span>🄯 {{ new Date().getFullYear() }}</span>
+			<span><span style="display:inline-block;transform-origin:50% 45%;transform:rotate(180deg)">©</span>&nbsp;{{ new Date().getFullYear() }}</span>
 		</v-footer>
 	</v-app>
 </template>
@@ -96,9 +98,22 @@ export default {
 			miniVariant: false,
 			navigation_items: [
 				{
+					title: 'TEAM 13',
+				},
+				{
 					icon: 'mdi-application-edit-outline',
 					title: 'Wireframe',
 					to: 'https://wireframe.cc/WSmfNz'
+				},
+				{
+					icon: 'mdi-folder-table',
+					title: 'Taiga',
+					to: 'https://aminsep.disi.unibo.it/project/admin-progetto-2021-team-13'
+				},
+				{
+					icon: 'mdi-gitlab',
+					title: 'Gitlab',
+					to: 'http://aminsep.disi.unibo.it/gitlab/progetto-swe-gruppo-13'
 				},
 			],
 			title: 'TED - Twitter Extended Dashboard',
