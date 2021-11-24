@@ -1,7 +1,7 @@
 <template>
 	<v-container fill-height class="pa-0">
 		<client-only>
-			<l-map v-if="show" ref="map" :zoom="zoom" :center="center">
+			<l-map ref="map" :zoom="zoom" :center="center">
 				<l-tile-layer :url="url" :attribution="attribution" />
 				<l-marker
 					v-for="point in geo"
