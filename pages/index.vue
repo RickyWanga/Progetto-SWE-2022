@@ -11,10 +11,22 @@
 				<Tweets :loading="loading_tweets" :tweets="tweets" />
 			</v-col>
 			<v-col
-				v-if="show_media"
+				v-if="show_media || show_grafici"
 				:cols="(show_map || show_tagcloud) ? 4 : 8"
 			>
-				<Media />
+				<div
+					v-if="show_media"
+					:style="'height:' + ( show_grafici ? 70 : 100 ) + '%'"
+				>
+					<Media />
+				</div>
+				<div
+					v-if="show_grafici"
+					:class="(show_media ? 'pt-6' : '')"
+					:style="'height:' + ( show_media ? 30 : 100 ) + '%'"
+				>
+					<Grafici />
+				</div>
 			</v-col>
 			<v-col
 				v-if="show_map || show_tagcloud"

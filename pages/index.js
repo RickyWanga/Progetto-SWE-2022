@@ -17,6 +17,7 @@ export default {
 			show_map: true,
 			show_media: true,
 			show_tagcloud: true,
+			show_grafici: true,
 			tweets: [],
 		}
 	},
@@ -76,5 +77,6 @@ export default {
 		on( "toggle-map", "show_map" )
 		on( "toggle-media", "show_media" )
 		on( "toggle-tagcloud", "show_tagcloud" )
+		on( "toggle-grafici", "show_grafici" )
 	},
 }
