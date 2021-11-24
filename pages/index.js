@@ -5,7 +5,7 @@ const LABEL_INFO_EMPTY = "Sorry, there are no results for this search"
 const LABEL_ERROR_UNKNOWN = "Unknown error"
 
 export default {
-	name: "Page1",
+	name: "Dashboard",
 	data() {
 		return {
 			alert: {
@@ -67,16 +67,14 @@ export default {
 			})
 		})
 
-		// Toggle layout elements
-		// Mapping event to model
-		for ( const [ event, model ] of Object.entries({
-			"toggle-map": "show_map",
-			"toggle-media": "show_media",
-			"toggle-tagcloud": "show_tagcloud",
-		})) {
+		// Watch to toggle layout elements
+		const on = ( event, model ) => {
 			this.$nuxt.$on( event, ( toggle ) => {
 				this[ model ] = toggle
 			})
 		}
+		on( "toggle-map", "show_map" )
+		on( "toggle-media", "show_media" )
+		on( "toggle-tagcloud", "show_tagcloud" )
 	},
 }

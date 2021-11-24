@@ -1,0 +1,38 @@
+[
+	{
+		"id": 1,
+		"geo": {
+			"latlng": [ 1, 1 ],
+			"place_name": "place_name1",
+			"place_country": "place_country1",
+			"target": 1,
+			"tooltip": "tooltip1"
+		},
+		"tags": [ "tag1" ],
+		"text": "text 1",
+		"user": {
+			"account": "account1",
+			"name": "name1",
+			"picture": "picture1"
+		},
+		"words": [ "text", "1" ]
+	},
+	{
+		"id": 2,
+		"geo": {
+			"latlng": [ 2, 2 ],
+			"place_name": "place_name2",
+			"place_country": "place_country2",
+			"target": 2,
+			"tooltip": "tooltip2"
+		},
+		"tags": [ "tag2" ],
+		"text": "text 2",
+		"user": {
+			"account": "account2",
+			"name": "name2",
+			"picture": "picture2"
+		},
+		"words": [ "text", "2" ]
+	}
+]
