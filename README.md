@@ -2,7 +2,7 @@
 
 Twitter Extended Dashboard
 
-[![Quality Gate Status](https://aminsep.disi.unibo.it/sonarqube/api/project_badges/measure?project=TED&metric=alert_status)](https://aminsep.disi.unibo.it/sonarqube/dashboard?id=TED)
+[![Quality Gate Status](https://aminsep.disi.unibo.it/sonarqube/api/project_badges/measure?project=Ted-Team13&metric=alert_status)](https://aminsep.disi.unibo.it/sonarqube/dashboard?id=Ted-Team13)
 
 ## Environment variables
 
@@ -23,3 +23,5 @@ $ npm run dev
 ```
 
 For detailed explanation on how things work, check out the [documentation](https://nuxtjs.org).
+
+Wireframe: https://wireframe.cc/WSmfNz

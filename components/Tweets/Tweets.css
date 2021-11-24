@@ -34,3 +34,8 @@
 .tweet-badges {
 	white-space: nowrap;
 }
+
+.v-application .v-form .error--text {
+	color: #1DA1F2 !important;
+	caret-color: #1DA1F2 !important;
+}

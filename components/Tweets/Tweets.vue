@@ -4,6 +4,7 @@
 			<v-col>
 				<v-form
 					v-model="valid"
+					class="tweets-form"
 					@submit.prevent="submit"
 				>
 					<v-row>
@@ -23,14 +24,13 @@
 						</v-col>
 						<v-col class="flex-grow-0">
 							<v-btn
-								ref="submit"
 								color="primary"
-								icon
-								x-large
 								elevation="3"
+								icon
+								type="submit"
+								x-large
 								:disabled="!valid"
 								:loading="loading"
-								@click.stop="submit"
 							>
 								<v-icon>
 									mdi-magnify

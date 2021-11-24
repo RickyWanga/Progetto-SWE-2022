@@ -51,7 +51,7 @@
 					<v-list-item
 						v-for="(item, i) in navigation_items"
 						:key="i"
-						:href="item.to"
+						href="http://aminsep.disi.unibo.it/gitlab/progetto-swe-gruppo-13"
 						target="_blank"
 					>
 						<v-list-item-action v-if="item.icon">
