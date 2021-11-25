@@ -35,7 +35,7 @@ describe( "Map", () => {
 		expect( wrapper.vm ).toBeTruthy()
 	})
 
-	test( "latlng computed property", async () => {
+	test( "latlng computed property", () => {
 		expect( wrapper.vm.latlng[ 0 ][ 0 ] ).toBe( 1 )
 		expect( wrapper.vm.latlng[ 0 ][ 1 ] ).toBe( 1 )
 		expect( wrapper.vm.latlng[ 1 ][ 0 ] ).toBe( 2 )
