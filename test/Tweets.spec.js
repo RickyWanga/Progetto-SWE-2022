@@ -6,20 +6,16 @@ describe( "Tweets Search Form", () => {
 	const local_vue = createLocalVue()
 	const mountComponent = ( custom_options = {} ) => mount( Component, Object.assign({
 		local_vue,
-		vuetify,
 	}, custom_options ))
 
-	let vuetify
 	let wrapper
 	let tweetsForm
 	let tweetsFormInput
+	let tweetsFormInputEl
 
 	beforeAll(() => {
-		vuetify = new Vuetify()
-	})
-
-	beforeEach(() => {
 		wrapper = mountComponent({
+			vuetify: new Vuetify(),
 			mocks: {
 				$nuxt: {
 					$emit: () => {},
@@ -31,6 +27,7 @@ describe( "Tweets Search Form", () => {
 		})
 		tweetsForm = wrapper.find( ".tweets-form" )
 		tweetsFormInput = wrapper.find( ".tweets-form .v-input" )
+		tweetsFormInputEl = tweetsFormInput.find( "input" )
 	})
 
 	test( "is a Vue instance", () => {
@@ -40,17 +37,17 @@ describe( "Tweets Search Form", () => {
 	test( "tweets form input validation", async () => {
 		expect( wrapper.vm.valid ).toBeFalsy()
 
-		await tweetsFormInput.find( "input" ).setValue( "test" )
-		await tweetsFormInput.trigger( "brur" )
+		await tweetsFormInputEl.setValue( "test" )
+		await wrapper.vm.$nextTick()
 		expect( wrapper.vm.valid ).toBeTruthy()
 	})
 
 	test( "tweets form submit", async () => {
 		const spySubmit = jest.spyOn( wrapper.vm, "submit" )
 		const test_query = "test"
-		await tweetsFormInput.find( "input" ).setValue( test_query )
+		await tweetsFormInputEl.setValue( test_query )
 		await tweetsForm.trigger( "submit" )
-		expect( spySubmit ).toHaveBeenCalled()
+		expect( spySubmit ).toHaveBeenCalledTimes( 1 )
 		expect( test_query === wrapper.vm.query ).toBeTruthy()
 	})
 })

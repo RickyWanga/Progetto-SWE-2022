@@ -1,8 +1,23 @@
 <template>
 	<v-container fill-height class="pa-0">
 		<client-only>
-			<l-map v-if="show" ref="map" :zoom="zoom" :center="center">
+			<l-map
+				ref="map"
+				:center="center"
+				:max-bounds="maxBounds"
+				:min-zoom="minZoom"
+				:zoom="zoom"
+			>
 				<l-tile-layer :url="url" :attribution="attribution" />
+				<l-marker
+					v-for="point in geo"
+					:key="point.target"
+					:lat-lng="point.latlng"
+				>
+					<l-tooltip>
+						{{ point.tooltip }}
+					</l-tooltip>
+				</l-marker>
 			</l-map>
 		</client-only>
 	</v-container>
