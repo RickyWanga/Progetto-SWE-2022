@@ -10,7 +10,7 @@
     "lint:js": "eslint --ext \".js,.vue\" --ignore-path .gitignore .",
     "lint": "npm run lint:js",
     "sonar:local": "node sonar-project.js -Dsonar.projectVersion=Local",
-    "sonar": "node sonar-project.js",
+    "sonar": "node sonar-project.js -Dsonar.projectVersion=1.0",
     "test": "jest --clearCache && jest --verbose"
   },
   "dependencies": {
