@@ -3,4 +3,3 @@
 </template>
 
 <script src="./Media.js"></script>
-<style src="./Media.css"></style>
