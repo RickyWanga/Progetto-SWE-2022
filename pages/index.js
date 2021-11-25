@@ -68,13 +68,13 @@ export default {
 		})
 
 		// Watch to toggle layout elements
-		const on = ( event, model ) => {
+		const onToggle = ( event, model ) => {
 			this.$nuxt.$on( event, ( toggle ) => {
 				this[ model ] = toggle
 			})
 		}
-		on( "toggle-map", "show_map" )
-		on( "toggle-media", "show_media" )
-		on( "toggle-tagcloud", "show_tagcloud" )
+		onToggle( "toggle-map", "show_map" )
+		onToggle( "toggle-media", "show_media" )
+		onToggle( "toggle-tagcloud", "show_tagcloud" )
 	},
 }
