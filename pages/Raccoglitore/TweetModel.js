@@ -8,6 +8,7 @@ class TweetModel {
 	#text = ""
 	#user = {}
 	#words = []
+	#data = ""
 
 	constructor( status ) {
 		this.#id = status.id
@@ -16,6 +17,7 @@ class TweetModel {
 		this.#text = status.text
 		this.#user = new UserModel( status )
 		this.#words = status.text.split( " " )
+		this.#data = status.created_at
 	}
 
 	get id() {
@@ -40,6 +42,9 @@ class TweetModel {
 
 	get words() {
 		return this.#words
+	}
+	get data() {
+		return this.#data
 	}
 }
 
