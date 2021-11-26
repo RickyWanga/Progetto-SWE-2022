@@ -1,8 +1,7 @@
 default:
-  image: openjdk:latest
+  image: node:14-alpine
 
   before_script:
-    - apt-get install -y curl && curl -sL https://deb.nodesource.com/setup_14.x | bash - && apt-get install -y nodejs && curl -L https://www.npmjs.com/install.sh | sh
     - npm ci
 
 cache:
@@ -55,8 +54,18 @@ test:
 sonar:
   stage: sonar
 
+  image:
+    name: sonarsource/sonar-scanner-cli:latest
+    entrypoint: [""]
+  variables:
+    SONAR_USER_HOME: "${CI_PROJECT_DIR}/.sonar"
+    GIT_DEPTH: "0"
+  cache:
+    key: "${CI_JOB_NAME}"
+    paths:
+      - .sonar/cache
   script:
-    - npm run sonar
+    - sonar-scanner -Dsonar.qualitygate.wait=true
 
   needs: ["test"]
 
