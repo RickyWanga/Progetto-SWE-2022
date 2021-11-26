@@ -1,8 +1,8 @@
 default:
-  image: node:14-alpine
+  image: openjdk:latest
 
   before_script:
-    - apt-get -y install default-jre
+    - apt-get install -y curl && curl -sL https://deb.nodesource.com/setup_14.x | bash - && apt-get install -y nodejs && curl -L https://www.npmjs.com/install.sh | sh
     - npm ci
 
 cache:
