@@ -20,8 +20,9 @@ lib-cov
 coverage
 .scannerwork
 
-# nyc test coverage
+# test coverage and report
 .nyc_output
+junit.xml
 
 # Grunt intermediate storage (http://gruntjs.com/creating-plugins#storing-task-files)
 .grunt
