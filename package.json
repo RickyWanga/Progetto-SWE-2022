@@ -11,6 +11,7 @@
     "lint": "npm run lint:js",
     "sonar:local": "node sonar-project.js -Dsonar.projectVersion=Local",
     "sonar": "node sonar-project.js -Dsonar.projectVersion=1.0",
+    "test:ci": "jest --ci --reporters=default --reporters=jest-junit",
     "test": "jest --clearCache && jest --verbose"
   },
   "dependencies": {
