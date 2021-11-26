@@ -2,7 +2,7 @@ default:
   image: node:14-alpine
 
   before_script:
-    - npm install
+    - npm ci
 
 cache:
   paths:
@@ -10,7 +10,9 @@ cache:
 
 stages:
   - build
+  - lint
   - test
+  - sonar
 
 build:
   stage: build
@@ -25,12 +27,31 @@ build:
   rules:
     - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
 
+lint:
+  stage: lint
+
+  script:
+    - npm run lint
+
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
+
 test:
   stage: test
 
   script:
-    - npm run lint
     - npm run test
+
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
+
+sonar:
+  stage: sonar
+
+  script:
+    - npm run sonar
+
+  needs: ["test"]
 
   rules:
     - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
