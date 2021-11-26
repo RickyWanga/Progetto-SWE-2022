@@ -1,0 +1,41 @@
+.tweets-container {
+	height: 100%;
+	overflow: auto;
+	position: relative;
+	width: 100%;
+}
+
+.tweets-container--empty {
+	background: url("~assets/twitter-logo.png") no-repeat center center;
+	background-size: contain;
+}
+
+.tweets-list {
+	left: 0;
+	position: absolute;
+	top: 0;
+	width: 100%;
+}
+
+.tweet-avatar {
+	align-self: flex-start;
+	position: relative;
+	top: 0.5ex;
+}
+
+.tweet-title,
+.tweet-text {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+	line-height: 1.4em;
+	width: 100%;
+	word-wrap: break-word;
+}
+
+.tweet-badges {
+	white-space: nowrap;
+}
+
+.v-application .v-form .error--text {
+	color: #1DA1F2 !important;
+	caret-color: #1DA1F2 !important;
+}

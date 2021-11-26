@@ -11,4 +11,3 @@
 </template>
 
 <script src="./TagCloud.js"></script>
-<style src="./TagCloud.css"></style>

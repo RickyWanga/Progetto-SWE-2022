@@ -17,6 +17,7 @@ module.exports = {
 	// add your custom rules here
 	rules: {
 		'array-bracket-spacing': 'off',
+		'arrow-parens': 'off',
 		'camelcase': 'off',
 		'comma-dangle': 'off',
 		'computed-property-spacing': 'off',
@@ -27,12 +28,12 @@ module.exports = {
 		'object-curly-spacing': 'off',
 		'one-var': 'off',
 		'padded-blocks': 'off',
-		'space-before-function-paren': 'off',
-		'space-infix-ops': 'off',
 		'quote-props': 'off',
 		'quotes': 'off',
+		'space-before-function-paren': 'off',
 		'space-in-parens': 'off',
 		'spaced-comment': 'off',
+		'template-curly-spacing': 'off',
 		'vue/html-indent': ['error', 'tab'],
 		'vue/singleline-html-element-content-newline': 'off',
 	}
