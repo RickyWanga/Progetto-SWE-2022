@@ -1,60 +1,38 @@
 import Chance from "chance"
 import VueWordCloud from "vuewordcloud"
 
-const colorFunction = ([, weight]) => {
-	const values = wordsTest.reduce(( p, c ) => ( p[p.length-1] !== c[1]) ? p.concat( c[1] ) : p, [] )
-	return weight === values[ 0 ] ? 'DeepPink' : weight === values[ 1 ] ? 'RoyalBlue' : 'Lime'
-}
-
-const rotationFunction = ( word ) => {
-	const chance = new Chance( word[0] )
-	return chance.pickone([ 0, 3/4 ])
-}
-
-const wordsTest = [
-	[ "hi", 9 ],
-	[ "jepa", 9 ],
-	[ "vocjo", 9 ],
-	[ "zalaj", 4 ],
-	[ "kokujra", 4 ],
-	[ "be", 4 ],
-	[ "kicnaap", 4 ],
-	[ "ruc", 4 ],
-	[ "wuwwis", 4 ],
-	[ "gidme", 4 ],
-	[ "opsofac", 4 ],
-	[ "wel", 4 ],
-	[ "sivahpeg", 4 ],
-	[ "inje", 4 ],
-	[ "juwreli", 4 ],
-	[ "mikuv", 4 ],
-	[ "emveba", 2 ],
-	[ "bikcupugi", 2 ],
-	[ "nez", 2 ],
-	[ "tah", 2 ],
-	[ "begec", 2 ],
-	[ "picipgo", 2 ],
-	[ "egive", 2 ],
-	[ "gico", 2 ],
-	[ "piur", 2 ],
-	[ "arnu", 2 ],
-	[ "ekezathi", 1 ],
-	[ "vu", 1 ],
-	[ "dirom", 1 ],
-	[ "se", 1 ],
-	[ "zivemaj", 1 ],
-]
-
 export default {
+	props: [ "tags" ],
 	data() {
 		return {
-			color: colorFunction,
 			fontFamily: "sans-serif",
-			rotation: rotationFunction,
-			words: wordsTest,
+			rotation: this.rotationFunction,
 		}
+	},
+	computed: {
+		color() {
+			return this.colorFunction( this.words )
+		},
+		words() {
+			return this.tags
+		},
 	},
 	components: {
 		VueWordCloud,
+	},
+	methods: {
+		colorFunction( words ) {
+			// Sorted array of tags counts [ 4, 2, 1 ]
+			return ([, weight]) => {
+				const values = words
+					.sort(( a, b ) => a[ 1 ] < b[ 1 ])
+					.reduce(( p, c ) => ( p[p.length - 1] !== c[1]) ? p.concat( c[1] ) : p, [] )
+				return weight > values[ 2 ] ? 'DeepPink' : weight > values[ 4 ] ? 'RoyalBlue' : 'Indigo'
+			}
+		},
+		rotationFunction( word ) {
+			const chance = new Chance( word[0] )
+			return chance.pickone([ 0, 3 / 4 ])
+		},
 	},
 }
