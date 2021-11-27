@@ -9,16 +9,16 @@ const gradients = [
 
 
 export default {
-	props: [ "days" ]
+	props: [ "days" ],
 	data() {
 		return{
 			show: true,
 			loading: true,
 			width: 2,
-			radius: 10,
+			radius: 0,
 			padding: 8,
 			lineCap: 'round',
-			gradient: gradients[5],
+			gradient: ['#222'],
 			value: [0, 2, 5, 9, 5, 10, 3, 5, 0, 0, 1, 8, 2, 9, 0],
 			gradientDirection: 'top',
 			gradients,

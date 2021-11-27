@@ -19,30 +19,13 @@ export default {
 			show_tagcloud: true,
 			show_grafici: true,
 			tweets: [],
+			day: [0, 1, 0, 2, 0, 4, 8, 6, 2],
 		}
 	},
 	computed: {
-		days(){
-			const ret = [0,0,0,0,0,0,0]
-			this.tweets.forEach( tweet => {
-				const day = tweet.data.toLowerCase().substr(0,3)
-				if (day === "mon") {
-					ret[0]++
-				}else if (day === "tue") {
-					ret[1]++
-				}else if (day === "wed") {
-					ret[2]++
-				}else if (day === "thu") {
-					ret[3]++
-				}else if (day === "fri") {
-					ret[4]++
-				}else if (day === "sat") {
-					ret[5]++
-				}else if (day === "sun") {
-					ret[6]++
-				}
-			})
-			return ret
+		days() {
+			console.log(this.tweets.map(( tweet ) => tweet.data ))
+			return this.tweets.map(( tweet ) => tweet.data )
 		},
 		geo() {
 			return this.tweets
