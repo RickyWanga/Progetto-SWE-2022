@@ -1,3 +1,4 @@
+import Dates from "./Dates/Dates.js"
 import Raccoglitore from "./Raccoglitore/Raccoglitore.js"
 
 const API_SEARCH_ENDPOINT = "twitter/search"
@@ -17,32 +18,23 @@ export default {
 			show_map: true,
 			show_media: true,
 			show_tagcloud: true,
-			show_grafici: true,
 			tweets: [],
 		}
 	},
 	computed: {
-		days(){
-			const ret = [0,0,0,0,0,0,0]
-			this.tweets.forEach( tweet => {
-				const day = tweet.data.toLowerCase().substr(0,3)
-				if (day === "mon") {
-					ret[0]++
-				}else if (day === "tue") {
-					ret[1]++
-				}else if (day === "wed") {
-					ret[2]++
-				}else if (day === "thu") {
-					ret[3]++
-				}else if (day === "fri") {
-					ret[4]++
-				}else if (day === "sat") {
-					ret[5]++
-				}else if (day === "sun") {
-					ret[6]++
-				}
-			})
-			return ret
+		dates() {
+			const dates = {}
+			const tweets_dates = this.tweets.map(( tweet ) => new Date( tweet.date ))
+			if ( tweets_dates.length > 1 ) {
+				new Dates( tweets_dates ).makeLabelsValues( dates )
+			}
+			return {
+				labels: Object.keys( dates ),
+				values: Object.values( dates ),
+			}
+		},
+		hasDiagram() {
+			return this.dates.values.length > 2
 		},
 		geo() {
 			return this.tweets
@@ -61,7 +53,7 @@ export default {
 			return Object.entries( tags )
 		},
 	},
-	created() {
+	mounted() {
 		this.$nuxt.$on( "query", ({ query }) => {
 			this.loading_tweets = true
 			this.$axios.$get( API_SEARCH_ENDPOINT, { params: {
