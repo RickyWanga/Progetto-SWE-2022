@@ -12,18 +12,18 @@ describe( "Tweets List", () => {
 	const local_vue = createLocalVue()
 	const mountComponent = ( custom_options = {} ) => mount( Component, Object.assign({
 		local_vue,
-		vuetify,
 	}, custom_options ))
 
-	let vuetify
 	let wrapper
 
 	beforeAll(() => {
-		vuetify = new Vuetify()
-	})
-
-	beforeEach(() => {
 		wrapper = mountComponent({
+			vuetify: new Vuetify(),
+			data() {
+				return {
+					tweets: Tweets,
+				}
+			},
 			mocks: {
 				$nuxt: {
 					$on: () => {},
@@ -35,22 +35,21 @@ describe( "Tweets List", () => {
 				"Tweets",
 			],
 		})
-		wrapper.setData({ tweets: Tweets })
 	})
 
 	test( "is a Vue instance", () => {
 		expect( wrapper.vm ).toBeTruthy()
 	})
 
-	test( "computed property: geo", () => {
+	test( "geo computed property", () => {
 		expect( wrapper.vm.geo[ 0 ].target ).toBe( 1 )
 	})
 
-	test( "computed property: media", () => {
+	test( "media computed property", () => {
 		expect( wrapper.vm.media ).toBeFalsy()
 	})
 
-	test( "computed property: tags", () => {
+	test( "tags computed property", () => {
 		expect( wrapper.vm.tags[ 0 ] ).toHaveLength( 2 )
 	})
 })
