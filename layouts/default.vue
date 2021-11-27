@@ -17,7 +17,7 @@
 						hide-details
 						inset
 						label="Media"
-						:disabled="!( toggle_map || toggle_tagcloud )"
+						:disabled="!( toggle_map || toggle_tagcloud)"
 						@click.stop="$nuxt.$emit( 'toggle-media', toggle_media )"
 					/>
 				</v-list-item>
@@ -41,7 +41,7 @@
 						hide-details
 						inset
 						label="Tag Cloud"
-						:disabled="!( toggle_media || toggle_map )"
+						:disabled="!( toggle_media || toggle_map)"
 						@click.stop="$nuxt.$emit( 'toggle-tagcloud', toggle_tagcloud )"
 					/>
 				</v-list-item>
@@ -53,7 +53,6 @@
 						hide-details
 						inset
 						label="Grafici"
-						:disabled="!( toggle_media || toggle_map  || toggle_tagcloud)"
 						@click.stop="$nuxt.$emit( 'toggle-grafici', toggle_grafici )"
 					/>
 				</v-list-item>

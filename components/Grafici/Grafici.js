@@ -9,24 +9,25 @@ const gradients = [
 
 
 export default {
-  data() {
-    return{
-      show: true,
-      loading: true,
-      width: 2,
-       radius: 10,
-       padding: 8,
-       lineCap: 'round',
-       gradient: gradients[5],
-       value: [0, 2, 5, 9, 5, 10, 3, 5, 0, 0, 1, 8, 2, 9, 0],
-       gradientDirection: 'top',
-       gradients,
-       fill: false,
-       type: 'trend',
-       autoLineWidth: false,
-    }
-  },
-  mounted() {
-    this.show = true
-  },
+	props: [ "days" ]
+	data() {
+		return{
+			show: true,
+			loading: true,
+			width: 2,
+			radius: 10,
+			padding: 8,
+			lineCap: 'round',
+			gradient: gradients[5],
+			value: [0, 2, 5, 9, 5, 10, 3, 5, 0, 0, 1, 8, 2, 9, 0],
+			gradientDirection: 'top',
+			gradients,
+			fill: false,
+			type: 'trend',
+			autoLineWidth: false,
+		}
+  	},
+	mounted() {
+		this.show = true
+	},
 }
