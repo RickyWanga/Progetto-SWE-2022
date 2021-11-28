@@ -22,4 +22,4 @@
 	</v-sparkline>
 </template>
 
-<script src="./Grafici.js"></script>
+<script src="./Diagram.js"></script>

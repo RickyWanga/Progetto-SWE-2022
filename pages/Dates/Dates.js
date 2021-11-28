@@ -26,7 +26,7 @@ class Dates {
 				: this.#oldest.getDate() !== this.#newest.getDate()
 					? `${ WEEK_DAY[ date.getDay() ] } ${ date.getDate() }`
 					: this.#oldest.getHours() !== this.#newest.getHours()
-						? `${ date.getHours() }`
+						? `${ date.getHours() }:00`
 						: this.#oldest.getMinutes() !== this.#newest.getMinutes()
 							? `${ date.getHours() }:${ this.#pad(Math.floor(date.getMinutes() / 20 ) * 20 )}`
 							: (Math.floor(this.#oldest.getSeconds() / 20) * 20) !== (Math.floor(this.#newest.getSeconds() / 20 ) * 20 )

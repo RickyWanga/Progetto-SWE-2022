@@ -25,7 +25,10 @@ export default {
 	},
 	computed: {
 		labels() {
-			return this.labelValue.labels
+			const show_only_seven_labels = Math.floor( this.labelValue.labels.length / 7 )
+			return this.labelValue.labels.map(( label, index ) =>
+				!( index % show_only_seven_labels ) ? label : ""
+			)
 		},
 		values() {
 			return this.labelValue.values

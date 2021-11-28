@@ -17,7 +17,7 @@
 					v-if="hasDiagram"
 					style="height:20%; display:flex;flex-direction:column;justify-content:center"
 				>
-					<Grafici :label-value="dates" />
+					<Diagram :label-value="dates" />
 				</div>
 			</v-col>
 			<v-col
