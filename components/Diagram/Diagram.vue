@@ -17,7 +17,7 @@
 		:value="values"
 	>
 		<template #label="label">
-			{{ label.value }} ({{ values[ label.index ] }})
+			{{ ( " " !== label.value ) ? `${ label.value } (${ values[ label.index ] })` : "" }}
 		</template>
 	</v-sparkline>
 </template>
