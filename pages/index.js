@@ -1,3 +1,4 @@
+import Dates from "./Dates/Dates.js"
 import Raccoglitore from "./Raccoglitore/Raccoglitore.js"
 
 const API_SEARCH_ENDPOINT = "twitter/search"
@@ -17,15 +18,23 @@ export default {
 			show_map: true,
 			show_media: true,
 			show_tagcloud: true,
-			show_grafici: true,
 			tweets: [],
-			day: [0, 1, 0, 2, 0, 4, 8, 6, 2],
 		}
 	},
 	computed: {
-		days() {
-			console.log(this.tweets.map(( tweet ) => tweet.data ))
-			return this.tweets.map(( tweet ) => tweet.data )
+		dates() {
+			const dates = {}
+			const tweets_dates = this.tweets.map(( tweet ) => new Date( tweet.date ))
+			if ( tweets_dates.length > 1 ) {
+				new Dates( tweets_dates ).makeLabelsValues( dates )
+			}
+			return {
+				labels: Object.keys( dates ),
+				values: Object.values( dates ),
+			}
+		},
+		hasDiagram() {
+			return this.dates.values.length > 2
 		},
 		geo() {
 			return this.tweets
@@ -44,7 +53,7 @@ export default {
 			return Object.entries( tags )
 		},
 	},
-	created() {
+	mounted() {
 		this.$nuxt.$on( "query", ({ query }) => {
 			this.loading_tweets = true
 			this.$axios.$get( API_SEARCH_ENDPOINT, { params: {
@@ -74,14 +83,13 @@ export default {
 		})
 
 		// Watch to toggle layout elements
-		const on = ( event, model ) => {
+		const onToggle = ( event, model ) => {
 			this.$nuxt.$on( event, ( toggle ) => {
 				this[ model ] = toggle
 			})
 		}
-		on( "toggle-map", "show_map" )
-		on( "toggle-media", "show_media" )
-		on( "toggle-tagcloud", "show_tagcloud" )
-		on( "toggle-grafici", "show_grafici" )
+		onToggle( "toggle-map", "show_map" )
+		onToggle( "toggle-media", "show_media" )
+		onToggle( "toggle-tagcloud", "show_tagcloud" )
 	},
 }

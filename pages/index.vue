@@ -9,29 +9,22 @@
 				cols="4"
 			>
 				<div
-					class=""
-					:style="'height:'+(show_grafici ? 70 : 100) +'%'"
+					:style="hasDiagram ? 'height:80%' : 'height:100%'"
 				>
 					<Tweets :loading="loading_tweets" :tweets="tweets" />
 				</div>
-
 				<div
-					v-if="show_grafici"
-					:class="'pt-6'"
-					:style="'height:' + 30 + '%'"
+					v-if="hasDiagram"
+					style="height:20%; display:flex;flex-direction:column;justify-content:center"
 				>
-					<Grafici days="days"/>
+					<Grafici :label-value="dates" />
 				</div>
 			</v-col>
 			<v-col
 				v-if="show_media"
 				:cols="(show_map || show_tagcloud) ? 4 : 8"
 			>
-				<div
-					v-if="show_media"
-					:style="'height:' + 100 + '%'"
-				>
-					<Media />
+				<Media />
 				</div>
 			</v-col>
 			<v-col

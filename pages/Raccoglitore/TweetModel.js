@@ -4,12 +4,12 @@ import UserModel from "./UserModel"
 class TweetModel {
 	#data = ""
 	#id = 0
+	#date = ""
 	#geo = {}
 	#tags = []
 	#text = ""
 	#user = {}
 	#words = []
-	#data = ""
 
 	constructor( status ) {
 		this.#data = status.created_at
@@ -19,7 +19,11 @@ class TweetModel {
 		this.#text = status.text
 		this.#user = new UserModel( status )
 		this.#words = status.text.split( " " )
-		this.#data = status.created_at
+		this.#date = status.created_at
+	}
+
+	get date() {
+		return this.#date
 	}
 
 	get data() {
@@ -48,9 +52,6 @@ class TweetModel {
 
 	get words() {
 		return this.#words
-	}
-	get data() {
-		return this.#data
 	}
 }
 
