@@ -1,6 +1,6 @@
 import Raccoglitore from "./Raccoglitore/Raccoglitore.js"
 
-const API_SEARCH_ENDPOINT = "twitter/search"
+const SEARCH_ROUTE = "twitter/search"
 const LABEL_INFO_EMPTY = "Sorry, there are no results for this search"
 const LABEL_ERROR_UNKNOWN = "Unknown error"
 
@@ -38,43 +38,47 @@ export default {
 			return Object.entries( tags )
 		},
 	},
-	created() {
-		this.$nuxt.$on( "query", ({ query }) => {
-			this.loading_tweets = true
-			this.$axios.$get( API_SEARCH_ENDPOINT, { params: {
-				query: encodeURIComponent( query )
-			}}).then(( async_data ) => {
-				if ( !async_data.error ) {
-					const raccoglitore = new Raccoglitore( async_data )
-					this.tweets = raccoglitore.tweets
-
-					if ( !this.tweets.length ) {
-						this.alert = {
-							message: LABEL_INFO_EMPTY,
-							type: "info",
-							show: true,
-						}
-					}
-				} else {
-					this.alert = {
-						message: async_data.error.message || LABEL_ERROR_UNKNOWN,
-						type: "error",
-						show: true,
-					}
+	mounted() {
+		this.$nuxt.$on( "query", async ({ query }) => {
+			if ( !query ) { return } // Guard
+			const async_data = await this.getTweets( query )
+			if ( !async_data.error ) {
+				const raccoglitore = new Raccoglitore( async_data )
+				this.tweets = raccoglitore.tweets
+				if ( !this.tweets.length ) {
+					this.showAlertInfo( LABEL_INFO_EMPTY )
 				}
-			}).finally(() => {
-				this.loading_tweets = false
-			})
+			} else {
+				this.showAlertError( async_data.error.message || LABEL_ERROR_UNKNOWN )
+			}
 		})
 
-		// Watch to toggle layout elements
-		const onToggle = ( event, model ) => {
+		this.onToggle( "toggle-map", "show_map" )
+		this.onToggle( "toggle-media", "show_media" )
+		this.onToggle( "toggle-tagcloud", "show_tagcloud" )
+	},
+	methods: {
+		getTweets( query ) {
+			this.loading_tweets = true
+			return this.$axios.$get( SEARCH_ROUTE, { params: {
+				query
+			}}).finally(() => {
+				this.loading_tweets = false
+			})
+		},
+		onToggle( event, model ) {
 			this.$nuxt.$on( event, ( toggle ) => {
 				this[ model ] = toggle
 			})
-		}
-		onToggle( "toggle-map", "show_map" )
-		onToggle( "toggle-media", "show_media" )
-		onToggle( "toggle-tagcloud", "show_tagcloud" )
+		},
+		showAlert( message, type, show = true ) {
+			this.alert = { message, show, type }
+		},
+		showAlertError( message ) {
+			this.showAlert( message, "error" )
+		},
+		showAlertInfo( message ) {
+			this.showAlert( message, "info" )
+		},
 	},
 }
