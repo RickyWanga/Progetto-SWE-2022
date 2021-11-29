@@ -1,9 +1,10 @@
 <template>
-	<v-container fill-height>
+	<v-container fill-height style="background-color:#eee">
 		<vue-word-cloud
 			class="tag-cloud"
 			:color="color"
 			:font-family="fontFamily"
+			:font-size-ratio="fontSizeRatio"
 			:rotation="rotation"
 			:words="words"
 		/>

@@ -1,4 +1,3 @@
-import Chance from "chance"
 import VueWordCloud from "vuewordcloud"
 
 export default {
@@ -6,6 +5,7 @@ export default {
 	data() {
 		return {
 			fontFamily: "sans-serif",
+			fontSizeRatio: 5,
 			rotation: this.rotationFunction,
 		}
 	},
@@ -22,17 +22,24 @@ export default {
 	},
 	methods: {
 		colorFunction( words ) {
-			// Sorted array of tags counts [ 4, 2, 1 ]
+			const values = words
+				.sort(( a, b ) => a[ 1 ] < b[ 1 ])
+				.reduce(( p, c ) => ( p[p.length - 1] !== c[1]) ? p.concat( c[1] ) : p, [] )
 			return ([, weight]) => {
-				const values = words
-					.sort(( a, b ) => a[ 1 ] < b[ 1 ])
-					.reduce(( p, c ) => ( p[p.length - 1] !== c[1]) ? p.concat( c[1] ) : p, [] )
-				return weight > values[ 2 ] ? 'DeepPink' : weight > values[ 4 ] ? 'RoyalBlue' : 'Indigo'
+				switch ( weight ) {
+				case values[ 0 ]:
+					return "DeepPink"
+				case values[ 1 ]:
+					return "RoyalBlue"
+				case values[ 2 ]:
+					return "Indigo"
+				default:
+					return "CornflowerBlue"
+				}
 			}
 		},
-		rotationFunction( word ) {
-			const chance = new Chance( word[0] )
-			return chance.pickone([ 0, 3 / 4 ])
+		rotationFunction( word, index ) {
+			return index > 3 ? ( 3 / 4 * Math.round(Math.random())) : 0
 		},
 	},
 }
