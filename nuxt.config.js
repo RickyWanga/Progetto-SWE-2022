@@ -34,7 +34,7 @@ export default {
 
 	// https://nuxtjs.org/docs/configuration-glossary/configuration-servermiddleware
 	serverMiddleware: [
-		'~/server-middleware/twitter/search.js',
+		'~/server-middleware/Search.js',
 	],
 
 	// Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins

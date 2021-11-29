@@ -1,11 +1,4 @@
-import twitter from "./twitter-api.js"
-
-const TWITTER_SEARCH_PARAMS = {
-	endpoint: "/2/tweets/search/recent",
-	count: twitter.getPageSize(),
-}
-
-const QUERY_PARAMS = {
+const TWITTER_API_SEARCH_PARAMS_QUERY = {
 	// If you have Essential or Elevated access, you can use the Basic operators
 	// when building your query and can make queries up to 512 characters long.
 	// If you have been approved for Academic Research access, you can use all
@@ -21,7 +14,7 @@ const QUERY_PARAMS = {
 	"expansions": "author_id,geo.place_id,attachments.poll_ids",
 
 	// default: 10
-	"max_results": TWITTER_SEARCH_PARAMS.count,
+	"max_results": 0,
 
 	// alt_text,duration_ms,height,media_key,non_public_metrics,
 	// organic_metrics,preview_image_url,promoted_metrics,
@@ -69,68 +62,4 @@ const QUERY_PARAMS = {
 	"user.fields": "username,name,id,profile_image_url,location",
 }
 
-const getData = ( response = {} ) => {
-	const data = response.data || {}
-	if ( 200 !== response.status ) {
-		data.error = {
-			status: response.status,
-			message: response.statusText,
-		}
-	}
-	return data
-}
-
-const getDataError = ( error = {} ) => {
-	const data = {
-		message: error.message,
-	}
-	try {
-		data.message = error.response.data.errors[ 0 ].message
-		data.message = data.message || error.response.data.reason
-	} finally {
-		data.status = error.response && error.response.status
-	}
-	return data
-}
-
-const getStaticRequestParams = () => {
-	return Object.entries( QUERY_PARAMS ).reduce(( params, [ param, value ]) =>
-		( value && ( params[ param ] = value ) && params ) || params, { })
-}
-
-/**
- *
- * @param {string} query
- * @returns {Promise} tweets{}
- */
-const fetchTweets = ( query ) => {
-	let data = {}
-	const dynamicRequestParams = {
-		query,
-	}
-	return new Promise(( resolve ) => {
-		twitter.api().get( TWITTER_SEARCH_PARAMS.endpoint, { params: Object.assign(
-			dynamicRequestParams,
-			getStaticRequestParams(),
-		)}).then(( response ) => {
-			data = getData( response )
-		}).catch(( error ) => {
-			data = getDataError( error )
-		}).finally(() => {
-			resolve( data )
-		})
-	})
-}
-
-export default {
-
-	path: "/twitter/search",
-
-	async handler( req, res ) {
-		const query = twitter.getUrlApiParam( "query", req )
-		const data = await fetchTweets( query )
-		const data_json = JSON.stringify( data )
-		res.writeHead( 200, { "Content-Type": "application/json" })
-		res.end( data_json )
-	}
-}
+export default TWITTER_API_SEARCH_PARAMS_QUERY
