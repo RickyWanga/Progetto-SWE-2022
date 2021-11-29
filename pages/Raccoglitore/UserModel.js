@@ -3,11 +3,11 @@ class UserModel {
 	#name = ""
 	#picture = ""
 
-	constructor( status ) {
-		if ( status && status.user ) {
-			this.#account = status.user.screen_name
-			this.#name = status.user.name
-			this.#picture = status.user.profile_image_url_https
+	constructor( tweet ) {
+		if ( tweet.author_expansion ) {
+			this.#account = tweet.author_expansion.username
+			this.#name = tweet.author_expansion.name
+			this.#picture = tweet.author_expansion.profile_image_url
 		}
 	}
 

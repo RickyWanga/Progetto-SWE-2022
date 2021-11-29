@@ -5,35 +5,32 @@ class GeoModel {
 	#target = 0
 	#tooltip = ""
 
-	#getCoordinates( status ) {
-		if ( status && status.geo ) {
+	#getCoordinates( tweet ) {
+		if ( tweet.geo && tweet.geo.coordinates ) {
 			return {
-				latlng: status.geo.coordinates,
-				place: status.place,
+				latlng: tweet.geo.coordinates.coordinates,
+				place: tweet.geo.place_expansion,
 			}
-		} else if ( status && status.place ) {
+		} else if ( tweet.geo && tweet.geo.place_expansion ) {
+			const bbox = tweet.geo.place_expansion.geo.bbox
+			const lat = ( bbox[ 1 ] + bbox[ 3 ] ) / 2
+			const lng = ( bbox[ 0 ] + bbox[ 2 ] ) / 2
 			return {
-				latlng: [
-					status.place.bounding_box.coordinates[ 0 ][ 0 ][ 1 ],
-					status.place.bounding_box.coordinates[ 0 ][ 0 ][ 0 ]
-				],
-				place: status.place,
+				latlng: [ lat, lng ],
+				place: tweet.geo.place_expansion,
 			}
 		} else {
 			return null
 		}
 	}
 
-	constructor( status ) {
-		let coordinates = this.#getCoordinates( status )
-		if ( !coordinates ) {
-			coordinates = this.#getCoordinates( status.retweeted_status )
-		}
+	constructor( tweet ) {
+		const coordinates = this.#getCoordinates( tweet || {} )
 		if ( coordinates ) {
 			this.#latlng = coordinates.latlng
 			this.#place_name = coordinates.place.full_name
 			this.#place_country = coordinates.place.country
-			this.#target = status.id
+			this.#target = tweet.id
 			this.#tooltip = `${ coordinates.place.full_name } - ${ coordinates.place.country }`
 		}
 	}
