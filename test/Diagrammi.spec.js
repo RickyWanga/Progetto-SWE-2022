@@ -1,8 +1,6 @@
 import { createLocalVue, shallowMount } from "@vue/test-utils"
 import Component from "@/components/Diagram/Diagram.vue"
 
-const Tweets = require( "./data/tweets.json" )
-
 describe( "Diagrammi", () => {
 	const local_vue = createLocalVue()
 	const mountComponent = ( custom_options = {} ) => shallowMount( Component, Object.assign({
@@ -17,7 +15,7 @@ describe( "Diagrammi", () => {
 				"v-sparkline",
 			],
 			propsData: {
-				labelValue: { labels: ["25/12","31/12"], values: [3,7] }
+				labelValue: { labels: ["25/12", "31/12"], values: [3, 7] }
 			},
 		})
 	})
