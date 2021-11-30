@@ -1,6 +1,6 @@
 import axios from "axios"
 
-class Api {
+class ApiAbstract {
 	#axios
 	#req
 	#res
@@ -81,9 +81,13 @@ class Api {
 		return this.#axios.get
 	}
 
+	get httpPost() {
+		return this.#axios.post
+	}
+
 	get respondWithJson() {
 		return this.#respondWithJson
 	}
 }
 
-export default Api
+export default ApiAbstract

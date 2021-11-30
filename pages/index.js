@@ -1,6 +1,7 @@
 import Raccoglitore from "./Raccoglitore/Raccoglitore.js"
 
 const SEARCH_ROUTE = "twitter/search"
+const SENTIMENT_ROUTE = "sentiment"
 const LABEL_INFO_EMPTY = "Sorry, there are no results for this search"
 const LABEL_ERROR_UNKNOWN = "Unknown error"
 
@@ -14,6 +15,7 @@ export default {
 				show: false,
 			},
 			loading_tweets: false,
+			sentiments: [],
 			show_map: true,
 			show_media: true,
 			show_tagcloud: true,
@@ -45,7 +47,9 @@ export default {
 			if ( !async_data.error ) {
 				const raccoglitore = new Raccoglitore( async_data )
 				this.tweets = raccoglitore.tweets
-				if ( !this.tweets.length ) {
+				if ( raccoglitore.tweets.length ) {
+					this.getSentiments( raccoglitore.tweets )
+				} else {
 					this.showAlertInfo( LABEL_INFO_EMPTY )
 				}
 			} else {
@@ -58,6 +62,30 @@ export default {
 		this.onToggle( "toggle-tagcloud", "show_tagcloud" )
 	},
 	methods: {
+		setSentiment( tweet, index = 0 ) {
+			return this.$axios.$get( SENTIMENT_ROUTE, { params: {
+				text: tweet.text,
+				index,
+			}}).then(( sentiment = {}) => {
+				if ( sentiment.score ) {
+					sentiment.value = sentiment.score
+					sentiment.score = Math.round(Math.abs( sentiment.score ) * 100 )
+					tweet.sentiment = sentiment
+				} else {
+					tweet.sentiment = { score: 0, value: 0 }
+				}
+			})
+		},
+		getSentiments( tweets ) {
+			const sentiments = []
+			const sentimental_tweets = tweets.map(( tweet, index ) => {
+				sentiments.push( this.setSentiment( tweet, index ))
+				return tweet
+			})
+			Promise.all( sentiments ).then(() => {
+				this.tweets = sentimental_tweets
+			})
+		},
 		getTweets( query ) {
 			this.loading_tweets = true
 			return this.$axios.$get( SEARCH_ROUTE, { params: {
