@@ -83,6 +83,22 @@
 									</v-icon>
 								</span>
 							</p>
+							<v-progress-circular
+								v-if="tweet.sentiment"
+								rotate="-300"
+								size="50"
+								style="position:absolute;top:7px;left:-5px"
+								width="4"
+								:color="( tweet.sentiment.value >= 0 ) ? 'teal' : 'pink'"
+								:value="tweet.sentiment.score"
+							/>
+							<v-badge
+								v-if="tweet.sentiment"
+								style="position:absolute;top:64px;left:30px"
+								:color="( tweet.sentiment.value === 0 ) ? 'grey lighten-2' : (( tweet.sentiment.value > 0 ) ? 'teal' : 'pink')"
+								:content="tweet.sentiment.score.toString()"
+								:title="`Sentiment analysis: ${ tweet.sentiment.value }`"
+							/>
 						</v-list-item-content>
 					</v-list-item>
 				</v-list>
