@@ -1,3 +1,4 @@
+import Dates from "./Dates/Dates.js"
 import Raccoglitore from "./Raccoglitore/Raccoglitore.js"
 
 const API_SEARCH_ENDPOINT = "twitter/search"
@@ -21,6 +22,20 @@ export default {
 		}
 	},
 	computed: {
+		dates() {
+			const dates = {}
+			const tweets_dates = this.tweets.map(( tweet ) => new Date( tweet.date ))
+			if ( tweets_dates.length > 1 ) {
+				new Dates( tweets_dates ).makeLabelsValues( dates )
+			}
+			return {
+				labels: Object.keys( dates ),
+				values: Object.values( dates ),
+			}
+		},
+		hasDiagram() {
+			return this.dates.values.length > 2
+		},
 		geo() {
 			return this.tweets
 				.filter(( tweet ) => tweet.geo.target )
@@ -38,7 +53,7 @@ export default {
 			return Object.entries( tags )
 		},
 	},
-	created() {
+	mounted() {
 		this.$nuxt.$on( "query", ({ query }) => {
 			this.loading_tweets = true
 			this.$axios.$get( API_SEARCH_ENDPOINT, { params: {

@@ -8,13 +8,24 @@
 			<v-col
 				cols="4"
 			>
-				<Tweets :loading="loading_tweets" :tweets="tweets" />
+				<div
+					:style="hasDiagram ? 'height:80%' : 'height:100%'"
+				>
+					<Tweets :loading="loading_tweets" :tweets="tweets" />
+				</div>
+				<div
+					v-if="hasDiagram"
+					style="height:20%; display:flex;flex-direction:column;justify-content:center"
+				>
+					<Diagram :label-value="dates" />
+				</div>
 			</v-col>
 			<v-col
 				v-if="show_media"
 				:cols="(show_map || show_tagcloud) ? 4 : 8"
 			>
 				<Media />
+				</div>
 			</v-col>
 			<v-col
 				v-if="show_map || show_tagcloud"
