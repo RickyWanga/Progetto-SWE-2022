@@ -15,23 +15,32 @@ class Dates {
 	 * #getDateGroup restituirà lo stesso nome-gruppo per date diverse.
 	 * In questo modo possiamo raggruppare le date
 	 * in base alla precisione richiesta:
-	 * mese || giorno || ora || minuti || 20 secondi || 2 secondi
+	 * anno || mese || giorno || ora || minuti || secondi
 	 * La precisione è decisa in base alla differenza
 	 * tra la data più recente e quella meno recente
 	 */
 	#setDateSlugFunction() {
-		this.#getDateGroup = ( date ) =>
-			this.#oldest.getMonth() !== this.#newest.getMonth()
-				? `${ date.getMonth() + 1 }/${ this.#pad(date.getDate()) }`
-				: this.#oldest.getDate() !== this.#newest.getDate()
-					? `${ WEEK_DAY[ date.getDay() ] } ${ date.getDate() }`
-					: this.#oldest.getHours() !== this.#newest.getHours()
-						? `${ date.getHours() }:00`
-						: this.#oldest.getMinutes() !== this.#newest.getMinutes()
-							? `${ date.getHours() }:${ this.#pad(Math.floor(date.getMinutes() / 20 ) * 20 )}`
-							: (Math.floor(this.#oldest.getSeconds() / 20) * 20) !== (Math.floor(this.#newest.getSeconds() / 20 ) * 20 )
-								? `${ date.getHours() }:${ this.#pad(date.getMinutes()) }:${ this.#pad(Math.floor(date.getSeconds() / 2 ) * 2 )}`
-								: `${ date.getHours() }:${ this.#pad(date.getMinutes()) }:${ this.#pad(Math.floor(date.getSeconds() / 20 ) * 20 )}`
+		const date_diff = new Date( this.#newest - this.#oldest )
+		const date_diff_years = date_diff.getUTCFullYear() - 1970
+		const date_diff_months = date_diff.getUTCMonth()
+		const date_diff_days = date_diff.getUTCDate() - 1
+		const date_diff_hours = date_diff.getUTCHours()
+		const date_diff_minutes = date_diff.getUTCMinutes()
+		this.#getDateGroup = ( date ) => {
+			if ( date_diff_years ) {
+				return `${ this.#pad(date.getDate()) }/${ this.#pad(date.getMonth() + 1) }/${ date.getFullYear() }/`
+			} else if ( date_diff_months ) {
+				return `${ date.getMonth() + 1 }/${ this.#pad(date.getDate()) }`
+			} else if ( date_diff_days ) {
+				return `${ WEEK_DAY[ date.getDay() ] } ${ date.getDate() }`
+			} else if ( date_diff_hours > 2 ) {
+				return `${ date.getHours() }:00`
+			} else if ( date_diff_hours || date_diff_minutes > 4 ) {
+				return `${ date.getHours() }:${ this.#pad(date.getMinutes()) }`
+			} else {
+				return `${ date.getHours() }:${ this.#pad(date.getMinutes()) }:${ this.#pad(date.getSeconds()) }`
+			}
+		}
 	}
 
 	makeLabelsValues( dates ) {
