@@ -3,6 +3,7 @@ import UserModel from "./UserModel"
 
 class TweetModel {
 	#id = 0
+	#date = ""
 	#geo = {}
 	#tags = []
 	#text = ""
@@ -12,12 +13,17 @@ class TweetModel {
 	constructor( tweet ) {
 		const hashtags = ( tweet.entities && tweet.entities.hashtags ) || []
 		const text = tweet.text || ""
+		this.#date = tweet.created_at
 		this.#id = tweet.id
 		this.#geo = new GeoModel( tweet )
 		this.#tags = hashtags.map(( hashtag ) => hashtag.tag )
 		this.#text = text
 		this.#user = new UserModel( tweet )
 		this.#words = text.split( " " )
+	}
+
+	get date() {
+		return this.#date
 	}
 
 	get id() {

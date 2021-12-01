@@ -54,7 +54,7 @@
 				>
 					<v-list-item
 						v-for="tweet in tweets"
-						:key="tweet.id"
+						:key="tweet.id + tweet.text"
 						class="pl-0"
 						tag="li"
 					>

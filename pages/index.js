@@ -1,4 +1,5 @@
-import Raccoglitore from "./Raccoglitore/Raccoglitore.js"
+import Dates from "./Dates/Dates"
+import Raccoglitore from "./Raccoglitore/Raccoglitore"
 
 const SEARCH_ROUTE = "twitter/search"
 const SENTIMENT_ROUTE = "sentiment"
@@ -23,6 +24,20 @@ export default {
 		}
 	},
 	computed: {
+		dates() {
+			const dates = {}
+			const tweets_dates = this.tweets.map(( tweet ) => new Date( tweet.date ))
+			if ( tweets_dates.length > 1 ) {
+				new Dates( tweets_dates ).makeLabelsValues( dates )
+			}
+			return {
+				labels: Object.keys( dates ),
+				values: Object.values( dates ),
+			}
+		},
+		hasDiagram() {
+			return this.dates.values.length > 1
+		},
 		geo() {
 			return this.tweets
 				.filter(( tweet ) => tweet.geo.target )
