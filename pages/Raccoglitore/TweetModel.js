@@ -1,5 +1,6 @@
 import GeoModel from "./GeoModel"
 import UserModel from "./UserModel"
+import PublicMetrics from "./PublicMetrics"
 
 class TweetModel {
 	#id = 0
@@ -8,6 +9,7 @@ class TweetModel {
 	#text = ""
 	#user = {}
 	#words = []
+	#public_metrics = {}
 
 	constructor( tweet ) {
 		const hashtags = ( tweet.entities && tweet.entities.hashtags ) || []
@@ -18,6 +20,7 @@ class TweetModel {
 		this.#text = text
 		this.#user = new UserModel( tweet )
 		this.#words = text.split( " " )
+		this.#public_metrics = new PublicMetrics( tweet )
 	}
 
 	get id() {
@@ -42,6 +45,10 @@ class TweetModel {
 
 	get words() {
 		return this.#words
+	}
+
+	get public_metrics() {
+		return this.#public_metrics
 	}
 }
 

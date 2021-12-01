@@ -81,6 +81,15 @@
 									>
 										mdi-map-marker
 									</v-icon>
+									<v-icon
+										color="primary"
+										small
+									>
+										mdi-message-reply-outline
+									</v-icon>
+									<small class="tweet-reply">
+										{{ tweet.public_metrics.reply_count }}
+									</small>
 								</span>
 							</p>
 						</v-list-item-content>
