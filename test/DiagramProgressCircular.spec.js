@@ -23,6 +23,14 @@ describe( "DiagramProgressCircular", () => {
 		expect( wrapper.vm ).toBeTruthy()
 	})
 
+	test( "diagramColor1 computed property when loading", () => {
+		expect( wrapper.vm.diagramColor1 ).toBe( wrapper.vm.color1 )
+	})
+
+	test( "diagramColor2 computed property when loading", () => {
+		expect( wrapper.vm.diagramColor2 ).toBe( wrapper.vm.color2 )
+	})
+
 	test( "diagramColor1 computed property when loading", async () => {
 		wrapper.setProps({ loading: true })
 		await wrapper.vm.$nextTick()

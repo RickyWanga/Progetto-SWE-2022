@@ -64,22 +64,7 @@ export default {
 		},
 	},
 	mounted() {
-		this.$nuxt.$on( "query", async ({ query }) => {
-			if ( !query ) { return } // Guard
-			const async_data = await this.getTweets( query )
-			if ( !async_data.error ) {
-				const raccoglitore = new Raccoglitore( async_data )
-				this.tweets = raccoglitore.tweets
-				if ( raccoglitore.tweets.length ) {
-					this.setSentimentsAsync()
-				} else {
-					this.showAlertInfo( LABEL_INFO_EMPTY )
-				}
-			} else {
-				this.showAlertError( async_data.error.message || LABEL_ERROR_UNKNOWN )
-			}
-		})
-
+		this.$nuxt.$on( "query", this.onQuery )
 		this.onToggle( "toggle-map", "show_map" )
 		this.onToggle( "toggle-media", "show_media" )
 		this.onToggle( "toggle-tagcloud", "show_tagcloud" )
@@ -132,6 +117,21 @@ export default {
 			this.tweets = []
 			this.sentiments_pos = 0
 			this.sentiments_neg = 0
+		},
+		async onQuery({ query }) {
+			if ( !query ) { return } // Guard
+			const async_data = await this.getTweets( query )
+			if ( !async_data.error ) {
+				const raccoglitore = new Raccoglitore( async_data )
+				this.tweets = raccoglitore.tweets
+				if ( raccoglitore.tweets.length ) {
+					this.setSentimentsAsync()
+				} else {
+					this.showAlertInfo( LABEL_INFO_EMPTY )
+				}
+			} else {
+				this.showAlertError( async_data.error.message || LABEL_ERROR_UNKNOWN )
+			}
 		},
 		onToggle( event, model ) {
 			this.$nuxt.$on( event, ( toggle ) => {
