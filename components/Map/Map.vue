@@ -2,6 +2,7 @@
 	<v-container fill-height class="pa-0">
 		<client-only>
 			<l-map
+				style="z-index: 0;"
 				ref="map"
 				:center="center"
 				:max-bounds="maxBounds"
