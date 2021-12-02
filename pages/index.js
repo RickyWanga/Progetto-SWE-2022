@@ -17,6 +17,8 @@ export default {
 			},
 			loading_tweets: false,
 			sentiments: [],
+			sentiment_pos: 0,
+			sentiment_neg: 0,
 			show_map: true,
 			show_media: true,
 			show_tagcloud: true,
@@ -45,6 +47,12 @@ export default {
 		},
 		media() {
 			return this.tweets && this.tweets.media
+		},
+		sentiment_positive_percent() {
+			return Math.round(( this.sentiment_pos * 100 ) / ( this.tweets.length || 1 ))
+		},
+		sentiment_negative_percent() {
+			return Math.round(( this.sentiment_neg * 100 ) / ( this.tweets.length || 1 ))
 		},
 		tags() {
 			const tags = {}
@@ -86,6 +94,11 @@ export default {
 					sentiment.value = sentiment.score
 					sentiment.score = Math.round(Math.abs( sentiment.score ) * 100 )
 					tweet.sentiment = sentiment
+					if ( sentiment.value > 0 ) {
+						this.sentiment_pos += 1
+					} else {
+						this.sentiment_neg += 1
+					}
 				} else {
 					tweet.sentiment = { score: 0, value: 0 }
 				}
@@ -103,11 +116,17 @@ export default {
 		},
 		getTweets( query ) {
 			this.loading_tweets = true
+			this.init()
 			return this.$axios.$get( SEARCH_ROUTE, { params: {
 				query
 			}}).finally(() => {
 				this.loading_tweets = false
 			})
+		},
+		init() {
+			this.tweets = []
+			this.sentiment_pos = 0
+			this.sentiment_neg = 0
 		},
 		onToggle( event, model ) {
 			this.$nuxt.$on( event, ( toggle ) => {
