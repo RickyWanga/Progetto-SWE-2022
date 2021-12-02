@@ -3,6 +3,7 @@
 		<client-only>
 			<l-map
 				ref="map"
+				style="z-index: 0;"
 				:center="center"
 				:max-bounds="maxBounds"
 				:min-zoom="minZoom"

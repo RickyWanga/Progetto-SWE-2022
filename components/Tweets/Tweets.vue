@@ -58,41 +58,83 @@
 						class="pl-0"
 						tag="li"
 					>
-						<v-list-item-avatar
-							class="tweet-avatar"
+						<v-dialog
+							transition="dialog-top-transition"
+							max-width="600"
 						>
-							<v-img :src="tweet.user.picture" />
-						</v-list-item-avatar>
-						<v-list-item-content>
-							<p class="tweet-title">
-								<strong>{{ tweet.user.name }}</strong>
-								<span class="text--disabled font-weight-bold">@{{ tweet.user.account }}</span>
-							</p>
-							<p class="tweet-text mb-0">
-								<span class="font-weight-regular">
-									{{ tweet.text }}
-								</span>
-								<span class="tweet-badges">
-									<v-icon
-										v-if="tweet.geo.target"
-										color="primary"
-										small
-										:title="tweet.geo.tooltip"
+							<template v-slot:activator="{ on, attrs }">
+								<v-card-actions
+									v-bind="attrs"
+									v-on="on"
+								>
+									<v-list-item-avatar
+										class="tweet-avatar"
 									>
-										mdi-map-marker
-									</v-icon>
-									<v-icon
-										color="primary"
-										small
-									>
-										mdi-message-reply-outline
-									</v-icon>
-									<small class="tweet-reply">
-										{{ tweet.public_metrics.reply_count }}
-									</small>
-								</span>
-							</p>
-						</v-list-item-content>
+										<v-img :src="tweet.user.picture" />
+									</v-list-item-avatar>
+									<v-list-item-content>
+										<p class="tweet-title">
+											<strong>{{ tweet.user.name }}</strong>
+											<span class="text--disabled font-weight-bold">@{{ tweet.user.account }}</span>
+										</p>
+										<p class="tweet-text mb-0">
+											<span class="font-weight-regular">
+												{{ tweet.text }}
+											</span>
+											<span class="tweet-badges">
+												<v-icon
+													v-if="tweet.geo.target"
+													color="primary"
+													small
+													:title="tweet.geo.tooltip"
+												>
+													mdi-map-marker
+												</v-icon>
+												<v-icon
+													color="primary"
+													small
+												>
+													mdi-message-reply-outline
+												</v-icon>
+												<small class="tweet-reply">
+													{{ tweet.public_metrics.reply_count }}
+												</small>
+											</span>
+										</p>
+									</v-list-item-content>
+								</v-card-actions>
+							</template>
+							<template v-slot:default="dialog">
+								<v-card>
+									<v-card-text>
+										<v-list-item-avatar
+											class="tweet-avatar"
+										>
+											<v-img :src="tweet.user.picture" />
+										</v-list-item-avatar>
+										<v-list-item-content>
+											<p class="tweet-title">
+												<strong>{{ tweet.user.name }}</strong>
+												<span class="text--disabled font-weight-bold">@{{ tweet.user.account }}</span>
+											</p>
+											<p class="tweet-text mb-0">
+												<span class="font-weight-regular">
+													{{ tweet.text }}
+												</span>
+											</p>
+										</v-list-item-content>
+									</v-card-text>
+									<v-card-actions class="justify-end">
+										<v-btn
+											text
+											@click="dialog.value = false"
+										>
+											Close
+										</v-btn>
+									</v-card-actions>
+								</v-card>
+							</template>
+						</v-dialog>
 					</v-list-item>
 				</v-list>
 			</v-col>
