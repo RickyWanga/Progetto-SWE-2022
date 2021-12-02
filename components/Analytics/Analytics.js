@@ -1,5 +1,5 @@
 export default {
-	props: [ "loading", "tweets" ],
+	props: [ "loading", "sentiment", "tweets" ],
 	data() {
 		return {
 

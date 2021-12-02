@@ -8,7 +8,7 @@ class GeoModel {
 	#getCoordinates( tweet ) {
 		if ( tweet.geo && tweet.geo.coordinates ) {
 			return {
-				latlng: tweet.geo.coordinates.coordinates,
+				latlng: tweet.geo.coordinates.coordinates.reverse(),
 				place: tweet.geo.place_expansion,
 			}
 		} else if ( tweet.geo && tweet.geo.place_expansion ) {

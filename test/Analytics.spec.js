@@ -1,8 +1,8 @@
 import Vuetify from "vuetify"
 import { createLocalVue, mount } from "@vue/test-utils"
-import Component from "@/components/Tweets/Tweets.vue"
+import Component from "@/components/Analytics/Analytics.vue"
 
-describe( "Tweets", () => {
+describe( "Analytics", () => {
 	const local_vue = createLocalVue()
 	const mountComponent = ( custom_options = {} ) => mount( Component, Object.assign({
 		local_vue,
@@ -14,10 +14,14 @@ describe( "Tweets", () => {
 		wrapper = mountComponent({
 			vuetify: new Vuetify(),
 			stubs: [
-				"TweetsSearchForm",
+				"DiagramProgressCircular",
 			],
 			propsData: {
-				tweets: []
+				sentiment: {
+					positive: 1,
+					negative: 0,
+				},
+				tweets: [],
 			},
 		})
 	})

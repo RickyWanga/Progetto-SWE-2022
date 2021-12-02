@@ -8,7 +8,7 @@ describe( "Dashboard", () => {
 	// @TODO
 })
 
-describe( "Tweets List", () => {
+describe( "App", () => {
 	const local_vue = createLocalVue()
 	const mountComponent = ( custom_options = {} ) => mount( Component, Object.assign({
 		local_vue,
@@ -30,9 +30,12 @@ describe( "Tweets List", () => {
 				},
 			},
 			stubs: [
+				"Analytics",
 				"Media",
 				"TagCloud",
-				"Tweets",
+				"TweetsList",
+				"TweetsListItem",
+				"TweetsListItemSentiment",
 			],
 		})
 	})

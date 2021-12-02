@@ -1,7 +1,7 @@
 import { createLocalVue, shallowMount } from "@vue/test-utils"
 import Component from "@/components/Diagram/Diagram.vue"
 
-describe( "Diagrammi", () => {
+describe( "Diagram", () => {
 	const local_vue = createLocalVue()
 	const mountComponent = ( custom_options = {} ) => shallowMount( Component, Object.assign({
 		local_vue,

@@ -15,10 +15,10 @@ export default {
 				type: "",
 				show: false,
 			},
+			loading_sentiments: false,
 			loading_tweets: false,
-			sentiments: [],
-			sentiment_pos: 0,
-			sentiment_neg: 0,
+			sentiments_pos: 0,
+			sentiments_neg: 0,
 			show_map: true,
 			show_media: true,
 			show_tagcloud: true,
@@ -37,7 +37,7 @@ export default {
 				values: Object.values( dates ),
 			}
 		},
-		hasDiagram() {
+		hasDateDiagram() {
 			return this.dates.values.length > 1
 		},
 		geo() {
@@ -48,11 +48,11 @@ export default {
 		media() {
 			return this.tweets && this.tweets.media
 		},
-		sentiment_positive_percent() {
-			return Math.round(( this.sentiment_pos * 100 ) / ( this.tweets.length || 1 ))
-		},
-		sentiment_negative_percent() {
-			return Math.round(( this.sentiment_neg * 100 ) / ( this.tweets.length || 1 ))
+		sentiment() {
+			return {
+				positive: Math.round(( this.sentiments_pos * 100 ) / ( this.tweets.length || 1 )),
+				negative: Math.round(( this.sentiments_neg * 100 ) / ( this.tweets.length || 1 )),
+			}
 		},
 		tags() {
 			const tags = {}
@@ -71,7 +71,7 @@ export default {
 				const raccoglitore = new Raccoglitore( async_data )
 				this.tweets = raccoglitore.tweets
 				if ( raccoglitore.tweets.length ) {
-					this.getSentiments( raccoglitore.tweets )
+					this.setSentimentsAsync()
 				} else {
 					this.showAlertInfo( LABEL_INFO_EMPTY )
 				}
@@ -85,33 +85,38 @@ export default {
 		this.onToggle( "toggle-tagcloud", "show_tagcloud" )
 	},
 	methods: {
-		setSentiment( tweet, index = 0 ) {
-			return this.$axios.$get( SENTIMENT_ROUTE, { params: {
-				text: tweet.text,
-				index,
-			}}).then(( sentiment = {}) => {
-				if ( sentiment.score ) {
-					sentiment.value = sentiment.score
-					sentiment.score = Math.round(Math.abs( sentiment.score ) * 100 )
-					tweet.sentiment = sentiment
-					if ( sentiment.value > 0 ) {
-						this.sentiment_pos += 1
+		getSentimentAsync( tweet, index = 0 ) {
+			return new Promise(( resolve ) => {
+				this.$axios.$get( SENTIMENT_ROUTE, { params: {
+					text: tweet.text,
+					index,
+				}}).then(( sentiment = {}) => {
+					if ( sentiment.score ) {
+						sentiment.value = sentiment.score
+						sentiment.score = Math.round(Math.abs( sentiment.score ) * 100 ).toString()
 					} else {
-						this.sentiment_neg += 1
+						sentiment = { score: "0", value: 0 }
 					}
-				} else {
-					tweet.sentiment = { score: 0, value: 0 }
-				}
+					resolve( sentiment )
+				})
 			})
 		},
-		getSentiments( tweets ) {
-			const sentiments = []
-			const sentimental_tweets = tweets.map(( tweet, index ) => {
-				sentiments.push( this.setSentiment( tweet, index ))
-				return tweet
+		setSentimentsAsync() {
+			this.loading_sentiments = true
+			const sentiments_promises = this.tweets.map(( tweet, index ) => {
+				const sentiments_promise = this.getSentimentAsync( tweet, index )
+				sentiments_promise.then(( sentiment ) => {
+					if ( sentiment.value > 0 ) {
+						this.sentiments_pos += 1
+					} else if ( sentiment.value < 0 ) {
+						this.sentiments_neg += 1
+					}
+					tweet.sentiment = sentiment
+				})
+				return sentiments_promise
 			})
-			Promise.all( sentiments ).then(() => {
-				this.tweets = sentimental_tweets
+			Promise.all( sentiments_promises ).then(() => {
+				this.loading_sentiments = false
 			})
 		},
 		getTweets( query ) {
@@ -125,8 +130,8 @@ export default {
 		},
 		init() {
 			this.tweets = []
-			this.sentiment_pos = 0
-			this.sentiment_neg = 0
+			this.sentiments_pos = 0
+			this.sentiments_neg = 0
 		},
 		onToggle( event, model ) {
 			this.$nuxt.$on( event, ( toggle ) => {

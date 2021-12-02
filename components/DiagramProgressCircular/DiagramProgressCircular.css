@@ -1,0 +1,14 @@
+.diagram-progress-circular {
+	position: relative;
+}
+
+.diagram-progress-circular-2 {
+	position: absolute;
+	top: 0;
+	left: 0;
+	transform: scale(1, -1);
+}
+
+.diagram-progress-circular-2 .v-progress-circular__underlay {
+	stroke: transparent;
+}
