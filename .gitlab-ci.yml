@@ -60,6 +60,8 @@ sonar:
     paths:
       - .sonar/cache
   script:
+    - npm ci
+    - npm run test:ci
     - sonar-scanner -Dsonar.projectVersion=1.0
   needs: ["test"]
   rules:
