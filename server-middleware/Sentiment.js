@@ -28,7 +28,7 @@ class Sentiment extends ApiAbstract {
 
 export default {
 
-	path: "/sentiment",
+	path: "/api/sentiment",
 
 	async handler( req, res ) {
 		const sentiment = new Sentiment( req, res, SENTIMENT_API_PARAMS )

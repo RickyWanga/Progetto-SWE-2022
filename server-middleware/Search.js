@@ -42,7 +42,7 @@ class Search extends ApiAbstract {
 
 export default {
 
-	path: "/twitter/search",
+	path: "/api/twitter/search",
 
 	async handler( req, res ) {
 		const search = new Search( req, res, TWITTER_API_PARAMS, TWITTER_API_SEARCH_PARAMS, {

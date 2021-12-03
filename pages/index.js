@@ -1,8 +1,9 @@
 import DateGroups from "~/classes/DateGroups"
 import Raccoglitore from "~/classes/Raccoglitore"
 
-const SEARCH_ROUTE = "twitter/search"
-const SENTIMENT_ROUTE = "sentiment"
+const CLIENT_CONFIGURATION_ROUTE = "/api/client-configuration"
+const SEARCH_ROUTE = "/api/twitter/search"
+const SENTIMENT_ROUTE = "/api/sentiment"
 const LABEL_INFO_EMPTY = "Sorry, there are no results for this search"
 const LABEL_ERROR_UNKNOWN = "Unknown error"
 
@@ -24,6 +25,10 @@ export default {
 			show_tagcloud: true,
 			tweets: [],
 		}
+	},
+	async asyncData({ $axios }) {
+		const client_configuration = await $axios.$get( CLIENT_CONFIGURATION_ROUTE )
+		return { client_configuration }
 	},
 	computed: {
 		dates() {
@@ -70,11 +75,10 @@ export default {
 		this.onToggle( "toggle-tagcloud", "show_tagcloud" )
 	},
 	methods: {
-		getSentimentAsync( tweet, index = 0 ) {
+		getSentimentAsync( tweet ) {
 			return new Promise(( resolve ) => {
 				this.$axios.$get( SENTIMENT_ROUTE, { params: {
 					text: tweet.text,
-					index,
 				}}).then(( sentiment = {}) => {
 					if ( sentiment.score ) {
 						sentiment.value = sentiment.score
@@ -84,24 +88,6 @@ export default {
 					}
 					resolve( sentiment )
 				})
-			})
-		},
-		setSentimentsAsync() {
-			this.loading_sentiments = true
-			const sentiments_promises = this.tweets.map(( tweet, index ) => {
-				const sentiments_promise = this.getSentimentAsync( tweet, index )
-				sentiments_promise.then(( sentiment ) => {
-					if ( sentiment.value > 0 ) {
-						this.sentiments_pos += 1
-					} else if ( sentiment.value < 0 ) {
-						this.sentiments_neg += 1
-					}
-					tweet.sentiment = sentiment
-				})
-				return sentiments_promise
-			})
-			Promise.all( sentiments_promises ).then(() => {
-				this.loading_sentiments = false
 			})
 		},
 		getTweets( query ) {
@@ -137,6 +123,32 @@ export default {
 			this.$nuxt.$on( event, ( toggle ) => {
 				this[ model ] = toggle
 			})
+		},
+		setSentiment( tweet, sentiment ) {
+			if ( sentiment.value > 0 ) {
+				this.sentiments_pos += 1
+			} else if ( sentiment.value < 0 ) {
+				this.sentiments_neg += 1
+			}
+			tweet.sentiment = sentiment
+		},
+		setSentimentsAsync( page = 0 ) {
+			const page_size = this.client_configuration.SENTIMENT_PAGE_SIZE * 1
+			const page_interval = this.client_configuration.SENTIMENT_PAGE_INTERVAL * 1
+			const max_page_number = Math.ceil( this.tweets.length / page_size )
+			const start_index = page * page_size
+			if ( page < max_page_number ) {
+				this.loading_sentiments = true
+				const page_tweets = this.tweets.slice( start_index, start_index + page_size )
+				page_tweets.forEach(( tweet ) => {
+					this.getSentimentAsync( tweet ).then(( sentiment ) => {
+						this.setSentiment( tweet, sentiment )
+					})
+				})
+				setTimeout( this.setSentimentsAsync, page_interval, page + 1 )
+			} else {
+				this.loading_sentiments = false
+			}
 		},
 		showAlert( message, type, show = true ) {
 			this.alert = { message, show, type }

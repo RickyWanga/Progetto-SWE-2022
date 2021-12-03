@@ -21,6 +21,10 @@ describe( "App", () => {
 			vuetify: new Vuetify(),
 			data() {
 				return {
+					client_configuration: {
+						SENTIMENT_PAGE_SIZE: 5,
+						SENTIMENT_PAGE_INTERVAL: 0,
+					},
 					sentiments_pos: 1,
 					sentiments_neg: 0,
 					tweets: Tweets,
