@@ -1,6 +1,6 @@
 const WEEK_DAY = [ "dom", "lun", "mar", "mer", "gio", "ven", "sab" ]
 
-class Dates {
+class DateGroups {
 	#dates_sorted
 	#getDateGroup
 	#oldest
@@ -66,4 +66,4 @@ class Dates {
 	}
 }
 
-export default Dates
+export default DateGroups

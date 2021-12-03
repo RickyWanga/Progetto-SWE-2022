@@ -1,5 +1,5 @@
-import Dates from "./Dates/Dates"
-import Raccoglitore from "./Raccoglitore/Raccoglitore"
+import DateGroups from "~/classes/DateGroups"
+import Raccoglitore from "~/classes/Raccoglitore"
 
 const SEARCH_ROUTE = "twitter/search"
 const SENTIMENT_ROUTE = "sentiment"
@@ -30,7 +30,7 @@ export default {
 			const dates = {}
 			const tweets_dates = this.tweets.map(( tweet ) => new Date( tweet.date ))
 			if ( tweets_dates.length > 1 ) {
-				new Dates( tweets_dates ).makeLabelsValues( dates )
+				new DateGroups( tweets_dates ).makeLabelsValues( dates )
 			}
 			return {
 				labels: Object.keys( dates ),
