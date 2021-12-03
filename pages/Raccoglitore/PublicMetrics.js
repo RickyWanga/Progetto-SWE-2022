@@ -7,7 +7,7 @@ class PublicMetrics {
 	constructor( tweet ) {
 		if ( tweet.public_metrics ) {
 			this.#retweet_count = tweet.public_metrics.retweet_count
-			this.#reply_count = tweet.public_metrics.retweet_count
+			this.#reply_count = tweet.public_metrics.reply_count
 			this.#like_count = tweet.public_metrics.like_count
 			this.#quote_count = tweet.public_metrics.quote_count
 		}
