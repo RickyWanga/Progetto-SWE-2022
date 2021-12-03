@@ -1,36 +1,32 @@
 <template>
-	<v-container
-		fill-height
-	>
-		<v-row
-			style="height:100%"
-		>
-			<v-col
-				cols="4"
-			>
-				<div
-					:style="hasDiagram ? 'height:80%' : 'height:100%'"
-				>
-					<Tweets :loading="loading_tweets" :tweets="tweets" />
+	<v-container fill-height>
+		<v-row style="height:100%">
+			<v-col cols="4">
+				<div style="height:70%">
+					<Tweets :loading="loading_tweets" :tweets="tweets">
+						<Tweet
+							v-for="( tweetItem, index ) in tweets"
+							:key="index"
+							:tweet="tweetItem"
+							class="pl-0"
+							tag="li"
+						>
+							<TweetSentiment :sentiment="tweetItem.sentiment" />
+						</Tweet>
+					</Tweets>
 				</div>
-				<div
-					v-if="hasDiagram"
-					style="height:20%; display:flex;flex-direction:column;justify-content:center"
-				>
-					<Diagram :label-value="dates" />
+				<div style="height:30%">
+					<div class="pt-4" style="height:100%">
+						<Analytics :tweets="tweets" :sentiment="sentiment" :loading="loading_sentiments">
+							<Diagram v-if="hasDateDiagram" :label-value="dates" />
+						</Analytics>
+					</div>
 				</div>
 			</v-col>
-			<v-col
-				v-if="show_media"
-				:cols="(show_map || show_tagcloud) ? 4 : 8"
-			>
+			<v-col v-if="show_media" :cols="(show_map || show_tagcloud) ? 4 : 8">
 				<Media />
-				</div>
 			</v-col>
-			<v-col
-				v-if="show_map || show_tagcloud"
-				:cols="(show_media) ? 4 : 8"
-			>
+			<v-col v-if="show_map || show_tagcloud" :cols="(show_media) ? 4 : 8">
 				<div
 					v-if="show_map"
 					:style="'height:' + ( show_tagcloud ? 70 : 100 ) + '%'"
@@ -46,10 +42,7 @@
 				</div>
 			</v-col>
 		</v-row>
-		<v-dialog
-			v-model="alert.show"
-			transition="dialog-top-transition"
-		>
+		<v-dialog v-model="alert.show" transition="dialog-top-transition">
 			<v-alert class="ma-0" :type="alert.type">{{ alert.message }}</v-alert>
 		</v-dialog>
 	</v-container>

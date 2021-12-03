@@ -12,6 +12,7 @@ Twitter Extended Dashboard
 
 	TWITTER_API_BASEURL="https://api.twitter.com"
 	TWITTER_BEARER_TOKEN=<Token by Twitter>
+	TWITTER_PAGE_SIZE=100
 
 ## Production
 

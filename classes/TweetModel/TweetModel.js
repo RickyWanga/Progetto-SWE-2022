@@ -2,7 +2,6 @@ import GeoModel from "./GeoModel"
 import UserModel from "./UserModel"
 
 class TweetModel {
-	#data = ""
 	#id = 0
 	#date = ""
 	#geo = {}
@@ -11,23 +10,20 @@ class TweetModel {
 	#user = {}
 	#words = []
 
-	constructor( status ) {
-		this.#data = status.created_at
-		this.#id = status.id
-		this.#geo = new GeoModel( status )
-		this.#tags = status.entities.hashtags.map(( hashtag ) => hashtag.text )
-		this.#text = status.text
-		this.#user = new UserModel( status )
-		this.#words = status.text.split( " " )
-		this.#date = status.created_at
+	constructor( tweet ) {
+		const hashtags = ( tweet.entities && tweet.entities.hashtags ) || []
+		const text = tweet.text || ""
+		this.#date = tweet.created_at
+		this.#id = tweet.id
+		this.#geo = new GeoModel( tweet )
+		this.#tags = hashtags.map(( hashtag ) => hashtag.tag )
+		this.#text = text
+		this.#user = new UserModel( tweet )
+		this.#words = text.split( " " )
 	}
 
 	get date() {
 		return this.#date
-	}
-
-	get data() {
-		return this.#data
 	}
 
 	get id() {

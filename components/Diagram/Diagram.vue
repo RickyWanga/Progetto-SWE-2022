@@ -1,8 +1,6 @@
 <template>
 	<v-sparkline
 		auto-draw
-		class="pa-3"
-		height="80"
 		:auto-draw-duration="autoDrawDuration"
 		:auto-line-width="autoLineWidth"
 		:fill="fill"
