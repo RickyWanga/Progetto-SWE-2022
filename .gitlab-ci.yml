@@ -62,6 +62,7 @@ sonar:
   script:
     - npm ci
     - npm run test:ci
+    - npx browserslist@latest --update-db
     - sonar-scanner -Dsonar.projectVersion=1.0
   needs: ["test"]
   rules:
