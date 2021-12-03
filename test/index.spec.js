@@ -46,8 +46,8 @@ describe( "App", () => {
 				"Media",
 				"TagCloud",
 				"Tweets",
-				"TweetsListItem",
-				"TweetsListItemSentiment",
+				"Tweet",
+				"TweetSentiment",
 			],
 		})
 	})

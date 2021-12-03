@@ -30,5 +30,5 @@
 	</v-list-item>
 </template>
 
-<script src="./ListItem.js"></script>
-<style src="./ListItem.css"></style>
+<script src="./Tweet.js"></script>
+<style src="./Tweet.css"></style>

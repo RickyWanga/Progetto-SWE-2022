@@ -1,10 +1,10 @@
 import Vuetify from "vuetify"
 import { createLocalVue, mount } from "@vue/test-utils"
-import Component from "@/components/Tweets/ListItem/ListItem.vue"
+import Component from "@/components/Tweet/Tweet.vue"
 
 const Tweets = require( "./data/tweets.json" )
 
-describe( "Tweets ListItem", () => {
+describe( "Tweet", () => {
 	const local_vue = createLocalVue()
 	const mountComponent = ( custom_options = {} ) => mount( Component, Object.assign({
 		local_vue,

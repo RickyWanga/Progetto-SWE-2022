@@ -4,15 +4,15 @@
 			<v-col cols="4">
 				<div style="height:70%">
 					<Tweets :loading="loading_tweets" :tweets="tweets">
-						<TweetsListItem
+						<Tweet
 							v-for="( tweetItem, index ) in tweets"
 							:key="index"
 							:tweet="tweetItem"
 							class="pl-0"
 							tag="li"
 						>
-							<TweetsListItemSentiment :sentiment="tweetItem.sentiment" />
-						</TweetsListItem>
+							<TweetSentiment :sentiment="tweetItem.sentiment" />
+						</Tweet>
 					</Tweets>
 				</div>
 				<div style="height:30%">
