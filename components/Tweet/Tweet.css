@@ -1,6 +1,7 @@
 .tweets-listitem-avatar {
 	align-self: flex-start;
 	position: relative;
+	left: -16px;
 	top: 0.5ex;
 }
 
