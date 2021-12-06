@@ -45,6 +45,16 @@
 		<v-dialog v-model="alert.show" transition="dialog-top-transition">
 			<v-alert class="ma-0" :type="alert.type">{{ alert.message }}</v-alert>
 		</v-dialog>
+		<v-dialog
+			v-model="tweet_modal_show"
+			transition="dialog-top-transition"
+			max-width="600"
+		>
+			<Tweet
+				v-if="tweet_modal_show"
+				:tweet="tweet_modal_tweet"
+			/>
+		</v-dialog>
 	</v-container>
 </template>
 

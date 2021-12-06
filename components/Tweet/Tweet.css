@@ -1,7 +1,11 @@
+.tweets-listitem {
+	background-color: white;
+}
+
 .tweets-listitem-avatar {
 	align-self: flex-start;
 	position: relative;
-	left: -16px;
+	left: 0;
 	top: 0.5ex;
 }
 
@@ -15,4 +19,8 @@
 
 .tweets-listitem-badges {
 	white-space: nowrap;
+}
+
+.tweet-reply {
+	color: #4169E1;
 }
