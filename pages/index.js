@@ -73,6 +73,7 @@ export default {
 	mounted() {
 		this.$nuxt.$on( "query", this.onQuery )
 		this.$nuxt.$on( "tweet-click", this.onTweetClick )
+		this.$nuxt.$on( "tweet-modal-off", this.onTweetClickOff )
 		this.onToggle( "toggle-map", "show_map" )
 		this.onToggle( "toggle-media", "show_media" )
 		this.onToggle( "toggle-tagcloud", "show_tagcloud" )
@@ -130,6 +131,9 @@ export default {
 		onTweetClick( tweet ) {
 			this.tweet_modal_show = true
 			this.tweet_modal_tweet = tweet
+		},
+		onTweetClickOff( tweet ) {
+			this.tweet_modal_show = false
 		},
 		setSentiment( tweet, sentiment ) {
 			if ( sentiment.value > 0 ) {

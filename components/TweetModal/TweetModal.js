@@ -5,7 +5,7 @@ export default {
 			on: false,
 		}
 	},
-	mounted() {
+	updated() {
 		this.on = this.show
 	},
 }
