@@ -15,6 +15,8 @@ build:
       - dist
   rules:
     - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
+    - if: '$CI_PIPELINE_SOURCE == "schedule"'
+    - if: '$CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH'
 
 lint:
   stage: lint
@@ -24,6 +26,8 @@ lint:
     - npm run lint
   rules:
     - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
+    - if: '$CI_PIPELINE_SOURCE == "schedule"'
+    - if: '$CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH'
 
 test:
   stage: test
@@ -38,6 +42,8 @@ test:
         - junit.xml
   rules:
     - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
+    - if: '$CI_PIPELINE_SOURCE == "schedule"'
+    - if: '$CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH'
 
 sonar:
   stage: sonar
@@ -54,7 +60,12 @@ sonar:
     paths:
       - .sonar/cache
   script:
+    - npm ci
+    - npm run test:ci
+    - npx browserslist@latest --update-db
     - sonar-scanner -Dsonar.projectVersion=1.0
   needs: ["test"]
   rules:
     - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
+    - if: '$CI_PIPELINE_SOURCE == "schedule"'
+    - if: '$CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH'

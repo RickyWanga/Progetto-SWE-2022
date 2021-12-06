@@ -1,4 +1,4 @@
-import TweetModel from "./TweetModel"
+import TweetModel from "./TweetModel/TweetModel"
 
 class Raccoglitore {
 	#tweets = []

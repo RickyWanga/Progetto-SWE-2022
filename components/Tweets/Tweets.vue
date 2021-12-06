@@ -2,43 +2,7 @@
 	<v-container class="d-flex flex-column" style="height:100%">
 		<v-row class="flex-grow-0">
 			<v-col>
-				<v-form
-					v-model="valid"
-					class="tweets-form"
-					@submit.prevent="submit"
-				>
-					<v-row>
-						<v-col class="flex-grow-1">
-							<v-text-field
-								v-model="query"
-								class="expanding-search rounded-pill"
-								clearable
-								dense
-								outlined
-								persistent-placeholder
-								placeholder="Search Tweets"
-								required
-								:rules="queryRules"
-								@click:clear="$nuxt.$emit( 'query-cleared' )"
-							/>
-						</v-col>
-						<v-col class="flex-grow-0">
-							<v-btn
-								color="primary"
-								elevation="3"
-								icon
-								type="submit"
-								x-large
-								:disabled="!valid"
-								:loading="loading"
-							>
-								<v-icon>
-									mdi-magnify
-								</v-icon>
-							</v-btn>
-						</v-col>
-					</v-row>
-				</v-form>
+				<TweetsSearchForm :loading="loading" />
 			</v-col>
 		</v-row>
 		<v-row class="flex-grow-1">
@@ -52,95 +16,12 @@
 					class="tweets-list"
 					tag="ul"
 				>
-					<v-list-item
-						v-for="tweet in tweets"
-						:key="tweet.id"
-						class="pl-0"
-						tag="li"
-					>
-						<v-dialog
-							transition="dialog-top-transition"
-							max-width="600"
-						>
-							<template v-slot:activator="{ on, attrs }">
-								<v-card-actions
-									v-bind="attrs"
-									v-on="on"
-								>
-									<v-list-item-avatar
-										class="tweet-avatar"
-									>
-										<v-img :src="tweet.user.picture" />
-									</v-list-item-avatar>
-									<v-list-item-content>
-										<p class="tweet-title">
-											<strong>{{ tweet.user.name }}</strong>
-											<span class="text--disabled font-weight-bold">@{{ tweet.user.account }}</span>
-										</p>
-										<p class="tweet-text mb-0">
-											<span class="font-weight-regular">
-												{{ tweet.text }}
-											</span>
-											<span class="tweet-badges">
-												<v-icon
-													v-if="tweet.geo.target"
-													color="primary"
-													small
-													:title="tweet.geo.tooltip"
-												>
-													mdi-map-marker
-												</v-icon>
-												<v-icon
-													color="primary"
-													small
-												>
-													mdi-message-reply-outline
-												</v-icon>
-												<small class="tweet-reply">
-													{{ tweet.public_metrics.reply_count }}
-												</small>
-											</span>
-										</p>
-									</v-list-item-content>
-								</v-card-actions>
-							</template>
-							<template v-slot:default="dialog">
-								<v-card>
-									<v-card-text>
-										<v-list-item-avatar
-											class="tweet-avatar"
-										>
-											<v-img :src="tweet.user.picture" />
-										</v-list-item-avatar>
-										<v-list-item-content>
-											<p class="tweet-title">
-												<strong>{{ tweet.user.name }}</strong>
-												<span class="text--disabled font-weight-bold">@{{ tweet.user.account }}</span>
-											</p>
-											<p class="tweet-text mb-0">
-												<span class="font-weight-regular">
-													{{ tweet.text }}
-												</span>
-											</p>
-										</v-list-item-content>
-									</v-card-text>
-									<v-card-actions class="justify-end">
-										<v-btn
-											text
-											@click="dialog.value = false"
-										>
-											Close
-										</v-btn>
-									</v-card-actions>
-								</v-card>
-							</template>
-						</v-dialog>
-					</v-list-item>
+					<slot />
 				</v-list>
 			</v-col>
 		</v-row>
 	</v-container>
 </template>
 
-<script src="./Tweets.js"></script>
-<style src="./Tweets.css"></style>
+<script src="./Tweets.js" />
+<style src="./Tweets.css" />

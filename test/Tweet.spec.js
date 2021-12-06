@@ -1,8 +1,10 @@
 import Vuetify from "vuetify"
 import { createLocalVue, mount } from "@vue/test-utils"
-import Component from "@/components/Tweets/Tweets.vue"
+import Component from "@/components/Tweet/Tweet.vue"
 
-describe( "Tweets", () => {
+const Tweets = require( "./data/tweets.json" )
+
+describe( "Tweet", () => {
 	const local_vue = createLocalVue()
 	const mountComponent = ( custom_options = {} ) => mount( Component, Object.assign({
 		local_vue,
@@ -13,11 +15,8 @@ describe( "Tweets", () => {
 	beforeAll(() => {
 		wrapper = mountComponent({
 			vuetify: new Vuetify(),
-			stubs: [
-				"TweetsSearchForm",
-			],
 			propsData: {
-				tweets: []
+				tweet: Tweets[ 0 ],
 			},
 		})
 	})
