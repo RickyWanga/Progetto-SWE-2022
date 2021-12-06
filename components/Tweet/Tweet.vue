@@ -1,5 +1,8 @@
 <template>
-	<v-list-item class="tweets-listitem">
+	<v-list-item
+		class="tweets-listitem"
+		@click="$nuxt.$emit( 'tweet-click', tweet )"
+	>
 		<v-list-item-avatar
 			class="tweets-listitem-avatar"
 		>

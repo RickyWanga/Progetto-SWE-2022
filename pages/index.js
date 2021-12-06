@@ -23,6 +23,8 @@ export default {
 			show_map: true,
 			show_media: true,
 			show_tagcloud: true,
+			tweet_modal_show: false,
+			tweet_modal_tweet: null,
 			tweets: [],
 		}
 	},
@@ -70,6 +72,7 @@ export default {
 	},
 	mounted() {
 		this.$nuxt.$on( "query", this.onQuery )
+		this.$nuxt.$on( "tweet-click", this.onTweetClick )
 		this.onToggle( "toggle-map", "show_map" )
 		this.onToggle( "toggle-media", "show_media" )
 		this.onToggle( "toggle-tagcloud", "show_tagcloud" )
@@ -123,6 +126,10 @@ export default {
 			this.$nuxt.$on( event, ( toggle ) => {
 				this[ model ] = toggle
 			})
+		},
+		onTweetClick( tweet ) {
+			this.tweet_modal_show = true
+			this.tweet_modal_tweet = tweet
 		},
 		setSentiment( tweet, sentiment ) {
 			if ( sentiment.value > 0 ) {
