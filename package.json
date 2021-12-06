@@ -32,8 +32,9 @@
     "eslint": "^7.29.0",
     "eslint-plugin-nuxt": "^2.0.0",
     "eslint-plugin-vue": "^7.12.1",
-    "jest": "^27.4.2",
+    "jest": "^27.4.3",
     "jest-junit": "^13.0.0",
+    "sass-loader": "^10.1.1",
     "sonarqube-scanner": "^2.8.1",
     "vue-jest": "^3.0.4"
   }

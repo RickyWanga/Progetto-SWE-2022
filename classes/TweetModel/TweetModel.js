@@ -4,23 +4,29 @@ import PublicMetrics from "./PublicMetrics"
 
 class TweetModel {
 	#id = 0
+	#date = ""
 	#geo = {}
+	#public_metrics = {}
 	#tags = []
 	#text = ""
 	#user = {}
 	#words = []
-	#public_metrics = {}
 
 	constructor( tweet ) {
 		const hashtags = ( tweet.entities && tweet.entities.hashtags ) || []
 		const text = tweet.text || ""
+		this.#date = tweet.created_at
 		this.#id = tweet.id
 		this.#geo = new GeoModel( tweet )
+		this.#public_metrics = new PublicMetrics( tweet )
 		this.#tags = hashtags.map(( hashtag ) => hashtag.tag )
 		this.#text = text
 		this.#user = new UserModel( tweet )
 		this.#words = text.split( " " )
-		this.#public_metrics = new PublicMetrics( tweet )
+	}
+
+	get date() {
+		return this.#date
 	}
 
 	get id() {
