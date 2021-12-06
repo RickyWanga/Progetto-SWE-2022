@@ -27,12 +27,13 @@
 						mdi-map-marker
 					</v-icon>
 					<v-icon
+						v-if="tweet.public_metrics.reply_count"
 						color="primary"
 						small
 					>
 						mdi-message-reply-outline
 					</v-icon>
-					<small class="tweet-reply">
+					<small v-if="tweet.public_metrics.reply_count" class="tweet-reply">
 						{{ tweet.public_metrics.reply_count }}
 					</small>
 				</span>
