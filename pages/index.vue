@@ -46,12 +46,21 @@
 			<v-alert class="ma-0" :type="alert.type">{{ alert.message }}</v-alert>
 		</v-dialog>
 		<TweetModal
+			v-if="tweet_modal_tweet"
 			:show="tweet_modal_show"
 		>
 			<Tweet
-				v-if="tweet_modal_tweet"
 				:tweet="tweet_modal_tweet"
 			/>
+			<div
+				v-for="( tweetItem, index ) in tweets"
+				:key="index"
+			>
+				<Tweet
+					v-if="tweetItem.reference.id == tweet_modal_tweet.id && tweet_modal_tweet !== tweetItem"
+					:tweet="tweetItem"
+				/>
+			</div>
 		</TweetModal>
 	</v-container>
 </template>

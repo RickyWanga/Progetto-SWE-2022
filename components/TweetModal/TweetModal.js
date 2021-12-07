@@ -8,4 +8,12 @@ export default {
 	updated() {
 		this.on = this.show
 	},
+
+	watch: {
+		on( val ) {
+			if (!val) {
+				this.$nuxt.$emit("tweet-modal-off")
+			}
+		}
+	}
 }

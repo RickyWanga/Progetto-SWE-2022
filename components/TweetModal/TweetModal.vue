@@ -8,10 +8,9 @@
 			<v-card-actions class="justify-end">
 				<v-icon
 					style="position:absolute; top:10px; z-index: 1;"
-					large
 					@click="$nuxt.$emit( 'tweet-modal-off' )"
 				>
-					mdi-alpha-x
+					mdi-close
 				</v-icon>
 			</v-card-actions>
 			<v-card-text>
