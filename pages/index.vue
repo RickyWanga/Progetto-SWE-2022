@@ -49,18 +49,15 @@
 			v-if="tweet_modal_tweet"
 			:show="tweet_modal_show"
 		>
-			<Tweet
-				:tweet="tweet_modal_tweet"
-			/>
-			<div
-				v-for="( tweetItem, index ) in tweets"
-				:key="index"
-			>
+			<v-row style="border:5px solid lightblue; background:lightblue; border-radius:15px;">
 				<Tweet
-					v-if="tweetItem.reference.id == tweet_modal_tweet.id && tweet_modal_tweet !== tweetItem"
-					:tweet="tweetItem"
+					style="background:lightblue;"
+					:tweet="tweet_modal_tweet"
 				/>
-			</div>
+			</v-row>
+			<v-row>
+				<TweetReplys :tweets="tweets" :tweet_modal_tweet="tweet_modal_tweet" />
+			</v-row>
 		</TweetModal>
 	</v-container>
 </template>
