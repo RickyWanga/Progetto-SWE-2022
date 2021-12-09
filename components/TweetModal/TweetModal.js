@@ -6,9 +6,15 @@ export default {
 		}
 	},
 	updated() {
-		this.on = this.show
+		this.onoff()
 	},
-
+	methods: {
+		onoff() {
+			this.$nextTick(() => {
+				this.on = this.show
+			})
+		}
+	},
 	watch: {
 		on( val ) {
 			if (!val) {
