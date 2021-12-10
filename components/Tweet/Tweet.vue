@@ -1,5 +1,8 @@
 <template>
-	<v-list-item class="tweets-listitem">
+	<v-list-item
+		class="tweets-listitem"
+		@click="$nuxt.$emit( 'tweet-click', tweet )"
+	>
 		<v-list-item-avatar
 			class="tweets-listitem-avatar"
 		>
@@ -23,6 +26,16 @@
 					>
 						mdi-map-marker
 					</v-icon>
+					<v-icon
+						v-if="tweet.public_metrics.reply_count"
+						color="primary"
+						small
+					>
+						mdi-message-reply-outline
+					</v-icon>
+					<small v-if="tweet.public_metrics.reply_count" class="tweet-reply">
+						{{ tweet.public_metrics.reply_count }}
+					</small>
 				</span>
 			</p>
 			<slot />
