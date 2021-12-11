@@ -8,6 +8,15 @@ class Raccoglitore {
 	}
 
 	// tweets[].author_expansion <- includes.users[]
+	#tweetsHydratesMedia ( tweets, media_expansion ) {
+		tweets.forEach(( tweet ) => {
+			tweet.media_expansion = media_expansion.find(( media_expansion ) =>
+				media_expansion.id === tweet.media_keys
+			)
+		})
+	}
+
+	// tweets[].author_expansion <- includes.users[]
 	#tweetsHydratesUsers( tweets, users_expansion ) {
 		tweets.forEach(( tweet ) => {
 			tweet.author_expansion = users_expansion.find(( user_expansion ) =>
@@ -31,6 +40,9 @@ class Raccoglitore {
 		this.#tweetsHydratesUsers( tweets, includes.users )
 		if ( includes.places ) {
 			this.#tweetsHydratesPlaces( tweets, includes.places )
+		}
+		if ( includes.media ) {
+			this.#tweetsHydratesMedia( tweets, includes.media )
 		}
 	}
 
