@@ -37,6 +37,7 @@ export default {
 		'~/server-middleware/ClientConfiguration.js',
 		'~/server-middleware/Search.js',
 		'~/server-middleware/Sentiment.js',
+		'~/server-middleware/Stream.js',
 	],
 
 	// Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins

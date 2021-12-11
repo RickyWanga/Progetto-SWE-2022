@@ -17,30 +17,54 @@ class ApiAbstract {
 	}
 
 	#getDataError( error = {} ) {
-		const data = {
-			message: error.message,
-		}
+		let message = error.message
+		const status = error.response?.status
+
 		try {
-			data.message = error.response.data.errors[ 0 ].message
-			data.message = data.message || error.response.data.reason
+			message = error.response.data.errors[ 0 ].message
+			message = message || error.response.data.reason
 		} catch ( e ) {
-		} finally {
-			data.status = error.response && error.response.status
+			// Failed retrieving specific error messages from various sources
 		}
-		return data
+
+		return { error: {
+			message,
+			status,
+		}}
 	}
 
-	#getUrlApiParams() {
-		const url_req = this.#req.url.substring( 2 ) // Strips the first two chars from url: "/?"
+	getUrlApiParams( req ) {
+		const url_req = ( req || this.#req ).url.replace( /^\/\?/, "" ) // Strips the first two chars from url: "/?"
 		return new URLSearchParams( url_req )
 	}
 
-	#getUrlApiParam( param ) {
-		const url_params = this.getUrlApiParams()
+	getUrlApiParam( param, req ) {
+		const url_params = this.getUrlApiParams( req )
 		return url_params.get( param )
 	}
 
-	#respondWithJson( data ) {
+	http( params ) {
+		let data = {}
+		return new Promise(( resolve ) => {
+			this.#axios( params ).then(( response ) => {
+				data = this.#getData( response )
+			}).catch(( error ) => {
+				data = this.#getDataError( error )
+			}).finally(() => {
+				resolve( data )
+			})
+		})
+	}
+
+	httpGet( url, params ) {
+		return this.http( Object.assign({ url, method: "get" }, params ))
+	}
+
+	httpPost( url, params ) {
+		return this.http( Object.assign({ url, method: "post" }, params ))
+	}
+
+	respondJson( data ) {
 		const data_json = JSON.stringify( data )
 		this.#res.writeHead( 200, { "Content-Type": "application/json" })
 		this.#res.end( data_json )
@@ -59,8 +83,6 @@ class ApiAbstract {
 		this.#axios = axios.create( axios_params )
 	}
 
-	fetch() {}
-
 	get _getData() {
 		return this.#getData
 	}
@@ -69,24 +91,20 @@ class ApiAbstract {
 		return this.#getDataError
 	}
 
-	get getUrlApiParam() {
-		return this.#getUrlApiParam
+	get req() {
+		return this.#req
 	}
 
-	get getUrlApiParams() {
-		return this.#getUrlApiParams
+	get res() {
+		return this.#res
 	}
 
-	get httpGet() {
-		return this.#axios.get
+	set req( req ) {
+		this.#req = req
 	}
 
-	get httpPost() {
-		return this.#axios.post
-	}
-
-	get respondWithJson() {
-		return this.#respondWithJson
+	set res( res ) {
+		this.#res = res
 	}
 }
 

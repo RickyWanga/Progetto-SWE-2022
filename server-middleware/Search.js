@@ -7,29 +7,15 @@ class Search extends ApiAbstract {
 	#max_results
 	#query_params
 
-	#getStaticRequestParams() {
-		return Object.entries( this.#query_params ).reduce(( params, [ param, value ]) =>
-			( value && ( params[ param ] = value ) && params ) || params, { })
-	}
-
 	fetch( query ) {
-		let data = {}
 		const dynamicRequestParams = {
 			query,
 			max_results: this.#max_results,
 		}
-		return new Promise(( resolve ) => {
-			this.httpGet( this.#endpoint, { params: Object.assign(
-				dynamicRequestParams,
-				this.#getStaticRequestParams(),
-			)}).then(( response ) => {
-				data = this._getData( response )
-			}).catch(( error ) => {
-				data = this._getDataError( error )
-			}).finally(() => {
-				resolve( data )
-			})
-		})
+		return this.httpGet( this.#endpoint, { params: Object.assign(
+			dynamicRequestParams,
+			this.#query_params,
+		)})
 	}
 
 	constructor( req, res, api_params, endpoint_params, headers ) {
@@ -47,10 +33,10 @@ export default {
 	async handler( req, res ) {
 		const search = new Search( req, res, TWITTER_API_PARAMS, TWITTER_API_SEARCH_PARAMS, {
 			"Authorization": "Bearer " + TWITTER_API_PARAMS.bearer_token,
-			// "Accept-Encoding": "gzip",
+
 		})
 		const query = search.getUrlApiParam( "query" )
 		const data = await search.fetch( query )
-		search.respondWithJson( data )
+		search.respondJson( data )
 	}
 }

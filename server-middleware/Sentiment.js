@@ -4,20 +4,10 @@ import ApiAbstract from "./_ApiAbstract.js"
 class Sentiment extends ApiAbstract {
 	#sentiment_url
 
-	fetch( text, index ) {
-		let data = {}
-		return new Promise(( resolve ) => {
-			this.httpGet( this.#sentiment_url, { params: {
-				text: Buffer.from( text ).toString( "base64" ),
-				index,
-			}}).then(( response ) => {
-				data = this._getData( response )
-			}).catch(( error ) => {
-				data = this._getDataError( error )
-			}).finally(() => {
-				resolve( data )
-			})
-		})
+	fetch( text ) {
+		return this.httpGet( this.#sentiment_url, { params: {
+			text: Buffer.from( text ).toString( "base64" ),
+		}})
 	}
 
 	constructor( req, res, api_params ) {
@@ -35,6 +25,6 @@ export default {
 		const text = sentiment.getUrlApiParam( "text" )
 		const index = sentiment.getUrlApiParam( "index" )
 		const data = await sentiment.fetch( text, index )
-		sentiment.respondWithJson( data )
+		sentiment.respondJson( data )
 	}
 }
