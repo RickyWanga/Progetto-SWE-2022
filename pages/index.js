@@ -1,7 +1,7 @@
 import DateGroups from "~/classes/DateGroups"
-import Raccoglitore from "~/classes/Raccoglitore"
 import Sentiments from "~/classes/Sentiments"
 import Stream from "~/classes/Stream"
+import Tweets from "~/classes/Tweets"
 
 const CLIENT_CONFIGURATION_ROUTE = "/api/client-configuration"
 const SEARCH_ROUTE = "/api/twitter/search"
@@ -102,8 +102,9 @@ export default {
 		})
 
 		this.stream.module = new Stream( STREAM_ROUTE, this.http_config, ( async_data ) => {
-			const tweets = new Raccoglitore( async_data )
+			const tweets = new Tweets( async_data )
 			this.tweets = tweets.list.concat( this.tweets )
+			this.getSentiments( tweets.list )
 		}, this.showAlertError )
 	},
 	methods: {
@@ -129,10 +130,10 @@ export default {
 			if ( !query ) { return } // Guard
 			const async_data = await this.getTweets( query )
 			if ( !async_data.error ) {
-				const raccoglitore = new Raccoglitore( async_data )
-				this.tweets = raccoglitore.tweets
-				if ( raccoglitore.tweets.length ) {
-					this.getSentiments( raccoglitore.tweets )
+				const tweets = new Tweets( async_data )
+				this.tweets = tweets.list
+				if ( tweets.list.length ) {
+					this.getSentiments( tweets.list )
 					this.setStreamQuery( query )
 				} else {
 					this.showAlertInfo( LABEL_INFO_EMPTY )

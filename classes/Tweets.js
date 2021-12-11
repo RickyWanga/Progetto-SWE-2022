@@ -1,7 +1,7 @@
 import TweetModel from "./TweetModel/TweetModel"
 
-class Raccoglitore {
-	#tweets = []
+class Tweets {
+	#list = []
 
 	#tweetModel( tweet ) {
 		return new TweetModel( tweet )
@@ -39,12 +39,12 @@ class Raccoglitore {
 		if ( response.includes ) {
 			this.#tweetsHydrates( tweets, response.includes )
 		}
-		this.#tweets = tweets.map( this.#tweetModel )
+		this.#list = tweets.map( this.#tweetModel )
 	}
 
-	get tweets() {
-		return this.#tweets
+	get list() {
+		return this.#list
 	}
 }
 
-export default Raccoglitore
+export default Tweets
