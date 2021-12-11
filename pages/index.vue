@@ -46,8 +46,7 @@
 			<v-alert class="ma-0" :type="alert.type">{{ alert.message }}</v-alert>
 		</v-dialog>
 		<TweetModal
-			v-if="tweet_modal_tweet"
-			:show="tweet_modal_show"
+			v-if="tweet_modal_show"
 		>
 			<v-row style="border:5px solid lightblue; background:lightblue; border-radius:15px;">
 				<Tweet
@@ -56,7 +55,10 @@
 				/>
 			</v-row>
 			<v-row>
-				<TweetReplys :tweets="tweets" :tweet_modal_tweet="tweet_modal_tweet" />
+				<TweetReplies
+					:tweets="tweets"
+					:tweet="tweet_modal_tweet"
+				/>
 			</v-row>
 		</TweetModal>
 	</v-container>
