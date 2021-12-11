@@ -33,7 +33,6 @@ export default {
 	async handler( req, res ) {
 		const search = new Search( req, res, TWITTER_API_PARAMS, TWITTER_API_SEARCH_PARAMS, {
 			"Authorization": "Bearer " + TWITTER_API_PARAMS.bearer_token,
-
 		})
 		const query = search.getUrlApiParam( "query" )
 		const data = await search.fetch( query )

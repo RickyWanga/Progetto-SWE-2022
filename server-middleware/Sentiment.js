@@ -1,4 +1,4 @@
-import SENTIMENT_API_PARAMS from "./Configuration/SentimentParams.js"
+import SENTIMENT_API_PARAMS from "./Configuration/SentimentApiParams.js"
 import ApiAbstract from "./_ApiAbstract.js"
 
 class Sentiment extends ApiAbstract {
