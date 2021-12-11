@@ -4,6 +4,7 @@ import PublicMetrics from "./PublicMetrics"
 import ReferenceModel from "./ReferenceModel"
 
 class TweetModel {
+	#conversation_id = 0
 	#id = 0
 	#date = ""
 	#geo = {}
@@ -17,6 +18,7 @@ class TweetModel {
 	constructor( tweet ) {
 		const hashtags = ( tweet.entities && tweet.entities.hashtags ) || []
 		const text = tweet.text || ""
+		this.#conversation_id = tweet.conversation_id
 		this.#date = tweet.created_at
 		this.#id = tweet.id
 		this.#geo = new GeoModel( tweet )
@@ -26,6 +28,10 @@ class TweetModel {
 		this.#text = text
 		this.#user = new UserModel( tweet )
 		this.#words = text.split( " " )
+	}
+
+	get conversation_id() {
+		return this.#conversation_id
 	}
 
 	get date() {

@@ -1,7 +1,7 @@
 <template>
 	<v-list-item
 		class="tweets-listitem"
-		@click="$nuxt.$emit( 'tweet-click', tweet )"
+		@click="$nuxt.$emit( 'tweet-click', tweet ) , $nuxt.$emit( 'getReply', { query: tweet.conversation_id } )"
 	>
 		<v-list-item-avatar
 			class="tweets-listitem-avatar"

@@ -26,6 +26,7 @@ export default {
 			tweet_modal_show: false,
 			tweet_modal_tweet: null,
 			tweets: [],
+			reply: [],
 		}
 	},
 	async asyncData({ $axios }) {
@@ -73,6 +74,7 @@ export default {
 	mounted() {
 		this.$nuxt.$on( "query", this.onQuery )
 		this.$nuxt.$on( "tweet-click", this.onTweetClick )
+		this.$nuxt.$on( "getReply", this.getReply )
 		this.$nuxt.$on( "tweet-modal-off", this.onTweetClickOff )
 		this.onToggle( "toggle-map", "show_map" )
 		this.onToggle( "toggle-media", "show_media" )
@@ -104,9 +106,11 @@ export default {
 			})
 		},
 		init() {
-			this.tweets = []
-			this.sentiments_pos = 0
-			this.sentiments_neg = 0
+			if (!this.tweet_modal_show) {
+				this.tweets = []
+				this.sentiments_pos = 0
+				this.sentiments_neg = 0
+			}
 		},
 		async onQuery({ query }) {
 			if ( !query ) { return } // Guard
@@ -122,6 +126,12 @@ export default {
 			} else {
 				this.showAlertError( async_data.error.message || LABEL_ERROR_UNKNOWN )
 			}
+		},
+		async getReply({ query }) {
+			if ( !query ) { return } // Guard
+			const async_data = await this.getTweets("conversation_id:" + query )
+			const raccoglitore = new Raccoglitore( async_data )
+			this.reply = raccoglitore.tweets
 		},
 		onToggle( event, model ) {
 			this.$nuxt.$on( event, ( toggle ) => {

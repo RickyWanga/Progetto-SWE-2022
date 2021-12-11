@@ -49,7 +49,7 @@ const TWITTER_API_SEARCH_PARAMS_QUERY = {
 	// @SEE: expansions=referenced_tweets.id (To return the specified fields
 	// for both the original Tweet and any included referenced Tweets)
 	// @DOC: https://developer.twitter.com/en/docs/twitter-api/data-dictionary/object-model/tweet
-	"tweet.fields": "text,id,author_id,created_at,entities,geo,public_metrics,referenced_tweets",
+	"tweet.fields": "text,id,author_id,created_at,entities,geo,public_metrics,referenced_tweets,conversation_id",
 
 	// Returns results with a Tweet ID less than (that is, older than) the
 	// specified ID. The ID specified is exclusive and responses will not include it

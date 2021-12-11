@@ -56,7 +56,7 @@
 				/>
 			</v-row>
 			<v-row>
-				<TweetReplys :tweets="tweets" :tweet_modal_tweet="tweet_modal_tweet" />
+				<TweetReplys :tweets="reply" :tweet_modal_tweet="tweet_modal_tweet" />
 			</v-row>
 		</TweetModal>
 	</v-container>
