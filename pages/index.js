@@ -1,5 +1,6 @@
 import DateGroups from "~/classes/DateGroups"
 import Raccoglitore from "~/classes/Raccoglitore"
+import Sentiments from "~/classes/Sentiments"
 import Stream from "~/classes/Stream"
 
 const CLIENT_CONFIGURATION_ROUTE = "/api/client-configuration"
@@ -21,10 +22,12 @@ export default {
 			http_config: {
 				module: this.$axios,
 			},
-			loading_sentiments: false,
-			loading_tweets: false,
-			sentiments_pos: 0,
-			sentiments_neg: 0,
+			sentiments: {
+				loading: true,
+				module: null,
+				neg: 0,
+				pos: 0,
+			},
 			show_map: true,
 			show_media: true,
 			show_tagcloud: true,
@@ -34,6 +37,7 @@ export default {
 				query: "",
 			},
 			tweets: [],
+			tweets_loading: false,
 			tweet_modal_show: false,
 			tweet_modal_tweet: null,
 		}
@@ -59,7 +63,7 @@ export default {
 		},
 		geo() {
 			return this.tweets
-				.filter(( tweet ) => tweet.geo.target )
+				.filter(( tweet ) => !!tweet.geo?.target )
 				.map(( tweet ) => tweet.geo )
 		},
 		media() {
@@ -67,13 +71,13 @@ export default {
 		},
 		sentiment() {
 			return {
-				positive: Math.round(( this.sentiments_pos * 100 ) / ( this.tweets.length || 1 )),
-				negative: Math.round(( this.sentiments_neg * 100 ) / ( this.tweets.length || 1 )),
+				positive: Math.round(( this.sentiments.pos * 100 ) / ( this.tweets.length || 1 )),
+				negative: Math.round(( this.sentiments.neg * 100 ) / ( this.tweets.length || 1 )),
 			}
 		},
 		tags() {
 			const tags = {}
-			this.tweets.forEach(( tweet ) => tweet.tags.forEach( tag => {
+			this.tweets.forEach(( tweet ) => tweet.tags?.forEach( tag => {
 				const tag_slug = tag.toLowerCase()
 				tags[ tag_slug ] = tags[ tag_slug ] ? tags[ tag_slug ] + 1 : 1
 			}))
@@ -88,40 +92,38 @@ export default {
 		this.onToggle( "toggle-media", "show_media" )
 		this.onToggle( "toggle-tagcloud", "show_tagcloud" )
 
+		this.sentiments.module = new Sentiments({
+			http_route: SENTIMENT_ROUTE,
+			http_config: this.http_config,
+			buffer_page_size: this.client_configuration.SENTIMENT_PAGE_SIZE * 1,
+			buffer_interval_duration: this.client_configuration.SENTIMENT_PAGE_INTERVAL * 1,
+			onSetSentiment: this.onSentimentSet,
+			onBufferEmpty: this.onSentimentsBufferEmpty,
+		})
+
 		this.stream.module = new Stream( STREAM_ROUTE, this.http_config, ( async_data ) => {
 			const tweets = new Raccoglitore( async_data )
 			this.tweets = tweets.list.concat( this.tweets )
 		}, this.showAlertError )
 	},
 	methods: {
-		getSentimentAsync( tweet ) {
-			return new Promise(( resolve ) => {
-				this.$axios.$get( SENTIMENT_ROUTE, { params: {
-					text: tweet.text,
-				}}).then(( sentiment = {}) => {
-					if ( sentiment.score ) {
-						sentiment.value = sentiment.score
-						sentiment.score = Math.round(Math.abs( sentiment.score ) * 100 ).toString()
-					} else {
-						sentiment = { score: "0", value: 0 }
-					}
-					resolve( sentiment )
-				})
-			})
+		getSentiments( tweets ) {
+			this.sentiments.module.bufferAdd( tweets )
 		},
 		getTweets( query ) {
-			this.loading_tweets = true
+			this.tweets_loading = true
 			this.init()
 			return this.$axios.$get( SEARCH_ROUTE, { params: {
 				query
 			}}).finally(() => {
-				this.loading_tweets = false
+				this.tweets_loading = false
 			})
 		},
 		init() {
 			this.tweets = []
-			this.sentiments_pos = 0
-			this.sentiments_neg = 0
+			this.sentiments.pos = 0
+			this.sentiments.neg = 0
+			this.sentiments.loading = true
 		},
 		async onQuery({ query }) {
 			if ( !query ) { return } // Guard
@@ -130,13 +132,24 @@ export default {
 				const raccoglitore = new Raccoglitore( async_data )
 				this.tweets = raccoglitore.tweets
 				if ( raccoglitore.tweets.length ) {
-					this.setSentimentsAsync()
+					this.getSentiments( raccoglitore.tweets )
 					this.setStreamQuery( query )
 				} else {
 					this.showAlertInfo( LABEL_INFO_EMPTY )
 				}
 			} else {
 				this.showAlertError( async_data.error.message || LABEL_ERROR_UNKNOWN )
+			}
+		},
+		onSentimentsBufferEmpty() {
+			this.tweets = [ ...this.tweets ] // Flush data
+			this.sentiments.loading = false
+		},
+		onSentimentSet( _, sentiment ) {
+			if ( sentiment.value > 0 ) {
+				this.sentiments.pos += 1
+			} else if ( sentiment.value < 0 ) {
+				this.sentiments.neg += 1
 			}
 		},
 		onToggle( event, model ) {
@@ -156,32 +169,6 @@ export default {
 		onTweetClick( tweet ) {
 			this.tweet_modal_show = true
 			this.tweet_modal_tweet = tweet
-		},
-		setSentiment( tweet, sentiment ) {
-			if ( sentiment.value > 0 ) {
-				this.sentiments_pos += 1
-			} else if ( sentiment.value < 0 ) {
-				this.sentiments_neg += 1
-			}
-			tweet.sentiment = sentiment
-		},
-		setSentimentsAsync( page = 0 ) {
-			const page_size = this.client_configuration.SENTIMENT_PAGE_SIZE * 1
-			const page_interval = this.client_configuration.SENTIMENT_PAGE_INTERVAL * 1
-			const max_page_number = Math.ceil( this.tweets.length / page_size )
-			const start_index = page * page_size
-			if ( page < max_page_number ) {
-				this.loading_sentiments = true
-				const page_tweets = this.tweets.slice( start_index, start_index + page_size )
-				page_tweets.forEach(( tweet ) => {
-					this.getSentimentAsync( tweet ).then(( sentiment ) => {
-						this.setSentiment( tweet, sentiment )
-					})
-				})
-				setTimeout( this.setSentimentsAsync, page_interval, page + 1 )
-			} else {
-				this.loading_sentiments = false
-			}
 		},
 		setStreamQuery( query ) {
 			if ( this.stream.active ) {
