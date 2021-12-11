@@ -1,3 +1,5 @@
+
+import Vuetify from "vuetify"
 import { createLocalVue, mount } from "@vue/test-utils"
 import Component from "@/components/TweetModal/TweetModal.vue"
 
@@ -7,13 +9,21 @@ describe( "TweetModal", () => {
 		local_vue,
 	}, custom_options ))
 
+	local_vue.use(Vuetify)
+
 	let wrapper
 
 	beforeAll(() => {
 		wrapper = mountComponent({
-			data:{
-				on: false
+			data() {
+				return {
+					on: false
+				}
 			},
+			stubs: [
+				"v-dialog",
+				"v-icon",
+			],
 			propsData: {
 				show: false
 			},
@@ -28,14 +38,14 @@ describe( "TweetModal", () => {
 		const onoff = jest.spyOn( wrapper.vm, "onoff" )
 		wrapper.setProps({ show: true })
 		await wrapper.vm.$nextTick()
-		// 2 perchè updated si attiva ad ogni cambiamnto sia data ce props
-		expect( onoff ).toHaveBeenCalledTimes( 2 )
+		expect( onoff ).toHaveBeenCalledTimes( 1 )
 		expect(wrapper.vm.$data.on).toEqual( true )
 	})
 
-	//non è completo, ma mi aiuta ad avere il massimo del coverage
 	test("watch.on ", async () => {
 		wrapper.setData({ on:false })
-		//expect( wrapper.emitted() ).toBeTruthy()
+		const vModdelOff = jest.spyOn( wrapper.vm, "vModelOff" )
+		await wrapper.vm.$nextTick()
+		expect( vModdelOff ).toHaveBeenCalledTimes( 1 )
 	})
 })

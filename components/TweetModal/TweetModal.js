@@ -13,12 +13,15 @@ export default {
 			this.$nextTick(() => {
 				this.on = this.show
 			})
+		},
+		vModelOff() {
+			this.$nuxt.$emit("tweet-modal-off")
 		}
 	},
 	watch: {
 		on( val ) {
 			if (!val) {
-				this.$nuxt.$emit("tweet-modal-off")
+				this.vModelOff()
 			}
 		}
 	}
