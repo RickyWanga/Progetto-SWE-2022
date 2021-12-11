@@ -25,8 +25,10 @@ describe( "App", () => {
 						SENTIMENT_PAGE_SIZE: 5,
 						SENTIMENT_PAGE_INTERVAL: 0,
 					},
-					sentiments_pos: 1,
-					sentiments_neg: 0,
+					sentiments: {
+						pos: 1,
+						neg: 0,
+					},
 					tweets: Tweets,
 				}
 			},
@@ -83,8 +85,8 @@ describe( "App", () => {
 		wrapper.vm.init()
 		await wrapper.vm.$nextTick()
 		expect( wrapper.vm.tweets.length ).toBe( 0 )
-		expect( wrapper.vm.sentiments_pos ).toBe( 0 )
-		expect( wrapper.vm.sentiments_neg ).toBe( 0 )
+		expect( wrapper.vm.sentiments.pos ).toBe( 0 )
+		expect( wrapper.vm.sentiments.neg ).toBe( 0 )
 	})
 
 	test( "methods.onQuery() with empty 'query'", () => {
@@ -102,11 +104,5 @@ describe( "App", () => {
 		wrapper.vm.onQuery({ query: "test" })
 		expect( spyOnQuery ).toHaveBeenCalledTimes( 1 )
 		expect( spyGetTweets ).toHaveBeenCalledTimes( 1 )
-	})
-
-	test( "methods.setSentimentsAsync()", async () => {
-		wrapper.vm.tweets = Tweets
-		await wrapper.vm.setSentimentsAsync()
-		expect( wrapper.vm.sentiments_neg ).toBe( 0 )
 	})
 })
