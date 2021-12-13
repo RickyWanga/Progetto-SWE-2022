@@ -44,7 +44,6 @@ class Stream {
 				rules,
 				start: true,
 			},
-			responseType: "stream",
 			withCredentials: true,
 		}).then(( response ) => {
 			if ( response.data.error ) {

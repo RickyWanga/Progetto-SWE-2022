@@ -23,14 +23,18 @@ class Stream extends ApiAbstract {
 
 	#streamData( data ) {
 		try {
-			this.res.write( data )
+			this.#resWrite( data )
 		} catch ( error ) {
-			console.log( error )
+			this.#resWrite( error )
 		}
 	}
 
 	#streamError( error ) {
-		console.log( error )
+		this.#resWrite( error )
+	}
+
+	#resWrite( data ) {
+		this.res.write( data ) || this.stop()
 	}
 
 	async setNewRules( new_rules ) {
@@ -43,13 +47,13 @@ class Stream extends ApiAbstract {
 		this.#stream = await this.httpGet( this.#endpoint, { // Get stream
 			params: Object.assign( this.#query_params ),
 			responseType: "stream",
-			// timeout: 30000,
 		})
 		if ( !this.#stream.error ) {
 			this.#stream.on( "data", this.#streamData.bind( this ))
 			this.#stream.on( "error", this.#streamError.bind( this ))
 		} else {
-			console.log( this.#stream.error )
+			const error = this._getDataError( this.#stream.error )
+			this.respondJson( error )
 		}
 	}
 

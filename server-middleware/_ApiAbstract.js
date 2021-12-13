@@ -18,7 +18,7 @@ class ApiAbstract {
 
 	#getDataError( error = {} ) {
 		let message = error.message
-		const status = error.response?.status
+		const status = error.status || error.response?.status
 
 		try {
 			message = error.response.data.errors[ 0 ].message
