@@ -27,6 +27,9 @@ export default {
 	css: [
 	],
 
+	// https://nuxtjs.org/docs/configuration-glossary/configuration-loading/
+	loading: false,
+
 	// https://nuxtjs.org/docs/directory-structure/nuxt-config#privateruntimeconfig
 	privateRuntimeConfig: {
 		// …: process.env.…,
