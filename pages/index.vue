@@ -3,10 +3,10 @@
 		<v-row style="height:100%">
 			<v-col cols="4">
 				<div style="height:70%">
-					<Tweets :loading="loading_tweets" :tweets="tweets">
+					<Tweets :loading="tweets_loading" :tweets="tweets">
 						<Tweet
-							v-for="( tweetItem, index ) in tweets"
-							:key="index"
+							v-for="tweetItem in tweets"
+							:key="tweetItem.id"
 							:tweet="tweetItem"
 							class="pl-0"
 							tag="li"
@@ -17,7 +17,7 @@
 				</div>
 				<div style="height:30%">
 					<div class="pt-4" style="height:100%">
-						<Analytics :tweets="tweets" :sentiment="sentiment" :loading="loading_sentiments">
+						<Analytics :tweets="tweets" :sentiment="sentiment" :loading="sentiments.loading">
 							<Diagram v-if="hasDateDiagram" :label-value="dates" />
 						</Analytics>
 					</div>
@@ -45,16 +45,22 @@
 		<v-dialog v-model="alert.show" transition="dialog-top-transition">
 			<v-alert class="ma-0" :type="alert.type">{{ alert.message }}</v-alert>
 		</v-dialog>
-		<v-dialog
-			v-model="tweet_modal_show"
-			transition="dialog-top-transition"
-			max-width="600"
+		<TweetModal
+			v-if="tweet_modal.show"
 		>
-			<Tweet
-				v-if="tweet_modal_show"
-				:tweet="tweet_modal_tweet"
-			/>
-		</v-dialog>
+			<v-row style="border:5px solid lightblue; background:lightblue; border-radius:15px;">
+				<Tweet
+					style="background:lightblue;"
+					:tweet="tweet_modal.tweet"
+				/>
+			</v-row>
+			<v-row>
+				<TweetReplies
+					:tweet="tweet_modal.tweet"
+					:replies="replies"
+				/>
+			</v-row>
+		</TweetModal>
 	</v-container>
 </template>
 
