@@ -1,28 +1,19 @@
 export default {
-	props: [ "show" ],
 	data() {
 		return {
-			on: false,
-		}
-	},
-	updated() {
-		this.onoff()
-	},
-	methods: {
-		onoff() {
-			this.$nextTick(() => {
-				this.on = this.show
-			})
-		},
-		vModelOff() {
-			this.$nuxt.$emit("tweet-modal-off")
+			on: true,
 		}
 	},
 	watch: {
 		on( val ) {
-			if (!val) {
-				this.vModelOff()
+			if ( !val ) {
+				this.vModalOff()
 			}
 		}
-	}
+	},
+	methods: {
+		vModalOff() {
+			this.$nuxt.$emit( "tweet-modal-off" )
+		}
+	},
 }

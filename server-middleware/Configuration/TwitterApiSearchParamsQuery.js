@@ -11,7 +11,7 @@ const TWITTER_API_SEARCH_PARAMS_QUERY = {
 	// author_id,referenced_tweets.id,referenced_tweets.id.author_id,
 	// entities.mentions.username,attachments.poll_ids,
 	// attachments.media_keys,in_reply_to_user_id,geo.place_id
-	"expansions": "author_id,geo.place_id,attachments.poll_ids",
+	"expansions": "author_id,geo.place_id",
 
 	// default: 10
 	"max_results": 0,
@@ -33,7 +33,7 @@ const TWITTER_API_SEARCH_PARAMS_QUERY = {
 
 	// duration_minutes,end_datetime,id,options,voting_status
 	// @REQUIRES: expansions=attachments.poll_ids
-	"poll.fields": "duration_minutes,end_datetime,id,options,voting_status",
+	"poll.fields": "",
 
 	// Returns results with a Tweet ID greater than (that is, more recent than) the
 	// specified ID. The ID specified is exclusive and responses will not include it

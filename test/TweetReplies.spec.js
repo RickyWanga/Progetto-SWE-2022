@@ -1,7 +1,7 @@
 import { createLocalVue, mount } from "@vue/test-utils"
-import Component from "@/components/TweetReplys/TweetReplys.vue"
+import Component from "@/components/TweetReplies/TweetReplies.vue"
 
-describe( "TweetReplays", () => {
+describe( "TweetReplies", () => {
 	const local_vue = createLocalVue()
 	const mountComponent = ( custom_options = {} ) => mount( Component, Object.assign({
 		local_vue,
@@ -10,12 +10,7 @@ describe( "TweetReplays", () => {
 	let wrapper
 
 	beforeAll(() => {
-		wrapper = mountComponent({
-			propsData: {
-				tweets: [],
-				tweet_modal_tweet: [],
-			},
-		})
+		wrapper = mountComponent()
 	})
 
 	test( "is a Vue instance", () => {

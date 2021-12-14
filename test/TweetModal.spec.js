@@ -17,16 +17,18 @@ describe( "TweetModal", () => {
 		wrapper = mountComponent({
 			data() {
 				return {
-					on: false
+					on: true
 				}
+			},
+			mocks: {
+				$nuxt: {
+					$emit: () => {},
+				},
 			},
 			stubs: [
 				"v-dialog",
 				"v-icon",
 			],
-			propsData: {
-				show: false
-			},
 		})
 	})
 
@@ -34,18 +36,10 @@ describe( "TweetModal", () => {
 		expect( wrapper.vm ).toBeTruthy()
 	})
 
-	test( "methods.onoff() called on props update", async () => {
-		const onoff = jest.spyOn( wrapper.vm, "onoff" )
-		wrapper.setProps({ show: true })
+	test( "watch.on", async () => {
+		const spy = jest.spyOn( wrapper.vm, "vModalOff" )
+		wrapper.setData({ on: false })
 		await wrapper.vm.$nextTick()
-		expect( onoff ).toHaveBeenCalledTimes( 1 )
-		expect(wrapper.vm.$data.on).toEqual( true )
-	})
-
-	test("watch.on ", async () => {
-		wrapper.setData({ on:false })
-		const vModdelOff = jest.spyOn( wrapper.vm, "vModelOff" )
-		await wrapper.vm.$nextTick()
-		expect( vModdelOff ).toHaveBeenCalledTimes( 1 )
+		expect( spy ).toHaveBeenCalledTimes( 1 )
 	})
 })

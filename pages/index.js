@@ -36,10 +36,13 @@ export default {
 				module: null,
 				query: "",
 			},
+			tweet_modal: {
+				show: false,
+				tweet: null,
+			},
+			tweet_replies: [],
 			tweets: [],
 			tweets_loading: false,
-			tweet_modal_show: false,
-			tweet_modal_tweet: null,
 		}
 	},
 	async asyncData({ $axios }) {
@@ -88,6 +91,7 @@ export default {
 		this.$nuxt.$on( "query", this.onQuery )
 		this.$nuxt.$on( "toggle-stream", this.onStreamToggle )
 		this.$nuxt.$on( "tweet-click", this.onTweetClick )
+		this.$nuxt.$on( "tweet-modal-off", this.onTweetModalOff )
 		this.onToggle( "toggle-map", "show_map" )
 		this.onToggle( "toggle-media", "show_media" )
 		this.onToggle( "toggle-tagcloud", "show_tagcloud" )
@@ -105,12 +109,19 @@ export default {
 			this.onStreamProgress, this.onStreamError )
 	},
 	methods: {
+		getReplies({ conversation_id }) {
+			return new Promise(( resolve ) => {
+				this.getTweets( "conversation_id:" + conversation_id ).then(( async_replies ) => {
+					const conversation = new Tweets( async_replies )
+					resolve( conversation.list )
+				})
+			})
+		},
 		getSentiments( tweets ) {
 			this.sentiments.module.bufferAdd( tweets )
 		},
 		getTweets( query ) {
 			this.tweets_loading = true
-			this.init()
 			return this.$axios.$get( SEARCH_ROUTE, { params: {
 				query
 			}}).finally(() => {
@@ -125,6 +136,7 @@ export default {
 		},
 		async onQuery({ query }) {
 			if ( !query ) { return } // Guard
+			this.init()
 			const async_data = await this.getTweets( query )
 			if ( !async_data.error ) {
 				const tweets = new Tweets( async_data )
@@ -172,9 +184,13 @@ export default {
 				this[ model ] = toggle
 			})
 		},
-		onTweetClick( tweet ) {
-			this.tweet_modal_show = true
-			this.tweet_modal_tweet = tweet
+		async onTweetClick( tweet ) {
+			this.tweet_replies = await this.getReplies( tweet )
+			this.tweet_modal.tweet = tweet
+			this.tweet_modal.show = true
+		},
+		onTweetModalOff() {
+			this.tweet_modal.show = false
 		},
 		setStreamQuery( query ) {
 			if ( this.stream.active ) {
