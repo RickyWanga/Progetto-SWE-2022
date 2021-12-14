@@ -35,7 +35,7 @@
 				</span>
 				<span class="tweets-listitem-badges">
 					<v-icon
-						v-if="tweet.geo.target"
+						v-if="!!( tweet.geo && tweet.geo.target )"
 						color="primary"
 						small
 						:title="tweet.geo.tooltip"
