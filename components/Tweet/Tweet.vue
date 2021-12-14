@@ -15,7 +15,23 @@
 			</p>
 			<p class="tweets-listitem-text mb-0">
 				<span class="font-weight-regular">
-					{{ tweet.text }}
+					<template
+						v-for="(word, i) in tweet.words"
+					>
+						<span
+							v-if="'#' === word[ 0 ]"
+							:key="i"
+							class="font-weight-bold primary--text text--lighten-1 tweet-tag"
+							@click="$nuxt.$emit( 'query', { query: `${ word }` })"
+						>
+							{{ word }}
+						</span>
+						<template
+							v-else
+						>
+							{{ word }}
+						</template>
+					</template>
 				</span>
 				<span class="tweets-listitem-badges">
 					<v-icon

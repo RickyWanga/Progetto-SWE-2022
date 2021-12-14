@@ -23,3 +23,7 @@
 .tweet-reply {
 	color: #4169E1;
 }
+
+.tweet-tag {
+	cursor: pointer;
+}
