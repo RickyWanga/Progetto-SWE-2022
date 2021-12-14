@@ -24,7 +24,7 @@
 				</div>
 			</v-col>
 			<v-col v-if="show_media" :cols="(show_map || show_tagcloud) ? 4 : 8">
-				<Media />
+				<Media :media="medias" />
 			</v-col>
 			<v-col v-if="show_map || show_tagcloud" :cols="(show_media) ? 4 : 8">
 				<div

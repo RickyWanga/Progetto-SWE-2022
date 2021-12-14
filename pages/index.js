@@ -69,6 +69,17 @@ export default {
 			}))
 			return Object.entries( tags )
 		},
+		medias() {
+			const medias = []
+			this.tweets.forEach(( tweet ) => {
+				if ( tweet.media ) {
+					tweet.media.forEach(( media ) => {
+						medias.push(media.url)
+					})
+				}
+			})
+			return Object.entries( medias )
+		},
 	},
 	mounted() {
 		this.$nuxt.$on( "query", this.onQuery )
