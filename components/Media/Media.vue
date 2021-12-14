@@ -4,10 +4,11 @@
 			<v-img
 				v-for="( m, i ) in media"
 				:key="`${ m.key }${ i }`"
+				:alt="m.alt"
+				:src="m.url"
 				aspect-ratio="1"
 				class="media-item"
 				width="50%"
-				:src="m.url"
 			/>
 		</div>
 	</v-container>
