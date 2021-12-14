@@ -19,6 +19,7 @@ describe( "Tweets SearchForm", () => {
 			mocks: {
 				$nuxt: {
 					$emit: () => {},
+					$on: () => {},
 				},
 			},
 			propsData: {

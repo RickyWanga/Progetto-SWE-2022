@@ -3,10 +3,10 @@
 		<v-row style="height:100%">
 			<v-col cols="4">
 				<div style="height:70%">
-					<Tweets :loading="loading_tweets" :tweets="tweets">
+					<Tweets :loading="tweets_loading" :tweets="tweets">
 						<Tweet
-							v-for="( tweetItem, index ) in tweets"
-							:key="index"
+							v-for="tweetItem in tweets"
+							:key="tweetItem.id"
 							:tweet="tweetItem"
 							class="pl-0"
 							tag="li"
@@ -17,7 +17,7 @@
 				</div>
 				<div style="height:30%">
 					<div class="pt-4" style="height:100%">
-						<Analytics :tweets="tweets" :sentiment="sentiment" :loading="loading_sentiments">
+						<Analytics :tweets="tweets" :sentiment="sentiment" :loading="sentiments.loading">
 							<Diagram v-if="hasDateDiagram" :label-value="dates" />
 						</Analytics>
 					</div>

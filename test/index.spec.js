@@ -25,8 +25,15 @@ describe( "App", () => {
 						SENTIMENT_PAGE_SIZE: 5,
 						SENTIMENT_PAGE_INTERVAL: 0,
 					},
-					sentiments_pos: 1,
-					sentiments_neg: 0,
+					sentiments: {
+						pos: 1,
+						neg: 0,
+					},
+					stream: {
+						active: false,
+						module: {},
+						query: "",
+					},
 					tweets: Tweets,
 				}
 			},
@@ -83,8 +90,8 @@ describe( "App", () => {
 		wrapper.vm.init()
 		await wrapper.vm.$nextTick()
 		expect( wrapper.vm.tweets.length ).toBe( 0 )
-		expect( wrapper.vm.sentiments_pos ).toBe( 0 )
-		expect( wrapper.vm.sentiments_neg ).toBe( 0 )
+		expect( wrapper.vm.sentiments.pos ).toBe( 0 )
+		expect( wrapper.vm.sentiments.neg ).toBe( 0 )
 	})
 
 	test( "methods.onQuery() with empty 'query'", () => {
@@ -104,9 +111,34 @@ describe( "App", () => {
 		expect( spyGetTweets ).toHaveBeenCalledTimes( 1 )
 	})
 
-	test( "methods.setSentimentsAsync()", async () => {
-		wrapper.vm.tweets = Tweets
-		await wrapper.vm.setSentimentsAsync()
-		expect( wrapper.vm.sentiments_neg ).toBe( 0 )
+	test( "methods.onStreamToggle()", () => {
+		wrapper.vm.stream.module.start = () => {} // Mock
+		wrapper.vm.stream.module.stop = () => {} // Mock
+		const spyStart = jest.spyOn( wrapper.vm.stream.module, "start" )
+		const spyStop = jest.spyOn( wrapper.vm.stream.module, "stop" )
+		// Test branch 1
+		wrapper.vm.onStreamToggle( true )
+		expect( spyStart ).toHaveBeenCalledTimes( 1 )
+		expect( wrapper.vm.stream.query ).toBe( null )
+		expect( wrapper.vm.stream.active ).toBe( true )
+		// Test branch 2
+		wrapper.vm.onStreamToggle( false )
+		expect( spyStop ).toHaveBeenCalledTimes( 1 )
+		expect( wrapper.vm.stream.active ).toBe( false )
+	})
+
+	test( "methods.setStreamQuery()", () => {
+		wrapper.vm.stream.module.setQuery = () => {} // Mock
+		const spy = jest.spyOn( wrapper.vm.stream.module, "setQuery" )
+		const query = "example_query"
+		// Test branch 1
+		wrapper.vm.stream.active = true
+		wrapper.vm.setStreamQuery( query )
+		expect( spy ).toHaveBeenCalledTimes( 1 )
+		expect( wrapper.vm.stream.query ).toBe( null )
+		// Test branch 2
+		wrapper.vm.stream.active = false
+		wrapper.vm.setStreamQuery( query )
+		expect( wrapper.vm.stream.query ).toBe( query )
 	})
 })
