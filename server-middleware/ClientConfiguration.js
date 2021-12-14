@@ -11,6 +11,6 @@ export default {
 
 	handler( req, res ) {
 		const clientConfiguration = new ClientConfiguration( req, res )
-		clientConfiguration.respondWithJson( CLIENT_CONFIGURATION )
+		clientConfiguration.respondJson( CLIENT_CONFIGURATION )
 	}
 }

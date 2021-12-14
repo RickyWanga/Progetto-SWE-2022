@@ -25,7 +25,7 @@ describe( "Map", () => {
 				"l-tooltip",
 			],
 			propsData: {
-				geo: Tweets.filter(( tweet ) => tweet.geo.target )
+				geo: Tweets.filter(( tweet ) => !!tweet.geo?.target )
 					.map(( tweet ) => ({ latlng: [ tweet.geo.latlng[0], tweet.geo.latlng[1] ]}))
 			},
 		})

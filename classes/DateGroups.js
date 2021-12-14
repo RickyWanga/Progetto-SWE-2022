@@ -51,7 +51,7 @@ class DateGroups {
 	}
 
 	constructor( dates ) {
-		this.#dates_sorted = dates.sort(( a, b ) => a.getTime() > b.getTime())
+		this.#dates_sorted = dates.sort(( a, b ) => a - b )
 		this.#oldest = this.#dates_sorted[ 0 ]
 		this.#newest = this.#dates_sorted[ this.#dates_sorted.length - 1 ]
 		this.#setDateSlugFunction()
