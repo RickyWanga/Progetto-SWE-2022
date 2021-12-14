@@ -86,7 +86,7 @@ export default {
 	},
 	mounted() {
 		this.$nuxt.$on( "query", this.onQuery )
-		this.$nuxt.$on( "toggle-stream", this.onToggleStream )
+		this.$nuxt.$on( "toggle-stream", this.onStreamToggle )
 		this.$nuxt.$on( "tweet-click", this.onTweetClick )
 		this.onToggle( "toggle-map", "show_map" )
 		this.onToggle( "toggle-media", "show_media" )
@@ -101,11 +101,8 @@ export default {
 			onBufferEmpty: this.onSentimentsBufferEmpty,
 		})
 
-		this.stream.module = new Stream( STREAM_ROUTE, this.http_config, ( async_data ) => {
-			const tweets = new Tweets( async_data )
-			this.tweets = tweets.list.concat( this.tweets )
-			this.getSentiments( tweets.list )
-		}, this.showAlertError )
+		this.stream.module = new Stream( STREAM_ROUTE, this.http_config,
+			this.onStreamProgress, this.onStreamError )
 	},
 	methods: {
 		getSentiments( tweets ) {
@@ -153,12 +150,15 @@ export default {
 				this.sentiments.neg += 1
 			}
 		},
-		onToggle( event, model ) {
-			this.$nuxt.$on( event, ( toggle ) => {
-				this[ model ] = toggle
-			})
+		onStreamError( message ) {
+			this.showAlertError( message )
 		},
-		onToggleStream( start ) {
+		onStreamProgress( async_data ) {
+			const tweets = new Tweets( async_data )
+			this.tweets = tweets.list.concat( this.tweets )
+			this.getSentiments( tweets.list )
+		},
+		onStreamToggle( start ) {
 			if ( start ) {
 				this.stream.module?.start( this.stream.query )
 				this.stream.query = null
@@ -166,6 +166,11 @@ export default {
 				this.stream.module?.stop()
 			}
 			this.stream.active = start
+		},
+		onToggle( event, model ) {
+			this.$nuxt.$on( event, ( toggle ) => {
+				this[ model ] = toggle
+			})
 		},
 		onTweetClick( tweet ) {
 			this.tweet_modal_show = true
