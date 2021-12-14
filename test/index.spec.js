@@ -29,6 +29,11 @@ describe( "App", () => {
 						pos: 1,
 						neg: 0,
 					},
+					stream: {
+						active: false,
+						module: {},
+						query: "",
+					},
 					tweets: Tweets,
 				}
 			},
@@ -104,5 +109,36 @@ describe( "App", () => {
 		wrapper.vm.onQuery({ query: "test" })
 		expect( spyOnQuery ).toHaveBeenCalledTimes( 1 )
 		expect( spyGetTweets ).toHaveBeenCalledTimes( 1 )
+	})
+
+	test( "methods.onStreamToggle()", () => {
+		wrapper.vm.stream.module.start = () => {} // Mock
+		wrapper.vm.stream.module.stop = () => {} // Mock
+		const spyStart = jest.spyOn( wrapper.vm.stream.module, "start" )
+		const spyStop = jest.spyOn( wrapper.vm.stream.module, "stop" )
+		// Test branch 1
+		wrapper.vm.onStreamToggle( true )
+		expect( spyStart ).toHaveBeenCalledTimes( 1 )
+		expect( wrapper.vm.stream.query ).toBe( null )
+		expect( wrapper.vm.stream.active ).toBe( true )
+		// Test branch 2
+		wrapper.vm.onStreamToggle( false )
+		expect( spyStop ).toHaveBeenCalledTimes( 1 )
+		expect( wrapper.vm.stream.active ).toBe( false )
+	})
+
+	test( "methods.setStreamQuery()", () => {
+		wrapper.vm.stream.module.setQuery = () => {} // Mock
+		const spy = jest.spyOn( wrapper.vm.stream.module, "setQuery" )
+		const query = "example_query"
+		// Test branch 1
+		wrapper.vm.stream.active = true
+		wrapper.vm.setStreamQuery( query )
+		expect( spy ).toHaveBeenCalledTimes( 1 )
+		expect( wrapper.vm.stream.query ).toBe( null )
+		// Test branch 2
+		wrapper.vm.stream.active = false
+		wrapper.vm.setStreamQuery( query )
+		expect( wrapper.vm.stream.query ).toBe( query )
 	})
 })
