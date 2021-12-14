@@ -1,19 +1,17 @@
 <template>
-	<div class="flex-grow-0" style="overflow:hidden;">
-		<v-row class="flex-grow-0">
-			<v-col
-				v-for="(image, index) in media"
-				:key="index"
-				class="flex-grow-0"
-				cols="4"
-			>
-				<v-img
-					:src="image[1]"
-					aspect-ratio="1"
-				/>
-			</v-col>
-		</v-row>
-	</div>
+	<v-container fill-height class="media-container">
+		<div class="media-list">
+			<v-img
+				v-for="( m, i ) in media"
+				:key="`${ m.key }${ i }`"
+				aspect-ratio="1"
+				class="media-item"
+				width="50%"
+				:src="m.url"
+			/>
+		</div>
+	</v-container>
 </template>
 
 <script src="./Media.js"></script>
+<style src="./Media.css"></style>

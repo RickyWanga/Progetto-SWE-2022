@@ -20,7 +20,7 @@ const TWITTER_API_SEARCH_PARAMS_QUERY = {
 	// organic_metrics,preview_image_url,promoted_metrics,
 	// public_metrics,type,url,width
 	// @REQUIRES: expansions=attachments.media_keys
-	"media.fields": "media_key,duration_ms,height,type,url,width",
+	"media.fields": "media_key,duration_ms,height,type,url,width,preview_image_url",
 
 	// This parameter is used to get the next 'page' of results.
 	// The value used with the parameter is pulled directly from the

@@ -66,8 +66,11 @@ export default {
 				.filter(( tweet ) => !!tweet.geo?.target )
 				.map(( tweet ) => tweet.geo )
 		},
-		media() {
-			return this.tweets && this.tweets.media
+		images() {
+			return this.tweets
+				.filter(( tweet ) => !!tweet.media?.images.length )
+				.map(( tweet ) => tweet.media.images )
+				.flat()
 		},
 		sentiment() {
 			return {
@@ -82,17 +85,6 @@ export default {
 				tags[ tag_slug ] = tags[ tag_slug ] ? tags[ tag_slug ] + 1 : 1
 			}))
 			return Object.entries( tags )
-		},
-		medias() {
-			const medias = []
-			this.tweets.forEach(( tweet ) => {
-				if ( tweet.media ) {
-					tweet.media.forEach(( media ) => {
-						medias.push(media.url)
-					})
-				}
-			})
-			return Object.entries( medias )
 		},
 	},
 	mounted() {

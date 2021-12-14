@@ -1,0 +1,17 @@
+.media-container {
+	background-color: #eee;
+	height: 100%;
+	position: relative;
+	overflow: auto;
+}
+
+.media-list {
+	left: 0;
+	position: absolute;
+	top: 0;
+	width: 100%;
+}
+
+.media-item {
+	float: left;
+}

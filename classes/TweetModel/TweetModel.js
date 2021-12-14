@@ -1,12 +1,13 @@
 import GeoModel from "./GeoModel"
+import MediaModel from "./MediaModel"
+import PublicMetricsModel from "./PublicMetricsModel"
 import UserModel from "./UserModel"
-import PublicMetrics from "./PublicMetrics"
 
 class TweetModel {
 	#id = 0
 	#date = ""
 	#geo = {}
-	#media = []
+	#media = {}
 	#public_metrics = {}
 	#tags = []
 	#text = ""
@@ -19,8 +20,8 @@ class TweetModel {
 		this.#date = tweet.created_at
 		this.#id = tweet.id
 		this.#geo = new GeoModel( tweet )
-		this.#media = tweet.media_expansion
-		this.#public_metrics = new PublicMetrics( tweet )
+		this.#media = new MediaModel( tweet )
+		this.#public_metrics = new PublicMetricsModel( tweet )
 		this.#tags = hashtags.map(( hashtag ) => hashtag.tag )
 		this.#text = text
 		this.#user = new UserModel( tweet )
@@ -43,6 +44,10 @@ class TweetModel {
 		return this.#media
 	}
 
+	get public_metrics() {
+		return this.#public_metrics
+	}
+
 	get tags() {
 		return this.#tags
 	}
@@ -57,10 +62,6 @@ class TweetModel {
 
 	get words() {
 		return this.#words
-	}
-
-	get public_metrics() {
-		return this.#public_metrics
 	}
 }
 
