@@ -1,13 +1,12 @@
 import GeoModel from "./GeoModel"
 import UserModel from "./UserModel"
 import PublicMetrics from "./PublicMetrics"
-import MediaModel from "./MediaModel"
 
 class TweetModel {
 	#id = 0
 	#date = ""
 	#geo = {}
-	#media = {}
+	#media = []
 	#public_metrics = {}
 	#tags = []
 	#text = ""
@@ -20,7 +19,7 @@ class TweetModel {
 		this.#date = tweet.created_at
 		this.#id = tweet.id
 		this.#geo = new GeoModel( tweet )
-		this.#media = new MediaModel( tweet )
+		this.#media = tweet.media_expansion
 		this.#public_metrics = new PublicMetrics( tweet )
 		this.#tags = hashtags.map(( hashtag ) => hashtag.tag )
 		this.#text = text

@@ -7,12 +7,18 @@ class Raccoglitore {
 		return new TweetModel( tweet )
 	}
 
-	// tweets[].author_expansion <- includes.users[]
+	// tweets[].media_expansion.media_key[] <- includes.media_key[]
 	#tweetsHydratesMedia ( tweets, media_expansion ) {
 		tweets.forEach(( tweet ) => {
-			tweet.media_expansion = media_expansion.find(( media_expansion ) =>
-				media_expansion.id === tweet.media_keys
-			)
+			if ( tweet.attachments && tweet.attachments.media_keys ) {
+				const tmp = []
+				tweet.attachments.media_keys.forEach(( media ) => {
+					tmp.push(media_expansion.find(( media_expansion ) =>
+						media_expansion.media_key === media
+					))
+				})
+				tweet.media_expansion = tmp
+			}
 		})
 	}
 
