@@ -52,6 +52,14 @@
 					<small v-if="tweet.public_metrics.reply_count" class="tweet-reply">
 						{{ tweet.public_metrics.reply_count }}
 					</small>
+
+					<v-icon
+						v-if="tweet.tags.some(Check)"
+						color="primary"
+						small
+					>
+						mdi-human-male-board-poll
+					</v-icon>
 				</span>
 			</p>
 			<slot />

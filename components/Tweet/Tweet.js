@@ -5,4 +5,10 @@ export default {
 
 		}
 	},
+	methods: {
+		Check (tag) {
+			const upper = tag.toUpperCase()
+			return upper.startsWith('CONCORSO_')
+		}
+	},
 }
