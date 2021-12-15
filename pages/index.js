@@ -104,6 +104,7 @@ export default {
 		initData() {
 			this.tweets = []
 			this.sentiments.loading = true
+			this.sentiments.module?.bufferEmpty()
 			this.sentiments.neg = 0
 			this.sentiments.pos = 0
 		},
