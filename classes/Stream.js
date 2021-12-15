@@ -62,7 +62,7 @@ class Stream {
 		})
 	}
 
-	constructor( http_route, http_config, onProgress, onError ) {
+	constructor({ http_route, http_config, onProgress, onError }) {
 		this.#http = http_config // Http handler injection
 		this.#http_headers = { "Authorization": `Bearer ${ btoa( Date.now() + Math.random() )}` }
 		this.#onErrorCallback = onError
