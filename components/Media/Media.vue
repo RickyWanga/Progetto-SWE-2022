@@ -8,7 +8,7 @@
 				:src="m.url"
 				aspect-ratio="1"
 				class="media-item"
-				:width="imgWidth"
+				:width="imgWidth "
 			/>
 		</div>
 	</v-container>
