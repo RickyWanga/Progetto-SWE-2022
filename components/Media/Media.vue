@@ -6,6 +6,7 @@
 				:key="`${ m.key }${ i }`"
 				:alt="m.alt"
 				:src="m.url"
+				:lazy-src="m.url"
 				aspect-ratio="1"
 				class="media-item"
 				:width="imgWidth "
