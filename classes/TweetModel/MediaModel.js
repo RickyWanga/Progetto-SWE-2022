@@ -8,6 +8,7 @@ class MediaModel {
 		if ( tweet.media_expansion ) {
 			this.#all = tweet.media_expansion.map(( media ) => {
 				return {
+					alt: media.alt_text,
 					height: media.height,
 					key: media.media_key,
 					target: tweet.id,
