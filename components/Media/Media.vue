@@ -6,7 +6,7 @@
 				:key="`${ m.key }${ i }`"
 				aspect-ratio="1"
 				class="media-item"
-				width="50%"
+				:width="imgWidth"
 				:src="m.url"
 			/>
 		</div>
