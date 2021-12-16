@@ -44,9 +44,6 @@ describe( "App", () => {
 				$nuxt: {
 					$on: () => {},
 				},
-				Raccoglitore: class {
-					tweets = Tweets
-				},
 			},
 			stubs: [
 				"Analytics",
@@ -64,6 +61,7 @@ describe( "App", () => {
 	})
 
 	test( "is a Vue instance", () => {
+		wrapper.vm.tweets = Tweets
 		expect( wrapper.vm ).toBeTruthy()
 	})
 
@@ -76,6 +74,10 @@ describe( "App", () => {
 	})
 
 	test( "sentiment computed property", () => {
+		wrapper.vm.sentiments = {
+			pos: 1,
+			neg: 0,
+		}
 		expect( wrapper.vm.sentiment ).toMatchObject({
 			positive: 50,
 			negative: 0,
@@ -86,12 +88,13 @@ describe( "App", () => {
 		expect( wrapper.vm.tags[ 0 ] ).toHaveLength( 2 )
 	})
 
-	test( "methods.init()", async () => {
-		wrapper.vm.init()
+	test( "methods.initData()", async () => {
+		wrapper.vm.initData()
 		await wrapper.vm.$nextTick()
 		expect( wrapper.vm.tweets.length ).toBe( 0 )
-		expect( wrapper.vm.sentiments.pos ).toBe( 0 )
+		expect( wrapper.vm.sentiments.loading ).toBe( true )
 		expect( wrapper.vm.sentiments.neg ).toBe( 0 )
+		expect( wrapper.vm.sentiments.pos ).toBe( 0 )
 	})
 
 	test( "methods.onQuery() with empty 'query'", () => {

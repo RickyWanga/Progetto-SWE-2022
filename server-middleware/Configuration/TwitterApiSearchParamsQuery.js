@@ -62,8 +62,8 @@ const TWITTER_API_SEARCH_PARAMS_QUERY = {
 	"user.fields": "username,name,id,profile_image_url,location",
 }
 
-const requestParams = Object.entries( TWITTER_API_SEARCH_PARAMS_QUERY )
+const twitter_api_search_params_query = Object.entries( TWITTER_API_SEARCH_PARAMS_QUERY )
 	.reduce(( params, [ param, value ]) =>
 		( value && ( params[ param ] = value ) && params ) || params, { })
 
-export default requestParams
+export default twitter_api_search_params_query

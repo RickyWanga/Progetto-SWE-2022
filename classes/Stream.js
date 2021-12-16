@@ -2,8 +2,8 @@ class Stream {
 	#http = {}
 	#http_headers = {}
 	#old_seek = 0
-	#onErrorCallback = () => {}
-	#onProgressCallback = () => {}
+	#onErrorCallback = null
+	#onProgressCallback = null
 	#route = ""
 
 	#onError( message ) {
@@ -62,9 +62,10 @@ class Stream {
 		})
 	}
 
-	constructor( http_route, http_config, onProgress, onError ) {
+	constructor({ http_route, http_config, onProgress, onError }) {
+		const bearer_token = Buffer.from( `${ Date.now() }${ Math.random() }` ).toString( "base64" ).replace( /=/g, "L" )
 		this.#http = http_config // Http handler injection
-		this.#http_headers = { "Authorization": `Bearer ${ btoa( Date.now() + Math.random() )}` }
+		this.#http_headers = { "Authorization": `Bearer ${ bearer_token }` }
 		this.#onErrorCallback = onError
 		this.#onProgressCallback = onProgress
 		this.#route = http_route
