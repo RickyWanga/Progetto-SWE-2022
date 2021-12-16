@@ -52,6 +52,7 @@ sonar:
     entrypoint: [""]
   variables:
     SONAR_HOST_URL: $SONAR_HOST_URL
+    SONAR_PROJECT_VERSION: $CI_COMMIT_BRANCH
     SONAR_TOKEN: $SONAR_TOKEN
     SONAR_USER_HOME: "${CI_PROJECT_DIR}/.sonar"
     GIT_DEPTH: "0"
@@ -62,8 +63,7 @@ sonar:
   script:
     - npm ci
     - npm run test:ci
-    - npx browserslist@latest --update-db
-    - sonar-scanner -Dsonar.projectVersion=1.0
+    - sonar-scanner -Dsonar.projectVersion="$SONAR_PROJECT_VERSION"
   needs: ["test"]
   rules:
     - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
