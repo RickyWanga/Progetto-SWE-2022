@@ -42,7 +42,7 @@
 				</div>
 			</v-col>
 		</v-row>
-		<v-dialog v-model="alert.show" transition="dialog-top-transition">
+		<v-dialog v-model="alert.show" transition="dialog-top-transition" width="auto">
 			<v-alert class="ma-0" :type="alert.type">{{ alert.message }}</v-alert>
 		</v-dialog>
 		<TweetModal

@@ -88,25 +88,9 @@ export default {
 		},
 	},
 	mounted() {
-		this.$nuxt.$on( "query", this.onQuery )
-		this.$nuxt.$on( "toggle-stream", this.onStreamToggle )
-		this.$nuxt.$on( "tweet-click", this.onTweetClick )
-		this.$nuxt.$on( "tweet-modal-off", this.onTweetModalOff )
-		this.onToggle( "toggle-map", "show_map" )
-		this.onToggle( "toggle-media", "show_media" )
-		this.onToggle( "toggle-tagcloud", "show_tagcloud" )
-
-		this.sentiments.module = new Sentiments({
-			http_route: SENTIMENT_ROUTE,
-			http_config: this.http_config,
-			buffer_page_size: this.client_configuration.SENTIMENT_PAGE_SIZE * 1,
-			buffer_interval_duration: this.client_configuration.SENTIMENT_PAGE_INTERVAL * 1,
-			onSetSentiment: this.onSentimentSet,
-			onBufferEmpty: this.onSentimentsBufferEmpty,
-		})
-
-		this.stream.module = new Stream( STREAM_ROUTE, this.http_config,
-			this.onStreamProgress, this.onStreamError )
+		this.initData()
+		this.initEvents()
+		this.initModules()
 	},
 	methods: {
 		getReplies({ conversation_id }) {
@@ -128,15 +112,41 @@ export default {
 				this.tweets_loading = false
 			})
 		},
-		init() {
+		initData() {
 			this.tweets = []
-			this.sentiments.pos = 0
-			this.sentiments.neg = 0
 			this.sentiments.loading = true
+			this.sentiments.module?.bufferEmpty()
+			this.sentiments.neg = 0
+			this.sentiments.pos = 0
+		},
+		initEvents() {
+			this.$nuxt.$on( "query", this.onQuery )
+			this.$nuxt.$on( "toggle-stream", this.onStreamToggle )
+			this.$nuxt.$on( "tweet-click", this.onTweetClick )
+			this.$nuxt.$on( "tweet-modal-off", this.onTweetModalOff )
+			this.onToggle( "toggle-map", "show_map" )
+			this.onToggle( "toggle-media", "show_media" )
+			this.onToggle( "toggle-tagcloud", "show_tagcloud" )
+		},
+		initModules() {
+			this.sentiments.module = new Sentiments({
+				http_route: SENTIMENT_ROUTE,
+				http_config: this.http_config,
+				buffer_page_size: this.client_configuration.SENTIMENT_PAGE_SIZE * 1,
+				buffer_interval_duration: this.client_configuration.SENTIMENT_PAGE_INTERVAL * 1,
+				onSetSentiment: this.onSentimentSet,
+				onBufferEmpty: this.onSentimentsBufferEmpty,
+			})
+			this.stream.module = new Stream({
+				http_route: STREAM_ROUTE,
+				http_config: this.http_config,
+				onProgress: this.onStreamProgress,
+				onError: this.onStreamError
+			})
 		},
 		async onQuery({ query }) {
 			if ( !query ) { return } // Guard
-			this.init()
+			this.initData()
 			const async_data = await this.getTweets( query )
 			if ( !async_data.error ) {
 				const tweets = new Tweets( async_data )
@@ -152,7 +162,6 @@ export default {
 			}
 		},
 		onSentimentsBufferEmpty() {
-			this.tweets = [ ...this.tweets ] // Flush data
 			this.sentiments.loading = false
 		},
 		onSentimentSet( _, sentiment ) {
