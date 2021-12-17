@@ -1,4 +1,4 @@
-class PublicMetrics {
+class PublicMetricsModel {
 	#retweet_count = ""
 	#reply_count = ""
 	#like_count= ""
@@ -30,4 +30,4 @@ class PublicMetrics {
 	}
 }
 
-export default PublicMetrics
+export default PublicMetricsModel

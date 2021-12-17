@@ -11,7 +11,7 @@ const TWITTER_API_SEARCH_PARAMS_QUERY = {
 	// author_id,referenced_tweets.id,referenced_tweets.id.author_id,
 	// entities.mentions.username,attachments.poll_ids,
 	// attachments.media_keys,in_reply_to_user_id,geo.place_id
-	"expansions": "author_id,geo.place_id",
+	"expansions": "author_id,geo.place_id,attachments.poll_ids,attachments.media_keys",
 
 	// default: 10
 	"max_results": 0,
@@ -20,7 +20,7 @@ const TWITTER_API_SEARCH_PARAMS_QUERY = {
 	// organic_metrics,preview_image_url,promoted_metrics,
 	// public_metrics,type,url,width
 	// @REQUIRES: expansions=attachments.media_keys
-	"media.fields": "",
+	"media.fields": "media_key,duration_ms,height,type,url,width,preview_image_url",
 
 	// This parameter is used to get the next 'page' of results.
 	// The value used with the parameter is pulled directly from the
@@ -49,7 +49,7 @@ const TWITTER_API_SEARCH_PARAMS_QUERY = {
 	// @SEE: expansions=referenced_tweets.id (To return the specified fields
 	// for both the original Tweet and any included referenced Tweets)
 	// @DOC: https://developer.twitter.com/en/docs/twitter-api/data-dictionary/object-model/tweet
-	"tweet.fields": "text,id,author_id,created_at,entities,geo,public_metrics,referenced_tweets,conversation_id",
+	"tweet.fields": "text,id,author_id,created_at,entities,geo,public_metrics,attachments,referenced_tweets,conversation_id",
 
 	// Returns results with a Tweet ID less than (that is, older than) the
 	// specified ID. The ID specified is exclusive and responses will not include it

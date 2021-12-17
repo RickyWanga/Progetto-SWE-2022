@@ -69,8 +69,11 @@ export default {
 				.filter(( tweet ) => !!tweet.geo?.target )
 				.map(( tweet ) => tweet.geo )
 		},
-		media() {
-			return this.tweets && this.tweets.media
+		images() {
+			return this.tweets
+				.filter(( tweet ) => !!tweet.media?.images.length )
+				.map(( tweet ) => tweet.media.images )
+				.flat()
 		},
 		sentiment() {
 			return {
@@ -185,6 +188,7 @@ export default {
 				this.stream.query = null
 			} else {
 				this.stream.module?.stop()
+				this.tweets = [ ...this.tweets ] // Flush data
 			}
 			this.stream.active = start
 		},
