@@ -45,16 +45,22 @@
 		<v-dialog v-model="alert.show" transition="dialog-top-transition" width="auto">
 			<v-alert class="ma-0" :type="alert.type">{{ alert.message }}</v-alert>
 		</v-dialog>
-		<v-dialog
-			v-model="tweet_modal_show"
-			transition="dialog-top-transition"
-			max-width="600"
+		<TweetModal
+			v-if="tweet_modal.show"
 		>
-			<Tweet
-				v-if="tweet_modal_show"
-				:tweet="tweet_modal_tweet"
-			/>
-		</v-dialog>
+			<v-row style="border:5px solid lightblue; background:lightblue; border-radius:15px;">
+				<Tweet
+					style="background:lightblue;"
+					:tweet="tweet_modal.tweet"
+				/>
+			</v-row>
+			<v-row>
+				<TweetReplies
+					:tweet="tweet_modal.tweet"
+					:replies="replies"
+				/>
+			</v-row>
+		</TweetModal>
 	</v-container>
 </template>
 
