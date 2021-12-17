@@ -1,21 +1,34 @@
+
 import Vuetify from "vuetify"
 import { createLocalVue, mount } from "@vue/test-utils"
-import Component from "@/components/Media/Media.vue"
+import Component from "@/components/TweetModal/TweetModal.vue"
 
-describe( "Media", () => {
+describe( "TweetModal", () => {
 	const local_vue = createLocalVue()
 	const mountComponent = ( custom_options = {} ) => mount( Component, Object.assign({
 		local_vue,
 	}, custom_options ))
 
+	local_vue.use(Vuetify)
+
 	let wrapper
 
 	beforeAll(() => {
 		wrapper = mountComponent({
-			vuetify: new Vuetify(),
-			propsData: {
-
+			data() {
+				return {
+					on: true
+				}
 			},
+			mocks: {
+				$nuxt: {
+					$emit: () => {},
+				},
+			},
+			stubs: [
+				"v-dialog",
+				"v-icon",
+			],
 		})
 	})
 
@@ -23,12 +36,10 @@ describe( "Media", () => {
 		expect( wrapper.vm ).toBeTruthy()
 	})
 
-	test( "'show' property watch", async () => {
-		wrapper.setProps({show: true})
+	test( "watch.on", async () => {
+		const spy = jest.spyOn( wrapper.vm, "vModalOff" )
+		wrapper.setData({ on: false })
 		await wrapper.vm.$nextTick()
-		expect( wrapper.vm.imgWidth ).toBe('50%')
-		wrapper.setProps({show: false})
-		await wrapper.vm.$nextTick()
-		expect( wrapper.vm.imgWidth ).toBe('25%')
+		expect( spy ).toHaveBeenCalledTimes( 1 )
 	})
 })

@@ -1,14 +1,17 @@
 import GeoModel from "./GeoModel"
 import MediaModel from "./MediaModel"
 import PublicMetricsModel from "./PublicMetricsModel"
+import ReferenceModel from "./ReferenceModel"
 import UserModel from "./UserModel"
 
 class TweetModel {
+	#conversation_id = 0
 	#id = 0
 	#date = ""
 	#geo = {}
 	#media = {}
 	#public_metrics = {}
+	#reference = {}
 	#tags = []
 	#text = ""
 	#user = {}
@@ -17,15 +20,21 @@ class TweetModel {
 	constructor( tweet ) {
 		const hashtags = ( tweet.entities && tweet.entities.hashtags ) || []
 		const text = tweet.text || ""
+		this.#conversation_id = tweet.conversation_id
 		this.#date = tweet.created_at
 		this.#id = tweet.id
 		this.#geo = new GeoModel( tweet )
 		this.#media = new MediaModel( tweet )
 		this.#public_metrics = new PublicMetricsModel( tweet )
+		this.#reference = new ReferenceModel( tweet )
 		this.#tags = hashtags.map(( hashtag ) => hashtag.tag )
 		this.#text = text
 		this.#user = new UserModel( tweet )
 		this.#words = text.split( " " )
+	}
+
+	get conversation_id() {
+		return this.#conversation_id
 	}
 
 	get date() {
@@ -46,6 +55,10 @@ class TweetModel {
 
 	get public_metrics() {
 		return this.#public_metrics
+	}
+
+	get reference() {
+		return this.#reference
 	}
 
 	get tags() {
