@@ -54,7 +54,7 @@
 					</small>
 
 					<v-icon
-						v-if="tweet.tags.some(Check)"
+						v-if="checkConcorso"
 						color="primary"
 						small
 					>
@@ -63,6 +63,18 @@
 				</span>
 			</p>
 			<slot />
+			<p
+				v-if="isModal && checkConcorso"
+				style="padding-top: 5px;"
+			>
+				<v-icon
+					color="black"
+					small
+				>
+					mdi-trophy
+				</v-icon>
+				Questo utente ha dato inizio ad un concorso
+			</p>
 		</v-list-item-content>
 	</v-list-item>
 </template>

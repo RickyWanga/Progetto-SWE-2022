@@ -1,14 +1,19 @@
 export default {
-	props: [ "tweet" ],
+	props: [ "tweet", "isModal" ],
 	data() {
 		return {
 
 		}
 	},
 	methods: {
-		Check (tag) {
+		check (tag) {
 			const upper = tag.toUpperCase()
 			return upper.startsWith('CONCORSO_')
+		}
+	},
+	computed: {
+		checkConcorso () {
+			return this.tweet.tags.some(this.check)
 		}
 	},
 }
