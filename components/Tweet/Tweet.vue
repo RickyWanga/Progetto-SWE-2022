@@ -11,7 +11,12 @@
 		<v-list-item-content>
 			<p class="tweets-listitem-title">
 				<strong>{{ tweet.user.name }}</strong>
-				<span class="text--disabled font-weight-bold">@{{ tweet.user.account }}</span>
+				<span
+					class="text--disabled font-weight-bold"
+					@click="$nuxt.$emit( 'query', { query: `from:${ tweet.user.account }` })"
+				>
+					@{{ tweet.user.account }}
+				</span>
 			</p>
 			<p class="tweets-listitem-text mb-0">
 				<span class="font-weight-regular">
