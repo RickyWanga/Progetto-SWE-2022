@@ -75,6 +75,18 @@
 				</v-icon>
 				Questo utente ha dato inizio ad un concorso
 			</p>
+			<p
+				v-if="isReplyModal && checkScrittore"
+				style="padding-top: 5px;"
+			>
+				<v-icon
+					color="black"
+					small
+				>
+					mdi-book
+				</v-icon>
+				Questo è un libro da poter votare
+			</p>
 		</v-list-item-content>
 	</v-list-item>
 </template>
