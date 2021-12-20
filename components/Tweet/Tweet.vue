@@ -60,6 +60,13 @@
 					>
 						mdi-human-male-board-poll
 					</v-icon>
+					<v-icon
+						v-if="checkScrittore"
+						color="primary"
+						small
+					>
+						mdi-book-open-variant
+					</v-icon>
 				</span>
 			</p>
 			<slot />
