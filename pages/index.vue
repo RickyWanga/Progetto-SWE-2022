@@ -56,6 +56,16 @@
 					:tweet="tweet_modal.tweet"
 				/>
 			</v-row>
+			<v-row v-if="tweet_modal.tweet.media.images[0]">
+				<v-carousel hide-delimiters>
+					<v-carousel-item
+						v-for="(item,i) in tweet_modal.tweet.media.images"
+						:key="i"
+						:src="item.url"
+						:lazy-src="item.url"
+					/>
+				</v-carousel>
+			</v-row>
 			<v-row>
 				<TweetReplies
 					:tweet="tweet_modal.tweet"
