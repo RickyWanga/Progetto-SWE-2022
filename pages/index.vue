@@ -58,7 +58,7 @@
 			<v-row>
 				<TweetReplies
 					:tweet="tweet_modal.tweet"
-					:replies="replies"
+					:replies="tweet_replies"
 				/>
 			</v-row>
 		</TweetModal>
