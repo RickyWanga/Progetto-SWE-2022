@@ -126,6 +126,7 @@ export default {
 			this.$nuxt.$on( "query", this.onQuery )
 			this.$nuxt.$on( "toggle-stream", this.onStreamToggle )
 			this.$nuxt.$on( "tweet-click", this.onTweetClick )
+			this.$nuxt.$on( "media-click", this.onMediaClick )
 			this.$nuxt.$on( "tweet-modal-off", this.onTweetModalOff )
 			this.onToggle( "toggle-map", "show_map" )
 			this.onToggle( "toggle-media", "show_media" )
@@ -201,6 +202,10 @@ export default {
 			this.tweet_replies = await this.getReplies( tweet )
 			this.tweet_modal.tweet = tweet
 			this.tweet_modal.show = true
+		},
+		onMediaClick(id) {
+			const found = this.tweets.find( tweet => tweet.id === id )
+			this.onTweetClick( found )
 		},
 		onTweetModalOff() {
 			this.tweet_modal.show = false
