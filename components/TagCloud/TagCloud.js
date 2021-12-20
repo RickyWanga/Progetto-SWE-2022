@@ -14,7 +14,7 @@ export default {
 			return this.colorFunction( this.words )
 		},
 		words() {
-			return this.tags
+			return this.tags.slice(0, 50)
 		},
 	},
 	components: {

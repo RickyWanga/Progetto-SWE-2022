@@ -20,7 +20,7 @@ class Sentiments {
 				}
 			})
 		} else {
-			this.#bufferConsumeIntervalStop()
+			this.bufferEmpty()
 			this.#onBufferEmpty && this.#onBufferEmpty()
 		}
 	}
@@ -52,8 +52,8 @@ class Sentiments {
 	}
 
 	#setSentiment( tweet, sentiment ) {
-		this.#onSetSentiment && this.#onSetSentiment( tweet, sentiment )
 		tweet.sentiment = sentiment
+		this.#onSetSentiment && this.#onSetSentiment( tweet, sentiment )
 	}
 
 	/**
@@ -65,6 +65,14 @@ class Sentiments {
 		if ( !this.#buffer_consume_interval ) {
 			this.#bufferConsumeIntervalStart()
 		}
+	}
+
+	/**
+	 *
+	 */
+	bufferEmpty() {
+		this.#bufferConsumeIntervalStop()
+		this.#buffer = []
 	}
 
 	/**

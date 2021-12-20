@@ -24,7 +24,9 @@
 				</div>
 			</v-col>
 			<v-col v-if="show_media" :cols="(show_map || show_tagcloud) ? 4 : 8">
-				<Media />
+				<div style="height:100%">
+					<Media :media="images" :show="show_map || show_tagcloud" />
+				</div>
 			</v-col>
 			<v-col v-if="show_map || show_tagcloud" :cols="(show_media) ? 4 : 8">
 				<div
@@ -42,7 +44,7 @@
 				</div>
 			</v-col>
 		</v-row>
-		<v-dialog v-model="alert.show" transition="dialog-top-transition">
+		<v-dialog v-model="alert.show" transition="dialog-top-transition" width="auto">
 			<v-alert class="ma-0" :type="alert.type">{{ alert.message }}</v-alert>
 		</v-dialog>
 		<TweetModal
