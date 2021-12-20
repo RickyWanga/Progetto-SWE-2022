@@ -148,6 +148,9 @@ export default {
 			})
 		},
 		async onQuery({ query }) {
+			if (this.tweet_modal.show === true) {
+				this.onTweetModalOff()
+			}
 			if ( !query ) { return } // Guard
 			this.initData()
 			const async_data = await this.getTweets( query )
