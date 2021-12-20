@@ -54,6 +54,7 @@
 				<Tweet
 					style="background:lightblue;"
 					:tweet="tweet_modal.tweet"
+					isModal="true"
 				/>
 			</v-row>
 			<v-row>

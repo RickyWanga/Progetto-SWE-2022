@@ -52,9 +52,29 @@
 					<small v-if="tweet.public_metrics.reply_count" class="tweet-reply">
 						{{ tweet.public_metrics.reply_count }}
 					</small>
+
+					<v-icon
+						v-if="checkConcorso"
+						color="primary"
+						small
+					>
+						mdi-human-male-board-poll
+					</v-icon>
 				</span>
 			</p>
 			<slot />
+			<p
+				v-if="isModal && checkConcorso"
+				style="padding-top: 5px;"
+			>
+				<v-icon
+					color="black"
+					small
+				>
+					mdi-trophy
+				</v-icon>
+				Questo utente ha dato inizio ad un concorso
+			</p>
 		</v-list-item-content>
 	</v-list-item>
 </template>
