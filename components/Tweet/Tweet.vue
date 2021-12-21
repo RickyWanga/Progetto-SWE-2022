@@ -83,7 +83,7 @@
 				Questo utente ha dato inizio ad un concorso
 			</p>
 			<p
-				v-if="isReplyModal && checkScrittore"
+				v-if="( isReplyModal || isModal ) && checkScrittore"
 				style="padding-top: 5px;"
 			>
 				<v-icon
