@@ -42,6 +42,7 @@ describe( "App", () => {
 					$get: () => Promise.resolve({ score: 0.99 })
 				},
 				$nuxt: {
+					$emit: () => {},
 					$on: () => {},
 				},
 			},
