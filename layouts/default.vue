@@ -147,8 +147,9 @@ export default {
 		onQuery() {
 			this.button_stream_disabled = false
 		},
-		onStreamStop() {
+		onStreamStop({ disabled }) {
 			this.toggle_stream = false
+			this.button_stream_disabled = disabled
 		},
 	}
 }

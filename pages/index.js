@@ -164,7 +164,7 @@ export default {
 					this.setStreamQuery( query )
 				} else {
 					this.showAlertInfo( LABEL_INFO_EMPTY )
-					this.streamStop()
+					this.streamStop( true )
 				}
 			} else {
 				this.showAlertError( async_data.error.message || LABEL_ERROR_UNKNOWN )
@@ -233,10 +233,10 @@ export default {
 			this.stream.module?.start( query )
 			this.$nuxt.$emit( "stream-start" )
 		},
-		streamStop() {
+		streamStop( disabled ) {
 			this.stream.active = false
 			this.stream.module?.stop()
-			this.$nuxt.$emit( "stream-stop" )
+			this.$nuxt.$emit( "stream-stop", { disabled })
 		},
 	},
 }
