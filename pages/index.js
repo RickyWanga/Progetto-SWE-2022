@@ -196,7 +196,6 @@ export default {
 				this.streamStop()
 				this.tweets = [ ...this.tweets ] // Flush data
 			}
-			this.stream.active = start
 		},
 		onToggle( event, model ) {
 			this.$nuxt.$on( event, ( toggle ) => {
