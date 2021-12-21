@@ -25,6 +25,11 @@ describe( "App", () => {
 						SENTIMENT_PAGE_SIZE: 5,
 						SENTIMENT_PAGE_INTERVAL: 0,
 					},
+					http_config: {
+						module: {
+							get: () => {},
+						},
+					},
 					sentiments: {
 						pos: 1,
 						neg: 0,

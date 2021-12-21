@@ -164,6 +164,7 @@ export default {
 					this.setStreamQuery( query )
 				} else {
 					this.showAlertInfo( LABEL_INFO_EMPTY )
+					this.streamStop()
 				}
 			} else {
 				this.showAlertError( async_data.error.message || LABEL_ERROR_UNKNOWN )
