@@ -76,9 +76,10 @@ export default {
 				.flat()
 		},
 		sentiment() {
+			const total = ( this.sentiments.loading ? this.sentiments.pos + this.sentiments.neg : this.tweets.length ) || 1
 			return {
-				positive: Math.round(( this.sentiments.pos * 100 ) / ( this.tweets.length || 1 )),
-				negative: Math.round(( this.sentiments.neg * 100 ) / ( this.tweets.length || 1 )),
+				positive: Math.round(( this.sentiments.pos * 100 ) / total ),
+				negative: Math.round(( this.sentiments.neg * 100 ) / total ),
 			}
 		},
 		tags() {
@@ -104,8 +105,8 @@ export default {
 				})
 			})
 		},
-		getSentiments( tweets ) {
-			this.sentiments.module.bufferAdd( tweets )
+		getSentiments( tweets, has_priority ) {
+			this.sentiments.module.bufferAdd( tweets, has_priority )
 		},
 		getTweets( query, next_token, max_results ) {
 			this.tweets_loading = true
@@ -158,8 +159,7 @@ export default {
 				this.onQuery({ query, max_results, next_token })
 			}
 		},
-		async onQuery({ query, next_token }) {
-			const max_results = 1000 //@TODO
+		async onQuery({ query, next_token, max_results }) {
 			if ( !query ) { return } // Guard
 			if ( !next_token ) {
 				this.initData()
@@ -183,7 +183,8 @@ export default {
 		onSentimentsBufferEmpty() {
 			this.sentiments.loading = false
 		},
-		onSentimentSet( _, sentiment ) {
+		onSentimentSet( tweet, sentiment ) {
+			tweet.sentiment = sentiment
 			if ( sentiment.value > 0 ) {
 				this.sentiments.pos += 1
 			} else if ( sentiment.value < 0 ) {
@@ -196,7 +197,7 @@ export default {
 		onStreamProgress( async_data ) {
 			const tweets = new Tweets( async_data )
 			this.tweets = tweets.list.concat( this.tweets )
-			this.getSentiments( tweets.list )
+			this.getSentiments( tweets.list, true )
 		},
 		onStreamToggle( start ) {
 			if ( start ) {
