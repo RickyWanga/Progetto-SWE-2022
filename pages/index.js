@@ -107,10 +107,12 @@ export default {
 		getSentiments( tweets ) {
 			this.sentiments.module.bufferAdd( tweets )
 		},
-		getTweets( query ) {
+		getTweets( query, next_token, max_results ) {
 			this.tweets_loading = true
-			return this.$axios.$get( SEARCH_ROUTE, { params: {
-				query
+			return this.http_config.module.$get( SEARCH_ROUTE, { params: {
+				query,
+				next_token,
+				max_results,
 			}}).finally(() => {
 				this.tweets_loading = false
 			})
@@ -121,6 +123,7 @@ export default {
 			this.sentiments.module?.bufferEmpty()
 			this.sentiments.neg = 0
 			this.sentiments.pos = 0
+			this.tweet_modal.show = false
 		},
 		initEvents() {
 			this.$nuxt.$on( "query", this.onQuery )
@@ -148,19 +151,28 @@ export default {
 				onError: this.onStreamError
 			})
 		},
-		async onQuery({ query }) {
-			if ( !query ) { return } // Guard
-			if (this.tweet_modal.show === true) {
-				this.onTweetModalOff()
+		loopNextResults({ query, async_data, max_results }) {
+			const next_token = async_data.meta?.next_token
+			max_results = max_results - async_data.meta?.result_count
+			if ( next_token && max_results > 0 ) {
+				this.onQuery({ query, max_results, next_token })
 			}
-			this.initData()
-			const async_data = await this.getTweets( query )
+		},
+		async onQuery({ query, next_token }) {
+			const max_results = 1000 //@TODO
+			if ( !query ) { return } // Guard
+			if ( !next_token ) {
+				this.initData()
+			}
+			const async_data = await this.getTweets( query, next_token, max_results )
 			if ( !async_data.error ) {
+				async_data.data = async_data.data?.slice( 0, max_results )
 				const tweets = new Tweets( async_data )
-				this.tweets = tweets.list
+				this.tweets = this.tweets.concat( tweets.list )
 				if ( tweets.list.length ) {
 					this.getSentiments( tweets.list )
 					this.setStreamQuery( query )
+					this.loopNextResults({ query, async_data, max_results })
 				} else {
 					this.showAlertInfo( LABEL_INFO_EMPTY )
 				}
