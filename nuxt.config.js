@@ -27,6 +27,9 @@ export default {
 	css: [
 	],
 
+	// https://nuxtjs.org/docs/configuration-glossary/configuration-loading/
+	loading: false,
+
 	// https://nuxtjs.org/docs/directory-structure/nuxt-config#privateruntimeconfig
 	privateRuntimeConfig: {
 		// …: process.env.…,
@@ -34,7 +37,10 @@ export default {
 
 	// https://nuxtjs.org/docs/configuration-glossary/configuration-servermiddleware
 	serverMiddleware: [
-		'~/server-middleware/twitter/search.js',
+		'~/server-middleware/ClientConfiguration.js',
+		'~/server-middleware/Search.js',
+		'~/server-middleware/Sentiment.js',
+		'~/server-middleware/Stream.js',
 	],
 
 	// Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins

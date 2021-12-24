@@ -75,6 +75,21 @@
 				<v-toolbar-title v-text="title" />
 			</nuxt-link>
 			<v-spacer />
+			<v-switch
+				v-model="toggle_stream"
+				class="v-input--reverse"
+				color="yellow"
+				dark
+				flat
+				hide-details
+				inset
+				:disabled="button_stream_disabled"
+				@click.stop="$nuxt.$emit( 'toggle-stream', toggle_stream )"
+			>
+				<template #label>
+					Flusso di Tweet in tempo reale
+				</template>
+			</v-switch>
 		</v-app-bar>
 		<v-main>
 			<Nuxt />
@@ -92,6 +107,7 @@
 export default {
 	data () {
 		return {
+			button_stream_disabled: true,
 			clipped: true,
 			drawer: false,
 			fixed: true,
@@ -119,8 +135,28 @@ export default {
 			title: 'TED - Twitter Extended Dashboard',
 			toggle_map: true,
 			toggle_media: true,
+			toggle_stream: false,
 			toggle_tagcloud: true,
 		}
 	},
+	mounted() {
+		this.$nuxt.$on( "query", this.onQuery )
+	},
+	methods: {
+		onQuery() {
+			this.button_stream_disabled = false
+		},
+	}
 }
 </script>
+
+<style>
+.v-input--reverse .v-input__slot {
+	flex-direction: row-reverse;
+	justify-content: flex-end;
+}
+
+.v-input--reverse .v-input--selection-controls__input {
+	margin: 0 36px 0 12px;
+}
+</style>
