@@ -52,7 +52,6 @@ class Sentiments {
 	}
 
 	#setSentiment( tweet, sentiment ) {
-		tweet.sentiment = sentiment
 		this.#onSetSentiment && this.#onSetSentiment( tweet, sentiment )
 	}
 
@@ -60,8 +59,8 @@ class Sentiments {
 	 *
 	 * @param {Array<TweetModel>} tweets
 	 */
-	bufferAdd( tweets ) {
-		this.#buffer = tweets.concat( this.#buffer )
+	bufferAdd( tweets, has_priority ) {
+		this.#buffer = has_priority ? tweets.concat( this.#buffer ) : this.#buffer.concat( tweets )
 		if ( !this.#buffer_consume_interval ) {
 			this.#bufferConsumeIntervalStart()
 		}
