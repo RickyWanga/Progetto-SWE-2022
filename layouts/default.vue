@@ -179,6 +179,7 @@ export default {
 		this.$nuxt.$emit( "max_results:change", this.max_results )
 		this.$nuxt.$on( "query", this.onQuery )
 		this.$nuxt.$on( "max_results:change", this.onMaxResultChange )
+		this.$nuxt.$on( "stream-stop", this.onStreamStop )
 	},
 	methods: {
 		checkMaxResultRange( val ) {
@@ -192,6 +193,10 @@ export default {
 		},
 		onQuery() {
 			this.button_stream_disabled = false
+		},
+		onStreamStop({ disabled }) {
+			this.toggle_stream = false
+			this.button_stream_disabled = disabled
 		},
 	}
 }
