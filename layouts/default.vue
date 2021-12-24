@@ -46,12 +46,39 @@
 					/>
 				</v-list-item>
 			</v-list>
+			<v-list>
+				<v-list-item>
+					<v-container>
+						<v-row>
+							<h3>Impostazioni</h3>
+						</v-row>
+					</v-container>
+				</v-list-item>
+				<v-list-item>
+					<v-container>
+						<v-row>
+							Numero massimo di Tweet da mostrare:
+						</v-row>
+						<v-row>
+							<v-text-field
+								v-model.number="max_results"
+								:rules="maxResultsRules"
+								class="mt-0 pt-0"
+								min="10"
+								required
+								type="number"
+								@change="$nuxt.$emit( 'max_results:change', $event )"
+							/>
+						</v-row>
+					</v-container>
+				</v-list-item>
+			</v-list>
 			<template #append>
 				<v-list>
 					<v-list-item
 						v-for="(item, i) in navigation_items"
 						:key="i"
-						href="http://aminsep.disi.unibo.it/gitlab/progetto-swe-gruppo-13"
+						:href="item.to"
 						target="_blank"
 					>
 						<v-list-item-action v-if="item.icon">
@@ -104,6 +131,10 @@
 </template>
 
 <script>
+const MAX_RESULTS = 500
+const MIN_RESULTS = 10
+const LABEL_REQUIRED = "This field is required"
+const LABEL_FIELD_MIN = "The field value must be greater than " + MIN_RESULTS
 export default {
 	data () {
 		return {
@@ -112,6 +143,11 @@ export default {
 			drawer: false,
 			fixed: true,
 			miniVariant: false,
+			max_results: MAX_RESULTS,
+			maxResultsRules: [
+				v => !!v || LABEL_REQUIRED,
+				v => ( v && v >= MIN_RESULTS ) || LABEL_FIELD_MIN,
+			],
 			navigation_items: [
 				{
 					title: 'TEAM 13',
@@ -129,7 +165,7 @@ export default {
 				{
 					icon: 'mdi-gitlab',
 					title: 'Gitlab',
-					to: 'http://aminsep.disi.unibo.it/gitlab/progetto-swe-gruppo-13'
+					to: 'https://aminsep.disi.unibo.it/gitlab/progetto-swe-gruppo-13/twitter-project'
 				},
 			],
 			title: 'TED - Twitter Extended Dashboard',
@@ -140,9 +176,20 @@ export default {
 		}
 	},
 	mounted() {
+		this.$nuxt.$emit( "max_results:change", this.max_results )
 		this.$nuxt.$on( "query", this.onQuery )
+		this.$nuxt.$on( "max_results:change", this.onMaxResultChange )
 	},
 	methods: {
+		checkMaxResultRange( val ) {
+			if ( val < MIN_RESULTS ) {
+				this.max_results = MIN_RESULTS
+				this.$nuxt.$emit( "max_results:change", MIN_RESULTS )
+			}
+		},
+		onMaxResultChange( val ) {
+			this.checkMaxResultRange( val )
+		},
 		onQuery() {
 			this.button_stream_disabled = false
 		},

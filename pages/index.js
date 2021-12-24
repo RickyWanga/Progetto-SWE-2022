@@ -109,14 +109,11 @@ export default {
 			this.sentiments.module.bufferAdd( tweets, has_priority )
 		},
 		getTweets( query, next_token, max_results ) {
-			this.tweets_loading = true
 			return this.http_config.module.$get( SEARCH_ROUTE, { params: {
 				query,
 				next_token,
 				max_results,
-			}}).finally(() => {
-				this.tweets_loading = false
-			})
+			}})
 		},
 		initData() {
 			this.tweets = []
@@ -127,10 +124,11 @@ export default {
 			this.tweet_modal.show = false
 		},
 		initEvents() {
+			this.$nuxt.$on( "max_results:change", this.onMaxResultsChange )
+			this.$nuxt.$on( "media-click", this.onMediaClick )
 			this.$nuxt.$on( "query", this.onQuery )
 			this.$nuxt.$on( "toggle-stream", this.onStreamToggle )
 			this.$nuxt.$on( "tweet-click", this.onTweetClick )
-			this.$nuxt.$on( "media-click", this.onMediaClick )
 			this.$nuxt.$on( "tweet-modal-off", this.onTweetModalOff )
 			this.onToggle( "toggle-map", "show_map" )
 			this.onToggle( "toggle-media", "show_media" )
@@ -159,17 +157,26 @@ export default {
 				this.onQuery({ query, max_results, next_token })
 			}
 		},
+		onMaxResultsChange( val ) {
+			this.max_results = val
+		},
 		async onQuery({ query, next_token, max_results }) {
 			if ( !query ) { return } // Guard
 			if ( !next_token ) {
 				this.initData()
 			}
-			const async_data = await this.getTweets( query, next_token, max_results )
+			if ( !max_results ) {
+				max_results = this.max_results
+			}
+			this.tweets_loading = true
+			const async_data = await this.getTweets( query, next_token, max_results ).finally(() => {
+				this.tweets_loading = false
+			})
 			if ( !async_data.error ) {
-				async_data.data = async_data.data?.slice( 0, max_results )
-				const tweets = new Tweets( async_data )
-				this.tweets = this.tweets.concat( tweets.list )
-				if ( tweets.list.length ) {
+				if ( async_data.data?.length ) {
+					async_data.data = async_data.data?.slice( 0, max_results )
+					const tweets = new Tweets( async_data )
+					this.tweets = this.tweets.concat( tweets.list )
 					this.getSentiments( tweets.list )
 					this.setStreamQuery( query )
 					this.loopNextResults({ query, async_data, max_results })
