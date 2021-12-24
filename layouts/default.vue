@@ -141,10 +141,15 @@ export default {
 	},
 	mounted() {
 		this.$nuxt.$on( "query", this.onQuery )
+		this.$nuxt.$on( "stream-stop", this.onStreamStop )
 	},
 	methods: {
 		onQuery() {
 			this.button_stream_disabled = false
+		},
+		onStreamStop({ disabled }) {
+			this.toggle_stream = false
+			this.button_stream_disabled = disabled
 		},
 	}
 }

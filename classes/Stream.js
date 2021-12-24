@@ -63,7 +63,7 @@ class Stream {
 	}
 
 	constructor({ http_route, http_config, onProgress, onError }) {
-		const bearer_token = Buffer.from( `${ Date.now() }${ Math.random() }` ).toString( "base64" ).replace( /=/g, "L" )
+		const bearer_token = Buffer.from( `${ Date.now() }${ Math.random() }` ).toString( "base64" ).replace( /=/g, "L" ) //NOSONAR
 		this.#http = http_config // Http handler injection
 		this.#http_headers = { "Authorization": `Bearer ${ bearer_token }` }
 		this.#onErrorCallback = onError

@@ -22,15 +22,17 @@ export default {
 			http_config: {
 				module: this.$axios,
 			},
+			layout: {
+				show_map: true,
+				show_media: true,
+				show_tagcloud: true,
+			},
 			sentiments: {
 				loading: true,
 				module: null,
 				neg: 0,
 				pos: 0,
 			},
-			show_map: true,
-			show_media: true,
-			show_tagcloud: true,
 			stream: {
 				active: false,
 				module: null,
@@ -109,7 +111,7 @@ export default {
 		},
 		getTweets( query ) {
 			this.tweets_loading = true
-			return this.$axios.$get( SEARCH_ROUTE, { params: {
+			return this.http_config.module.$get( SEARCH_ROUTE, { params: {
 				query
 			}}).finally(() => {
 				this.tweets_loading = false
@@ -163,6 +165,7 @@ export default {
 					this.setStreamQuery( query )
 				} else {
 					this.showAlertInfo( LABEL_INFO_EMPTY )
+					this.streamStop( true )
 				}
 			} else {
 				this.showAlertError( async_data.error.message || LABEL_ERROR_UNKNOWN )
@@ -188,17 +191,16 @@ export default {
 		},
 		onStreamToggle( start ) {
 			if ( start ) {
-				this.stream.module?.start( this.stream.query )
+				this.streamStart( this.stream.query )
 				this.stream.query = null
 			} else {
-				this.stream.module?.stop()
+				this.streamStop()
 				this.tweets = [ ...this.tweets ] // Flush data
 			}
-			this.stream.active = start
 		},
 		onToggle( event, model ) {
 			this.$nuxt.$on( event, ( toggle ) => {
-				this[ model ] = toggle
+				this.layout[ model ] = toggle
 			})
 		},
 		async onTweetClick( tweet ) {
@@ -229,6 +231,16 @@ export default {
 		},
 		showAlertInfo( message ) {
 			this.showAlert( message, "info" )
+		},
+		streamStart( query ) {
+			this.stream.active = true
+			this.stream.module?.start( query )
+			this.$nuxt.$emit( "stream-start" )
+		},
+		streamStop( disabled ) {
+			this.stream.active = false
+			this.stream.module?.stop()
+			this.$nuxt.$emit( "stream-stop", { disabled })
 		},
 	},
 }

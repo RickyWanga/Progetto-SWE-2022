@@ -23,22 +23,22 @@
 					</div>
 				</div>
 			</v-col>
-			<v-col v-if="show_media" :cols="(show_map || show_tagcloud) ? 4 : 8">
+			<v-col v-if="layout.show_media" :cols="(layout.show_map || layout.show_tagcloud) ? 4 : 8">
 				<div style="height:100%">
-					<Media :media="images" :show="show_map || show_tagcloud" />
+					<Media :media="images" :show="layout.show_map || layout.show_tagcloud" />
 				</div>
 			</v-col>
-			<v-col v-if="show_map || show_tagcloud" :cols="(show_media) ? 4 : 8">
+			<v-col v-if="layout.show_map || layout.show_tagcloud" :cols="(layout.show_media) ? 4 : 8">
 				<div
-					v-if="show_map"
-					:style="'height:' + ( show_tagcloud ? 70 : 100 ) + '%'"
+					v-if="layout.show_map"
+					:style="'height:' + ( layout.show_tagcloud ? 70 : 100 ) + '%'"
 				>
 					<Map :geo="geo" />
 				</div>
 				<div
-					v-if="show_tagcloud"
-					:class="(show_map ? 'pt-6' : '')"
-					:style="'height:' + ( show_map ? 30 : 100 ) + '%'"
+					v-if="layout.show_tagcloud"
+					:class="(layout.show_map ? 'pt-6' : '')"
+					:style="'height:' + ( layout.show_map ? 30 : 100 ) + '%'"
 				>
 					<TagCloud :tags="tags" />
 				</div>
@@ -54,7 +54,7 @@
 				<Tweet
 					style="background:lightblue;"
 					:tweet="tweet_modal.tweet"
-					isModal="true"
+					is-modal="true"
 				/>
 			</v-row>
 			<v-row v-if="tweet_modal.tweet.media.images[0]">
