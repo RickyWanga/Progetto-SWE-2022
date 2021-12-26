@@ -35,7 +35,7 @@
 							v-if="'@' === word[ 0 ]"
 							:key="i"
 							class="font-weight-bold primary--text text--lighten-1 tweet-tag"
-							@click="$nuxt.$emit( 'query', { query: `from:${ word.slice(1,word.length - 2) }` })"
+							@click="$nuxt.$emit( 'query', { query: `from:${ cut(word) }` })"
 						>
 							{{ word }}
 						</span>

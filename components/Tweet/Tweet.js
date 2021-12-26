@@ -9,6 +9,13 @@ export default {
 		check (tag) {
 			const upper = tag.toUpperCase()
 			return upper.startsWith('CONCORSO_')
+		},
+		cut (word) {
+			let index = word.length
+			if (word.includes(':')) {
+				index--
+			}
+			return word.slice(1, index)
 		}
 	},
 	computed: {
