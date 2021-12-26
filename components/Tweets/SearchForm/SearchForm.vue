@@ -68,6 +68,14 @@
 					scrollable
 				>
 					<v-spacer />
+					<v-spacer />
+					<v-btn
+						text
+						color="primary"
+						@click="dates = []"
+					>
+						Clear
+					</v-btn>
 					<v-btn
 						text
 						color="primary"
