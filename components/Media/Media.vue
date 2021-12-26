@@ -11,7 +11,7 @@
 				:width="imgWidth "
 				aspect-ratio="1"
 				class="media-item"
-				@click="$nuxt.$emit( 'media-click', m.target )"
+				@click="$nuxt.$emit( 'open-modal', m.target )"
 			/>
 		</div>
 	</v-container>

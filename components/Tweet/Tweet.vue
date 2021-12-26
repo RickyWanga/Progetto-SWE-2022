@@ -1,7 +1,7 @@
 <template>
 	<v-list-item
 		class="tweets-listitem"
-		@click="$nuxt.$emit( 'tweet-click', tweet )"
+		@click="$nuxt.$emit( 'open-modal', tweet )"
 	>
 		<v-list-item-avatar
 			class="tweets-listitem-avatar"
