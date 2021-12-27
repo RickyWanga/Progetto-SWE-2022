@@ -14,6 +14,7 @@
 					v-for="point in geo"
 					:key="point.target"
 					:lat-lng="point.latlng"
+					@click="$nuxt.$emit( 'open-modal', point.target )"
 				>
 					<l-tooltip>
 						{{ point.tooltip }}

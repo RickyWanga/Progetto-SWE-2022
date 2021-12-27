@@ -5,11 +5,13 @@
 				v-for="( m, i ) in media"
 				:key="`${ m.key }${ i }`"
 				:alt="m.alt"
+				:lazy-src="i <= 12 ? m.url : null"
 				:src="m.url"
-				:lazy-src="m.url"
+				:transition="false"
+				:width="imgWidth "
 				aspect-ratio="1"
 				class="media-item"
-				:width="imgWidth "
+				@click="$nuxt.$emit( 'open-modal', m.target )"
 			/>
 		</div>
 	</v-container>

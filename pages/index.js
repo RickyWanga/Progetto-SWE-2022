@@ -22,15 +22,17 @@ export default {
 			http_config: {
 				module: this.$axios,
 			},
+			layout: {
+				show_map: true,
+				show_media: true,
+				show_tagcloud: true,
+			},
 			sentiments: {
 				loading: true,
 				module: null,
 				neg: 0,
 				pos: 0,
 			},
-			show_map: true,
-			show_media: true,
-			show_tagcloud: true,
 			stream: {
 				active: false,
 				module: null,
@@ -52,9 +54,11 @@ export default {
 	computed: {
 		dates() {
 			const dates = {}
-			const tweets_dates = this.tweets.map(( tweet ) => new Date( tweet.date ))
-			if ( tweets_dates.length > 1 ) {
-				new DateGroups( tweets_dates ).makeLabelsValues( dates )
+			if ( !this.tweets_loading ) {
+				const tweets_dates = this.tweets.map(( tweet ) => new Date( tweet.date ))
+				if ( tweets_dates.length > 1 ) {
+					new DateGroups( tweets_dates ).makeLabelsValues( dates )
+				}
 			}
 			return {
 				labels: Object.keys( dates ),
@@ -76,17 +80,20 @@ export default {
 				.flat()
 		},
 		sentiment() {
+			const total = ( this.sentiments.loading ? this.sentiments.pos + this.sentiments.neg : this.tweets.length ) || 1
 			return {
-				positive: Math.round(( this.sentiments.pos * 100 ) / ( this.tweets.length || 1 )),
-				negative: Math.round(( this.sentiments.neg * 100 ) / ( this.tweets.length || 1 )),
+				positive: Math.round(( this.sentiments.pos * 100 ) / total ),
+				negative: Math.round(( this.sentiments.neg * 100 ) / total ),
 			}
 		},
 		tags() {
 			const tags = {}
-			this.tweets.forEach(( tweet ) => tweet.tags?.forEach( tag => {
-				const tag_slug = tag.toLowerCase()
-				tags[ tag_slug ] = tags[ tag_slug ] ? tags[ tag_slug ] + 1 : 1
-			}))
+			if ( !this.tweets_loading ) {
+				this.tweets.forEach(( tweet ) => tweet.tags?.forEach( tag => {
+					const tag_slug = tag.toLowerCase()
+					tags[ tag_slug ] = tags[ tag_slug ] ? tags[ tag_slug ] + 1 : 1
+				}))
+			}
 			return Object.entries( tags )
 		},
 	},
@@ -104,16 +111,15 @@ export default {
 				})
 			})
 		},
-		getSentiments( tweets ) {
-			this.sentiments.module.bufferAdd( tweets )
+		getSentiments( tweets, has_priority ) {
+			this.sentiments.module.bufferAdd( tweets, has_priority )
 		},
-		getTweets( query ) {
-			this.tweets_loading = true
-			return this.$axios.$get( SEARCH_ROUTE, { params: {
-				query
-			}}).finally(() => {
-				this.tweets_loading = false
-			})
+		getTweets( query, next_token, max_results ) {
+			return this.http_config.module.$get( SEARCH_ROUTE, { params: {
+				query,
+				next_token,
+				max_results,
+			}})
 		},
 		initData() {
 			this.tweets = []
@@ -121,11 +127,14 @@ export default {
 			this.sentiments.module?.bufferEmpty()
 			this.sentiments.neg = 0
 			this.sentiments.pos = 0
+			this.tweet_modal.show = false
 		},
 		initEvents() {
+			this.$nuxt.$on( "max_results:change", this.onMaxResultsChange )
+			this.$nuxt.$on( "media-click", this.onMediaClick )
 			this.$nuxt.$on( "query", this.onQuery )
 			this.$nuxt.$on( "toggle-stream", this.onStreamToggle )
-			this.$nuxt.$on( "tweet-click", this.onTweetClick )
+			this.$nuxt.$on( "open-modal", this.openModal )
 			this.$nuxt.$on( "tweet-modal-off", this.onTweetModalOff )
 			this.onToggle( "toggle-map", "show_map" )
 			this.onToggle( "toggle-media", "show_media" )
@@ -147,18 +156,39 @@ export default {
 				onError: this.onStreamError
 			})
 		},
-		async onQuery({ query }) {
+		loopNextResults({ query, async_data, max_results }) {
+			const next_token = async_data.meta?.next_token
+			max_results = max_results - async_data.meta?.result_count
+			if ( next_token && max_results > 0 ) {
+				this.onQuery({ query, max_results, next_token })
+			}
+		},
+		onMaxResultsChange( val ) {
+			this.max_results = val
+		},
+		async onQuery({ query, next_token, max_results }) {
 			if ( !query ) { return } // Guard
-			this.initData()
-			const async_data = await this.getTweets( query )
+			if ( !next_token ) {
+				this.initData()
+			}
+			if ( !max_results ) {
+				max_results = this.max_results
+			}
+			this.tweets_loading = true
+			const async_data = await this.getTweets( query, next_token, max_results ).finally(() => {
+				this.tweets_loading = false
+			})
 			if ( !async_data.error ) {
-				const tweets = new Tweets( async_data )
-				this.tweets = tweets.list
-				if ( tweets.list.length ) {
+				if ( async_data.data?.length ) {
+					async_data.data = async_data.data?.slice( 0, max_results )
+					const tweets = new Tweets( async_data )
+					this.tweets = this.tweets.concat( tweets.list )
 					this.getSentiments( tweets.list )
 					this.setStreamQuery( query )
+					this.loopNextResults({ query, async_data, max_results })
 				} else {
 					this.showAlertInfo( LABEL_INFO_EMPTY )
+					this.streamStop( true )
 				}
 			} else {
 				this.showAlertError( async_data.error.message || LABEL_ERROR_UNKNOWN )
@@ -167,7 +197,8 @@ export default {
 		onSentimentsBufferEmpty() {
 			this.sentiments.loading = false
 		},
-		onSentimentSet( _, sentiment ) {
+		onSentimentSet( tweet, sentiment ) {
+			tweet.sentiment = sentiment
 			if ( sentiment.value > 0 ) {
 				this.sentiments.pos += 1
 			} else if ( sentiment.value < 0 ) {
@@ -180,26 +211,29 @@ export default {
 		onStreamProgress( async_data ) {
 			const tweets = new Tweets( async_data )
 			this.tweets = tweets.list.concat( this.tweets )
-			this.getSentiments( tweets.list )
+			this.getSentiments( tweets.list, true )
 		},
 		onStreamToggle( start ) {
 			if ( start ) {
-				this.stream.module?.start( this.stream.query )
+				this.streamStart( this.stream.query )
 				this.stream.query = null
 			} else {
-				this.stream.module?.stop()
+				this.streamStop()
 				this.tweets = [ ...this.tweets ] // Flush data
 			}
-			this.stream.active = start
 		},
 		onToggle( event, model ) {
 			this.$nuxt.$on( event, ( toggle ) => {
-				this[ model ] = toggle
+				this.layout[ model ] = toggle
 			})
 		},
-		async onTweetClick( tweet ) {
-			this.tweet_replies = await this.getReplies( tweet )
-			this.tweet_modal.tweet = tweet
+		async openModal( tweet ) {
+			let found = tweet
+			if ( typeof found !== 'object' ) {
+				found = this.tweets.find( tweet => tweet.id === found )
+			}
+			this.tweet_replies = await this.getReplies( found )
+			this.tweet_modal.tweet = found
 			this.tweet_modal.show = true
 		},
 		onTweetModalOff() {
@@ -221,6 +255,16 @@ export default {
 		},
 		showAlertInfo( message ) {
 			this.showAlert( message, "info" )
+		},
+		streamStart( query ) {
+			this.stream.active = true
+			this.stream.module?.start( query )
+			this.$nuxt.$emit( "stream-start" )
+		},
+		streamStop( disabled ) {
+			this.stream.active = false
+			this.stream.module?.stop()
+			this.$nuxt.$emit( "stream-stop", { disabled })
 		},
 	},
 }
