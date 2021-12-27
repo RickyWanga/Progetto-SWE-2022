@@ -97,7 +97,14 @@
 				>
 					mdi-book
 				</v-icon>
-				Questo è un libro da poter votare
+				Questo è un libro da poter votare.
+			</p>
+			<p
+				v-if="isModal && checkScrittore"
+				style="text-decoration: underline; padding-top: 5px"
+				@click="$nuxt.$emit( 'open-modal', tweet.reference.id )"
+			>
+				Vai al concorso
 			</p>
 		</v-list-item-content>
 	</v-list-item>
