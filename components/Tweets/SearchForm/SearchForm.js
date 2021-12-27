@@ -5,47 +5,54 @@ export default {
 			query: null,
 			queryRules: [ v => !!v ],
 			valid: false,
-			today: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
-			time: 'T00%3a00%3a00Z',
-			dates: [],
-			menu: false,
-			allowedDates: val => val <= this.today,
+			dateMaxDay: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
+			dateMenu: false,
+			dateRangeInput: [],
 		}
 	},
 	computed: {
-		dateRangeText () {
-			return this.dates.join(' ~ ')
+		dateRange() {
+			if ( this.dateRangeInput[0] > this.dateRangeInput[1] ) {
+				return [ this.dateRangeInput[1], this.dateRangeInput[0] ]
+			} else {
+				return this.dateRangeInput
+			}
+		},
+		dateRangeText() {
+			return this.dateRange.join(' ~ ')
+		},
+		twitterDateFrom() {
+			return this.dateRange.length ? new Date( this.dateRange[0] ).toISOString() : null
+		},
+		twitterDateTo() {
+			if ( this.dateRange.length ) {
+				let date
+				if ( 2 === this.dateRange.length ) {
+					date = new Date( this.dateRange[1] )
+				} else {
+					date = new Date( this.dateRange[0] )
+				}
+				date.setHours( 23 )
+				date.setMinutes( 59 )
+				date.setSeconds( 59 )
+				return date.toISOString()
+			} else {
+				return null
+			}
 		},
 	},
 	mounted() {
 		this.$nuxt.$on( "query", ({ query }) => {
-			let slice = query
-			if (query.includes('&')) {
-				const index = slice.indexOf('&')
-				slice = slice.slice(0, index)
-			}
-			this.query = slice
+			this.query = query
 		})
 	},
 	methods: {
 		submit() {
-			let query = this.query
-			if (this.dates[0]) {
-				query = query + "&start_time=" + this.dates[0] + this.time
-			}
-			if (this.dates[1]) {
-				query = query + "&end_time=" + this.dates[1] + this.time
-			}
-			this.$nuxt.$emit( "query", { query })
+			this.$nuxt.$emit( "query", {
+				end_time: this.twitterDateTo,
+				query: this.query,
+				start_time: this.twitterDateFrom,
+			})
 		},
 	},
-	watch: {
-		dates(val) {
-			if (val[0] > val[1]) {
-				const tmp = val[0]
-				val[0] = val[1]
-				val[1] = tmp
-			}
-		}
-	}
 }

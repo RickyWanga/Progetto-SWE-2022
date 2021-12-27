@@ -36,57 +36,54 @@
 				</v-btn>
 			</v-col>
 		</v-row>
-		<v-row>
+		<v-row class="ma-0 mr-3">
 			<v-menu
 				ref="menu"
-				v-model="menu"
+				v-model="dateMenu"
 				:close-on-content-click="false"
-				:return-value.sync="dates"
+				:return-value.sync="dateRangeInput"
 				transition="scale-transition"
 				offset-y
 				min-width="auto"
 			>
 				<template #activator="{ on, attrs }">
-					<v-combobox
-						v-model="dates"
-						multiple
-						chips
-						small-chips
-						readonly
-						label="Multiple picker in menu"
+					<v-text-field
+						v-model="dateRangeText"
+						dense
+						placeholder="Date range"
 						prepend-icon="mdi-calendar"
+						readonly
 						v-bind="attrs"
 						v-on="on"
 					/>
 				</template>
 				<v-date-picker
-					v-model="dates"
-					:allowed-dates="allowedDates"
-					max="dates"
-					range
+					v-model="dateRangeInput"
+					:max="dateMaxDay"
+					first-day-of-week="1"
 					no-title
+					range
 					scrollable
 				>
-					<v-spacer />
 					<v-spacer />
 					<v-btn
 						text
 						color="primary"
-						@click="dates = []"
+						@click="dateRangeInput = []"
 					>
 						Clear
 					</v-btn>
 					<v-btn
 						text
 						color="primary"
-						@click="menu = false"
+						@click="dateMenu = false"
 					>
 						Cancel
 					</v-btn>
 					<v-btn
 						text
 						color="primary"
-						@click="$refs.menu.save(dates)"
+						@click="$refs.menu.save(dateRangeInput)"
 					>
 						OK
 					</v-btn>
