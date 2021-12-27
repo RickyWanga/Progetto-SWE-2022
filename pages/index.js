@@ -114,11 +114,13 @@ export default {
 		getSentiments( tweets, has_priority ) {
 			this.sentiments.module.bufferAdd( tweets, has_priority )
 		},
-		getTweets( query, next_token, max_results ) {
+		getTweets({ query, next_token, max_results, start_time, end_time }) {
 			return this.http_config.module.$get( SEARCH_ROUTE, { params: {
 				query,
 				next_token,
 				max_results,
+				start_time,
+				end_time,
 			}})
 		},
 		initData() {
@@ -166,7 +168,7 @@ export default {
 		onMaxResultsChange( val ) {
 			this.max_results = val
 		},
-		async onQuery({ query, next_token, max_results }) {
+		async onQuery({ query, next_token, max_results, start_time, end_time }) {
 			if ( !query ) { return } // Guard
 			if ( !next_token ) {
 				this.initData()
@@ -175,7 +177,13 @@ export default {
 				max_results = this.max_results
 			}
 			this.tweets_loading = true
-			const async_data = await this.getTweets( query, next_token, max_results ).finally(() => {
+			const async_data = await this.getTweets({
+				query,
+				next_token,
+				max_results,
+				start_time,
+				end_time,
+			}).finally(() => {
 				this.tweets_loading = false
 			})
 			if ( !async_data.error ) {
