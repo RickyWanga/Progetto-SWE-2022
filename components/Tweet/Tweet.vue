@@ -21,29 +21,20 @@
 			<p class="tweets-listitem-text mb-0">
 				<span class="font-weight-regular">
 					<template
-						v-for="(word, i) in tweet.words"
+						v-for="(word, i) in words"
 					>
 						<span
 							v-if="'#' === word[ 0 ]"
-							:key="i"
+							:key="`word_${ i }`"
 							class="font-weight-bold primary--text text--lighten-1 tweet-tag"
-							@click="$nuxt.$emit( 'query', { query: `${ word }` })"
-						>
-							{{ word }}
-						</span>
+							@click="$nuxt.$emit( 'query', { query: `${ word }` })">{{ word }}</span><!-- eslint-disable-line vue/html-closing-bracket-newline -->
 						<span
-							v-if="'@' === word[ 0 ]"
-							:key="i"
+							v-else-if="'@' === word[ 0 ]"
+							:key="`word_${ i }`"
 							class="font-weight-bold primary--text text--lighten-1 tweet-tag"
-							@click="$nuxt.$emit( 'query', { query: `from:${ cut(word) }` })"
-						>
-							{{ word }}
-						</span>
+							@click="$nuxt.$emit( 'query', { query: `from:${ word.slice( 1 ) }` })">{{ word }}</span><!-- eslint-disable-line vue/html-closing-bracket-newline -->
 						<template
-							v-else
-						>
-							{{ word }}
-						</template>
+							v-else>{{ word }}</template><!-- eslint-disable-line vue/html-closing-bracket-newline -->
 					</template>
 				</span>
 				<span class="tweets-listitem-badges">
