@@ -58,7 +58,6 @@
 				<Tweet
 					style="background:lightblue;"
 					:tweet="tweet_modal.tweet"
-					:replies="tweet_replies"
 					is-modal="true"
 				/>
 			</v-row>
