@@ -72,6 +72,13 @@
 					>
 						mdi-book-open-variant
 					</v-icon>
+					<v-icon
+						v-if="checkVoto"
+						color="primary"
+						small
+					>
+						mdi-vote-outline
+					</v-icon>
 				</span>
 			</p>
 			<slot />
@@ -100,11 +107,30 @@
 				Questo è un libro da poter votare.
 			</p>
 			<p
+				v-if="( isReplyModal || isModal ) && checkVoto"
+				style="padding-top: 5px;"
+			>
+				<v-icon
+					color="black"
+					small
+				>
+					mdi-ballot
+				</v-icon>
+				L'utente ha votato il libro : {{ libro }}
+			</p>
+			<p
 				v-if="isModal && checkScrittore"
 				style="text-decoration: underline; padding-top: 5px"
 				@click="$nuxt.$emit( 'open-modal', tweet.reference.id )"
 			>
 				Vai al concorso
+			</p>
+			<p
+				v-if="isModal && checkVoto"
+				style="text-decoration: underline; padding-top: 5px"
+				@click="$nuxt.$emit( 'open-modal', tweet.reference.id )"
+			>
+				Vai al libro votato
 			</p>
 		</v-list-item-content>
 	</v-list-item>
