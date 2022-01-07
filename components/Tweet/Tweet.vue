@@ -68,6 +68,9 @@
 				</span>
 			</p>
 			<slot />
+			<p>
+				{{ dateFormat }}
+			</p>
 			<p
 				v-if="isModal && checkConcorso"
 				style="padding-top: 5px;"
