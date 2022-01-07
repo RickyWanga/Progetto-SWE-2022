@@ -13,7 +13,7 @@
 				<strong>{{ tweet.user.name }}</strong>
 				<span
 					class="text--disabled font-weight-bold"
-					@click="$nuxt.$emit( 'query', { query: `from:${ tweet.user.account }` })"
+					@click="$nuxt.$emit( 'query:update', { query: `from:${ tweet.user.account }` })"
 				>
 					@{{ tweet.user.account }}
 				</span>
@@ -27,7 +27,7 @@
 							v-if="'#' === word[ 0 ]"
 							:key="i"
 							class="font-weight-bold primary--text text--lighten-1 tweet-tag"
-							@click="$nuxt.$emit( 'query', { query: `${ word }` })"
+							@click="$nuxt.$emit( 'query:update', { query: `${ word }` })"
 						>
 							{{ word }}
 						</span>

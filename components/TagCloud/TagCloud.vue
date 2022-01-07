@@ -11,7 +11,7 @@
 			<template slot-scope="{ text }">
 				<div
 					style="cursor: pointer"
-					@click="$nuxt.$emit( 'query', { query: `#${ text }` })"
+					@click="$nuxt.$emit( 'query:update', { query: `#${ text }` })"
 				>
 					{{ text }}
 				</div>

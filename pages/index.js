@@ -45,6 +45,7 @@ export default {
 			tweet_replies: [],
 			tweets: [],
 			tweets_loading: false,
+			tweets_max_results: 0,
 		}
 	},
 	async asyncData({ $axios }) {
@@ -134,7 +135,7 @@ export default {
 		initEvents() {
 			this.$nuxt.$on( "max_results:change", this.onMaxResultsChange )
 			this.$nuxt.$on( "media-click", this.onMediaClick )
-			this.$nuxt.$on( "query", this.onQuery )
+			this.$nuxt.$on( "query:submit", this.onQuery )
 			this.$nuxt.$on( "toggle-stream", this.onStreamToggle )
 			this.$nuxt.$on( "open-modal", this.openModal )
 			this.$nuxt.$on( "tweet-modal-off", this.onTweetModalOff )
@@ -166,7 +167,7 @@ export default {
 			}
 		},
 		onMaxResultsChange( val ) {
-			this.max_results = val
+			this.tweets_max_results = val
 		},
 		async onQuery({ query, next_token, max_results, start_time, end_time }) {
 			if ( !query ) { return } // Guard
@@ -174,8 +175,9 @@ export default {
 				this.initData()
 			}
 			if ( !max_results ) {
-				max_results = this.max_results
+				max_results = this.tweets_max_results
 			}
+			this.tweets_query = query
 			this.tweets_loading = true
 			const async_data = await this.getTweets({
 				query,
@@ -186,20 +188,22 @@ export default {
 			}).finally(() => {
 				this.tweets_loading = false
 			})
-			if ( !async_data.error ) {
-				if ( async_data.data?.length ) {
-					async_data.data = async_data.data?.slice( 0, max_results )
-					const tweets = new Tweets( async_data )
-					this.tweets = this.tweets.concat( tweets.list )
-					this.getSentiments( tweets.list )
-					this.setStreamQuery( query )
-					this.loopNextResults({ query, async_data, max_results })
+			if ( query === this.tweets_query ) {
+				if ( !async_data.error ) {
+					if ( async_data.data?.length ) {
+						async_data.data = async_data.data?.slice( 0, max_results )
+						const tweets = new Tweets( async_data )
+						this.tweets = this.tweets.concat( tweets.list )
+						this.getSentiments( tweets.list )
+						this.setStreamQuery( query )
+						this.loopNextResults({ query, async_data, max_results })
+					} else {
+						this.showAlertInfo( LABEL_INFO_EMPTY )
+						this.streamStop( true )
+					}
 				} else {
-					this.showAlertInfo( LABEL_INFO_EMPTY )
-					this.streamStop( true )
+					this.showAlertError( async_data.error.message || LABEL_ERROR_UNKNOWN )
 				}
-			} else {
-				this.showAlertError( async_data.error.message || LABEL_ERROR_UNKNOWN )
 			}
 		},
 		onSentimentsBufferEmpty() {

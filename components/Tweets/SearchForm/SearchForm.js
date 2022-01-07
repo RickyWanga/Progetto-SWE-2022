@@ -22,9 +22,14 @@ export default {
 			return this.dateRange.join(' ~ ')
 		},
 		twitterDateFrom() {
-			return this.dateRange.length ? new Date( this.dateRange[0] ).toISOString() : null
+			let twitter_date = null
+			if ( this.dateRange.length ) {
+				twitter_date = new Date( this.dateRange[0] ).toISOString()
+			}
+			return twitter_date
 		},
 		twitterDateTo() {
+			let twitter_date = null
 			if ( this.dateRange.length ) {
 				let date
 				if ( 2 === this.dateRange.length ) {
@@ -35,20 +40,21 @@ export default {
 				date.setHours( 23 )
 				date.setMinutes( 59 )
 				date.setSeconds( 59 )
-				return date.toISOString()
-			} else {
-				return null
+				twitter_date = date.toISOString()
 			}
+			return twitter_date
 		},
 	},
 	mounted() {
-		this.$nuxt.$on( "query", ({ query }) => {
+		this.$nuxt.$on( "query:update", ({ query }) => {
+			this.dateRangeInput = []
 			this.query = query
+			this.submit()
 		})
 	},
 	methods: {
 		submit() {
-			this.$nuxt.$emit( "query", {
+			this.$nuxt.$emit( "query:submit", {
 				end_time: this.twitterDateTo,
 				query: this.query,
 				start_time: this.twitterDateFrom,
