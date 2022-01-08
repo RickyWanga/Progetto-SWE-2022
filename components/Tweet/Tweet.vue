@@ -121,14 +121,14 @@
 			<p
 				v-if="isModal && checkScrittore"
 				style="text-decoration: underline; padding-top: 5px"
-				@click="$nuxt.$emit( 'open-modal', tweet.reference.id )"
+				@click.stop="$nuxt.$emit( 'open-modal', tweet.reference.id )"
 			>
 				Vai al concorso
 			</p>
 			<p
 				v-if="isModal && checkVoto"
 				style="text-decoration: underline; padding-top: 5px"
-				@click="$nuxt.$emit( 'open-modal', tweet.reference.id )"
+				@click.stop="$nuxt.$emit( 'open-modal', tweet.reference.id )"
 			>
 				Vai al libro votato
 			</p>
