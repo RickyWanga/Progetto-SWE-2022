@@ -68,8 +68,10 @@
 				</span>
 			</p>
 			<slot />
-			<p>
-				{{ dateFormat }}
+			<p
+				class="text--disabled font-weight-bold"
+			>
+				<small>{{ dateFormat }}</small>
 			</p>
 			<p
 				v-if="isModal && checkConcorso"
