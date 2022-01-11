@@ -104,19 +104,24 @@
 				>
 					mdi-book
 				</v-icon>
-				Questo è un libro da poter votare.
+				Questo è un libro da poter votare. {{ libri[libro] }}
 			</p>
 			<p
 				v-if="( isReplyModal || isModal ) && checkVoto"
 				style="padding-top: 5px;"
 			>
-				<v-icon
-					color="black"
-					small
+				{{ concorso }} , {{ libro }} , {{ voto }}
+				<span
+					v-if="libro === voto"
 				>
-					mdi-ballot
-				</v-icon>
-				L'utente ha votato il libro : {{ libro }}
+					<v-icon
+						color="black"
+						small
+					>
+						mdi-ballot
+					</v-icon>
+					L'utente ha votato il libro : {{ concorso }} , {{ libro }} , {{ voto }}
+				</span>
 			</p>
 			<p
 				v-if="isModal && checkScrittore"
