@@ -15,6 +15,10 @@ export default {
 		checkConcorso () {
 			return this.tweet.tags.some(this.check)
 		},
+		dateFormat () {
+			const date = new Date( this.tweet.date )
+			return date.toLocaleString()
+		},
 		words() {
 			let re = null
 			let re_pattern = ""
