@@ -17,7 +17,7 @@ describe( "TagCloud", () => {
 				"TweetsSearchForm",
 			],
 			propsData: {					//Indicare con i quali dati da testare
-				tags: [["tag1", 4], ["tag2", 7], ["tag3", 5], ["tag4", 3]]		
+				tags: [["tag1", 4], ["tag2", 7], ["tag3", 5], ["tag4", 3]]
 			},
 		})
 	})
@@ -27,7 +27,7 @@ describe( "TagCloud", () => {
 	})
 
 	test( "Color computed property", () => {
-		const colorFunction = wrapper.vm.color;
+		const colorFunction = wrapper.vm.color
 		expect( colorFunction(wrapper.vm.tags[0])).toBe("DeepPink")
 		expect( colorFunction(wrapper.vm.tags[1])).toBe("RoyalBlue")
 		expect( colorFunction(wrapper.vm.tags[2])).toBe("Indigo")
