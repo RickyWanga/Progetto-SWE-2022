@@ -53,6 +53,7 @@ describe( "App", () => {
 			},
 			stubs: [
 				"Analytics",
+				"Diagram",
 				"Media",
 				"TagCloud",
 				"Tweets",

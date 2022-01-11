@@ -17,7 +17,7 @@ export default {
 		},
 		dateFormat () {
 			const date = new Date( this.tweet.date )
-			return `${ date.getHours() }:${ date.getMinutes() } ${ date.getDate() } ${ new Intl.DateTimeFormat('it-EU', { month: 'short' }).format(date) } ${ date.getFullYear() }`
+			return date.toLocaleString()
 		},
 		words() {
 			let re = null

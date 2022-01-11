@@ -68,7 +68,7 @@
 			</p>
 			<slot />
 			<p
-				class="text--disabled font-weight-bold"
+				class="text--disabled font-weight-bold mt-1 mb-0"
 			>
 				<small>{{ dateFormat }}</small>
 			</p>
