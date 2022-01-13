@@ -227,14 +227,17 @@ export default {
 				this.layout[ model ] = toggle
 			})
 		},
-		async openModal( tweet ) {
+		openModal( tweet ) {
 			let found = tweet
 			if ( typeof found !== 'object' ) {
 				found = this.tweets.find( tweet => tweet.id === found )
 			}
-			this.tweet_replies = await this.getReplies( found )
-			this.tweet_modal.tweet = found
-			this.tweet_modal.show = true
+			this.tweet_modal.show = false
+			this.$nextTick( async () => {
+				this.tweet_replies = await this.getReplies( found )
+				this.tweet_modal.tweet = found
+				this.tweet_modal.show = true
+			})
 		},
 		onTweetModalOff() {
 			this.tweet_modal.show = false

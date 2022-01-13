@@ -11,12 +11,14 @@
 				mdi-trophy
 			</v-icon>
 			Questo utente ha dato inizio al concorso
-			<span
-				v-for="( libroid , index ) in Object.keys(voti.libro)"
-				:key="index"
+			<ul
+				v-for="( libro_id, i ) in Object.keys( voti.libro )"
+				:key="`${ libro_id }_${ i }`"
 			>
-				{{ libroid }} {{ voti.libro[libroid] }}
-			</span>
+				<li>
+					{{ libro_id }} {{ voti.libro[ libro_id ] }}
+				</li>
+			</ul>
 		</p>
 		<p
 			v-else-if="isLibro"
