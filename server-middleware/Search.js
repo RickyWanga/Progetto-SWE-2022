@@ -9,7 +9,7 @@ class Search extends ApiAbstract {
 	#page_size
 	#query_params
 
-	fetch( query, next_token, max_results ) {
+	fetch( query, next_token, max_results, start_time, end_time ) {
 		if ( max_results ) {
 			max_results = Math.max( max_results, MIN_RESULTS )
 			max_results = Math.min( max_results, this.#page_size )
@@ -20,6 +20,8 @@ class Search extends ApiAbstract {
 			query,
 			max_results,
 			next_token,
+			start_time,
+			end_time,
 		}
 		return this.httpGet( this.#endpoint, { params: Object.assign(
 			dynamicRequestParams,
@@ -46,7 +48,9 @@ export default {
 		const query = search.getUrlApiParam( "query" )
 		const next_token = search.getUrlApiParam( "next_token" )
 		const max_results = search.getUrlApiParam( "max_results" )
-		const data = await search.fetch( query, next_token, max_results )
+		const start_time = search.getUrlApiParam( "start_time" )
+		const end_time = search.getUrlApiParam( "end_time" )
+		const data = await search.fetch( query, next_token, max_results, start_time, end_time )
 		search.respondJson( data )
 	}
 }

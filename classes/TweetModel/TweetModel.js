@@ -12,15 +12,16 @@ class TweetModel {
 	#date = ""
 	#geo = {}
 	#media = {}
+	#mentions = []
 	#public_metrics = {}
 	#reference = {}
 	#tags = []
 	#text = ""
 	#user = {}
-	#words = []
 
 	constructor( tweet ) {
 		const hashtags = ( tweet.entities?.hashtags || [] ).map(( hashtag ) => hashtag.tag )
+		const mentions = ( tweet.entities?.mentions || [] ).map(( mention ) => mention.username )
 		const text = tweet.text || ""
 		this.#concorso = new ConcorsoModel( hashtags )
 		this.#conversation_id = tweet.conversation_id
@@ -28,12 +29,12 @@ class TweetModel {
 		this.#id = tweet.id
 		this.#geo = new GeoModel( tweet )
 		this.#media = new MediaModel( tweet )
+		this.#mentions = mentions
 		this.#public_metrics = new PublicMetricsModel( tweet )
 		this.#reference = new ReferenceModel( tweet )
 		this.#tags = hashtags
 		this.#text = text
 		this.#user = new UserModel( tweet )
-		this.#words = text.split( " " )
 	}
 
 	get concorso() {
@@ -60,6 +61,10 @@ class TweetModel {
 		return this.#media
 	}
 
+	get mentions() {
+		return this.#mentions
+	}
+
 	get public_metrics() {
 		return this.#public_metrics
 	}
@@ -78,10 +83,6 @@ class TweetModel {
 
 	get user() {
 		return this.#user
-	}
-
-	get words() {
-		return this.#words
 	}
 }
 

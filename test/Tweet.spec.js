@@ -15,6 +15,11 @@ describe( "Tweet", () => {
 	beforeAll(() => {
 		wrapper = mountComponent({
 			vuetify: new Vuetify(),
+			computed: {
+				words() {
+					return []
+				},
+			},
 			propsData: {
 				tweet: Tweets[ 0 ],
 			},
