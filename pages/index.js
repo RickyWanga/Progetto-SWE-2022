@@ -104,12 +104,16 @@ export default {
 		this.initModules()
 	},
 	methods: {
-		getReplies({ conversation_id }) {
+		getReplies({ conversation_id, public_metrics }) {
 			return new Promise(( resolve ) => {
-				this.getTweets({ query: "conversation_id:" + conversation_id }).then(( async_replies ) => {
-					const conversation = new Tweets( async_replies )
-					resolve( conversation.list )
-				})
+				if ( public_metrics.reply_count ) {
+					this.getTweets({ query: "conversation_id:" + conversation_id }).then(( async_replies ) => {
+						const conversation = new Tweets( async_replies )
+						resolve( conversation.list )
+					})
+				} else {
+					resolve([])
+				}
 			})
 		},
 		getSentiments( tweets, has_priority ) {
@@ -137,7 +141,7 @@ export default {
 			this.$nuxt.$on( "media-click", this.onMediaClick )
 			this.$nuxt.$on( "query:submit", this.onQuery )
 			this.$nuxt.$on( "toggle-stream", this.onStreamToggle )
-			this.$nuxt.$on( "open-modal", this.openModal )
+			this.$nuxt.$on( "open-modal", this.onTweetModalOn )
 			this.$nuxt.$on( "tweet-modal-off", this.onTweetModalOff )
 			this.onToggle( "toggle-map", "show_map" )
 			this.onToggle( "toggle-media", "show_media" )
@@ -239,7 +243,7 @@ export default {
 				this.layout[ model ] = toggle
 			})
 		},
-		openModal( tweet ) {
+		onTweetModalOn( tweet ) {
 			let found = tweet
 			if ( typeof found !== 'object' ) {
 				found = this.tweets.find( tweet => tweet.id === found )
