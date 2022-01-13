@@ -7,7 +7,6 @@
 			<Tweet
 				v-if="reply !== tweet && reply.reference.id === tweet.id"
 				:tweet="reply"
-				isReplyModal="true"
 			/>
 		</div>
 	</div>

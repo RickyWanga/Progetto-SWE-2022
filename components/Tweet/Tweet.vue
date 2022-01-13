@@ -47,96 +47,30 @@
 					>
 						mdi-map-marker
 					</v-icon>
-					<v-icon
+					<span
 						v-if="tweet.public_metrics.reply_count"
-						color="primary"
-						small
+						style="white-space:nowrap"
 					>
-						mdi-message-reply-outline
-					</v-icon>
-					<small v-if="tweet.public_metrics.reply_count" class="tweet-reply">
-						{{ tweet.public_metrics.reply_count }}
-					</small>
-
+						<v-icon
+							color="primary"
+							small
+						>
+							mdi-message-reply-outline
+						</v-icon>
+						<small class="tweet-reply">
+							{{ tweet.public_metrics.reply_count }}
+						</small>
+					</span>
 					<v-icon
-						v-if="checkConcorso"
+						v-if="!!tweet.concorso.is_concorso || !!tweet.concorso.is_libro || !!tweet.concorso.is_voto"
 						color="primary"
 						small
 					>
-						mdi-human-male-board-poll
-					</v-icon>
-					<v-icon
-						v-if="checkScrittore"
-						color="primary"
-						small
-					>
-						mdi-book-open-variant
-					</v-icon>
-					<v-icon
-						v-if="checkVoto"
-						color="primary"
-						small
-					>
-						mdi-vote-outline
+						mdi-trophy
 					</v-icon>
 				</span>
 			</p>
 			<slot />
-			<p
-				v-if="isModal && checkConcorso"
-				style="padding-top: 5px;"
-			>
-				<v-icon
-					color="black"
-					small
-				>
-					mdi-trophy
-				</v-icon>
-				Questo utente ha dato inizio ad un concorso
-			</p>
-			<p
-				v-if="( isReplyModal || isModal ) && checkScrittore"
-				style="padding-top: 5px;"
-			>
-				<v-icon
-					color="black"
-					small
-				>
-					mdi-book
-				</v-icon>
-				Questo è un libro da poter votare. {{ libri[libro] }}
-			</p>
-			<p
-				v-if="( isReplyModal || isModal ) && checkVoto"
-				style="padding-top: 5px;"
-			>
-				{{ concorso }} , {{ libro }} , {{ voto }}
-				<span
-					v-if="libro === voto"
-				>
-					<v-icon
-						color="black"
-						small
-					>
-						mdi-ballot
-					</v-icon>
-					L'utente ha votato il libro : {{ concorso }} , {{ libro }} , {{ voto }}
-				</span>
-			</p>
-			<p
-				v-if="isModal && checkScrittore"
-				style="text-decoration: underline; padding-top: 5px"
-				@click.stop="$nuxt.$emit( 'open-modal', tweet.reference.id )"
-			>
-				Vai al concorso
-			</p>
-			<p
-				v-if="isModal && checkVoto"
-				style="text-decoration: underline; padding-top: 5px"
-				@click.stop="$nuxt.$emit( 'open-modal', tweet.reference.id )"
-			>
-				Vai al libro votato
-			</p>
 		</v-list-item-content>
 	</v-list-item>
 </template>

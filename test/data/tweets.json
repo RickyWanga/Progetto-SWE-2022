@@ -1,5 +1,6 @@
 [
 	{
+		"concorso": {},
 		"id": 1,
 		"geo": {
 			"latlng": [ 1, 1 ],
@@ -21,6 +22,7 @@
 		"words": [ "text", "1" ]
 	},
 	{
+		"concorso": {},
 		"id": 2,
 		"geo": {
 			"latlng": [ 2, 2 ],
