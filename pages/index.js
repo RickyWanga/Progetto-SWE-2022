@@ -106,7 +106,7 @@ export default {
 	methods: {
 		getReplies({ conversation_id }) {
 			return new Promise(( resolve ) => {
-				this.getTweets( "conversation_id:" + conversation_id ).then(( async_replies ) => {
+				this.getTweets({ query: "conversation_id:" + conversation_id }).then(( async_replies ) => {
 					const conversation = new Tweets( async_replies )
 					resolve( conversation.list )
 				})
@@ -115,7 +115,7 @@ export default {
 		getSentiments( tweets, has_priority ) {
 			this.sentiments.module.bufferAdd( tweets, has_priority )
 		},
-		getTweets({ query, next_token, max_results, start_time, end_time }) {
+		getTweets({ query, next_token, start_time, end_time, max_results = 100 }) {
 			return this.http_config.module.$get( SEARCH_ROUTE, { params: {
 				query,
 				next_token,
