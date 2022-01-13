@@ -19,6 +19,9 @@ export default {
 			return this.tweet.concorso.is_voto
 		},
 	},
+	updated() {
+		this.countVoti()
+	},
 	created() {
 		this.countVoti()
 	},
