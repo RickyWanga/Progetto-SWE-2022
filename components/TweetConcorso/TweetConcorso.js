@@ -24,6 +24,10 @@ export default {
 	},
 	methods: {
 		initLibri() {
+			this.voti = {
+				utente: {},
+				libro: {},
+			}
 			this.replies.forEach(( reply ) => {
 				if ( reply.concorso.is_libro ) {
 					const libro_id = reply.id.toString()
@@ -48,6 +52,11 @@ export default {
 					}
 				}
 			})
+		},
+	},
+	watch: {
+		replies() {
+			this.countVoti()
 		},
 	},
 }

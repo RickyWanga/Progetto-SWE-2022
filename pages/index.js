@@ -35,6 +35,10 @@ export default {
 			},
 			stream: {
 				active: false,
+				modal: {
+					active: false,
+					module: null,
+				},
 				module: null,
 				query: "",
 			},
@@ -162,6 +166,27 @@ export default {
 				onProgress: this.onStreamProgress,
 				onError: this.onStreamError
 			})
+			this.stream.modal.module = new Stream({
+				http_route: STREAM_ROUTE,
+				http_config: this.http_config,
+				onProgress: ( async_data ) => {
+					const replies = new Tweets( async_data )
+					this.tweet_replies = replies.list.concat( this.tweet_replies )
+				},
+				onError: this.onStreamError
+			})
+		},
+		async initStreamConcorso( tweet ) {
+			if ( tweet.concorso.is_concorso ) {
+				if ( this.stream.active ) {
+					this.onStreamToggle( false )
+				}
+				if ( this.stream.modal.active ) {
+					await this.stream.modal.module.stop()
+				}
+				this.stream.modal.module.start( "conversation_id:" + tweet.conversation_id )
+				this.stream.modal.active = true
+			}
 		},
 		loopNextResults({ query, async_data, max_results }) {
 			const next_token = async_data.meta?.next_token
@@ -183,15 +208,10 @@ export default {
 			}
 			this.tweets_query = query
 			this.tweets_loading = true
-			const async_data = await this.getTweets({
-				query,
-				next_token,
-				max_results,
-				start_time,
-				end_time,
-			}).finally(() => {
-				this.tweets_loading = false
-			})
+			const async_data = await this.getTweets({ query, next_token, start_time, end_time, max_results })
+				.finally(() => {
+					this.tweets_loading = false
+				})
 			if ( query === this.tweets_query ) {
 				if ( !async_data.error ) {
 					if ( async_data.data?.length ) {
@@ -244,18 +264,25 @@ export default {
 			})
 		},
 		onTweetModalOn( tweet ) {
-			let found = tweet
-			if ( typeof found !== 'object' ) {
-				found = this.tweets.find( tweet => tweet.id === found )
+			if ( "string" === typeof tweet ) {
+				const tweet_id = tweet
+				tweet = this.tweets.find( tweet_item => tweet_id === tweet_item.id )
 			}
-			this.tweet_modal.show = false
-			this.$nextTick( async () => {
-				this.tweet_replies = await this.getReplies( found )
-				this.tweet_modal.tweet = found
-				this.tweet_modal.show = true
-			})
+			if ( tweet ) {
+				this.tweet_modal.show = false
+				this.$nextTick( async () => {
+					this.tweet_replies = await this.getReplies( tweet )
+					this.tweet_modal.tweet = tweet
+					this.tweet_modal.show = true
+					this.initStreamConcorso( tweet )
+				})
+			}
 		},
-		onTweetModalOff() {
+		async onTweetModalOff() {
+			if ( this.stream.modal.active ) {
+				await this.stream.modal.module.stop()
+				this.stream.modal.active = false
+			}
 			this.tweet_modal.show = false
 		},
 		setStreamQuery( query ) {
@@ -275,14 +302,14 @@ export default {
 		showAlertInfo( message ) {
 			this.showAlert( message, "info" )
 		},
-		streamStart( query ) {
+		async streamStart( query ) {
 			this.stream.active = true
-			this.stream.module?.start( query )
+			await this.stream.module?.start( query )
 			this.$nuxt.$emit( "stream-start" )
 		},
-		streamStop( disabled ) {
+		async streamStop( disabled ) {
 			this.stream.active = false
-			this.stream.module?.stop()
+			await this.stream.module?.stop()
 			this.$nuxt.$emit( "stream-stop", { disabled })
 		},
 	},
