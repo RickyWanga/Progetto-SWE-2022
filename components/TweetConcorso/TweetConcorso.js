@@ -6,6 +6,7 @@ export default {
 				utente: {},
 				libro: {},
 			},
+			power: 20,
 		}
 	},
 	computed: {
@@ -17,6 +18,15 @@ export default {
 		},
 		isVoto() {
 			return this.tweet.concorso.is_voto
+		},
+		maxVoto() {
+			let max = 0
+			Object.values( this.voti.libro ).forEach((libro) => {
+				if (libro > max) {
+					max = libro
+				}
+			})
+			return max
 		},
 	},
 	created() {
