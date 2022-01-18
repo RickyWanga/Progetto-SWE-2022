@@ -16,5 +16,11 @@
 	color: white !important;
 }
 
-.custom_btn{
+.custom_text3{
+	font-size: 1rem !important;
+	font-weight: 900 !important;
+	line-height: 3.125rem;
+	letter-spacing:normal;
+	font-family: "Roboto", sans-serif !important;
+	color: #424242 !important;
 }

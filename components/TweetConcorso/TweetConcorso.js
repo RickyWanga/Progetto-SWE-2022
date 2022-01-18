@@ -6,7 +6,6 @@ export default {
 				utente: {},
 				libro: {},
 			},
-			power: 20,
 		}
 	},
 	computed: {
@@ -27,6 +26,16 @@ export default {
 				}
 			})
 			return max
+		},
+		getOrdinato() {
+			const voti = Object.keys( this.voti.libro ).map(( libro_id ) => {
+				return {
+					libro_id,
+					libro_voti: this.voti.libro[ libro_id ],
+				}
+			})
+			voti.sort(( b, a ) => a.libro_voti - b.libro_voti )
+			return voti
 		},
 	},
 	created() {
@@ -51,7 +60,7 @@ export default {
 				if ( reply.concorso.is_voto ) {
 					const libro_id = reply.reference.id.toString()
 					const utente_id = reply.user.account
-					if ( "undefined" !== this.voti.libro[ libro_id ] ) {
+					if ( "undefined" !== typeof this.voti.libro[ libro_id ] ) {
 						if ( !this.voti.utente[ utente_id ] ) {
 							this.voti.utente[ utente_id ] = []
 						}

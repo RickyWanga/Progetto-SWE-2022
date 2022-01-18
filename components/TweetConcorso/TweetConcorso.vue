@@ -6,7 +6,7 @@
 		>
 			<v-btn
 				class="ma-2 pa-2"
-				color="light blue"
+				color="#1D9BF0"
 				fab
 			>
 				<v-icon
@@ -20,15 +20,18 @@
 				Questo utente ha dato inizio al concorso
 			</span>
 			<span
-				v-for="( libro_id, i ) in Object.keys( voti.libro )"
-				:key="`${ libro_id }_${ i }`"
+				v-for="( voto, i ) in getOrdinato"
+				:key="`${ voto.libro_id }_${ i }`"
 			>
 				<v-progress-linear
 					class="ma-2"
-					color="light-blue"
-					height="20"
-					:value="(voti.libro[ libro_id ] * 100) / maxVoto"
-				>{{ libro_id }} {{ voti.libro[ libro_id ] || 0 }}
+					color="#1D9BF0"
+					height="25"
+					:value="( voto.libro_voti * 100 ) / maxVoto"
+				>
+					<span class="custom_text3">
+						{{ voto.libro_id }} {{ voto.libro_voti }}
+					</span>
 				</v-progress-linear>
 			</span>
 		</p>
@@ -37,8 +40,8 @@
 			style="padding-top: 5px;"
 		>
 			<v-btn
-				class="ma-2 pa-2 custom_btn"
-				color="light blue"
+				class="ma-2 pa-2"
+				color="#1D9BF0"
 				fab
 			>
 				<v-icon
@@ -58,7 +61,7 @@
 		>
 			<v-btn
 				class="ma-2 pa-2"
-				color="light blue"
+				color="#1D9BF0"
 				fab
 			>
 				<v-icon
@@ -75,7 +78,7 @@
 		<v-btn
 			v-if="isLibro"
 			style="padding-top: 5px"
-			color="light blue"
+			color="#1D9BF0"
 			@click.stop="$nuxt.$emit( 'open-modal', tweet.reference.id )"
 		>
 			<span class="custom_text2">
@@ -92,7 +95,7 @@
 		<v-btn
 			v-else-if="isVoto"
 			style="padding-top: 5px"
-			color="light blue"
+			color="#1D9BF0"
 			@click.stop="$nuxt.$emit( 'open-modal', tweet.reference.id )"
 		>
 			<span class="custom_text2">
