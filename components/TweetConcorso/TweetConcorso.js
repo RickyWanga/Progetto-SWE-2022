@@ -30,7 +30,7 @@ export default {
 			}
 			this.replies.forEach(( reply ) => {
 				if ( reply.concorso.is_libro ) {
-					const libro_id = reply.id.toString()
+					const libro_id = reply.concorso.libro_id
 					this.voti.libro[ libro_id ] = 0
 				}
 			})
@@ -41,7 +41,7 @@ export default {
 				if ( reply.concorso.is_voto ) {
 					const libro_id = reply.reference.id.toString()
 					const utente_id = reply.user.account
-					if ( "undefined" !== this.voti.libro[ libro_id ] ) {
+					if ( "undefined" !== typeof this.voti.libro[ libro_id ] ) {
 						if ( !this.voti.utente[ utente_id ] ) {
 							this.voti.utente[ utente_id ] = []
 						}

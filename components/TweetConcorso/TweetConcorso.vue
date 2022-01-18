@@ -30,7 +30,7 @@
 			>
 				mdi-book
 			</v-icon>
-			Questo è un libro da votare {{ voti.libro[ tweet.id ] }}
+			Questo è un libro da votare
 		</p>
 		<p
 			v-else-if="isVoto"
