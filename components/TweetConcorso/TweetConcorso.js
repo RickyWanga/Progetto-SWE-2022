@@ -49,7 +49,7 @@ export default {
 			}
 			this.replies.forEach(( reply ) => {
 				if ( reply.concorso.is_libro ) {
-					const libro_id = reply.id.toString()
+					const libro_id = reply.concorso.libro_id
 					this.voti.libro[ libro_id ] = 0
 				}
 			})
