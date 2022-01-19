@@ -3,6 +3,7 @@
 		v-model="on"
 		transition="dialog-top-transition"
 		max-width="600"
+		@click:outside="$nuxt.$emit( 'tweet-modal-off' )"
 	>
 		<v-card
 			style="background:white; padding-top:4px"

@@ -61,6 +61,12 @@
 					is-modal="true"
 				/>
 			</v-row>
+			<v-row>
+				<TweetConcorso
+					:tweet="tweet_modal.tweet"
+					:replies="tweet_replies"
+				/>
+			</v-row>
 			<v-row v-if="tweet_modal.tweet.media.images[0]">
 				<v-carousel
 					:show-arrows="tweet_modal.tweet.media.images.length > 1"

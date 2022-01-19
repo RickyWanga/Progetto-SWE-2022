@@ -46,23 +46,26 @@
 					>
 						mdi-map-marker
 					</v-icon>
-					<v-icon
+					<span
 						v-if="tweet.public_metrics.reply_count"
-						color="primary"
-						small
+						style="white-space:nowrap"
 					>
-						mdi-message-reply-outline
-					</v-icon>
-					<small v-if="tweet.public_metrics.reply_count" class="tweet-reply">
-						{{ tweet.public_metrics.reply_count }}
-					</small>
-
+						<v-icon
+							color="primary"
+							small
+						>
+							mdi-message-reply-outline
+						</v-icon>
+						<small class="tweet-reply">
+							{{ tweet.public_metrics.reply_count }}
+						</small>
+					</span>
 					<v-icon
-						v-if="checkConcorso"
+						v-if="!!tweet.concorso.is_concorso || !!tweet.concorso.is_libro || !!tweet.concorso.is_voto"
 						color="primary"
 						small
 					>
-						mdi-human-male-board-poll
+						mdi-trophy
 					</v-icon>
 				</span>
 			</p>
@@ -71,18 +74,6 @@
 				class="text--disabled font-weight-bold mt-1 mb-0"
 			>
 				<small>{{ dateFormat }}</small>
-			</p>
-			<p
-				v-if="isModal && checkConcorso"
-				style="padding-top: 5px;"
-			>
-				<v-icon
-					color="black"
-					small
-				>
-					mdi-trophy
-				</v-icon>
-				Questo utente ha dato inizio ad un concorso
 			</p>
 		</v-list-item-content>
 	</v-list-item>

@@ -1,3 +1,4 @@
+import ConcorsoModel from "./ConcorsoModel"
 import GeoModel from "./GeoModel"
 import MediaModel from "./MediaModel"
 import PublicMetricsModel from "./PublicMetricsModel"
@@ -5,6 +6,7 @@ import ReferenceModel from "./ReferenceModel"
 import UserModel from "./UserModel"
 
 class TweetModel {
+	#concorso = {}
 	#conversation_id = 0
 	#id = 0
 	#date = ""
@@ -18,20 +20,25 @@ class TweetModel {
 	#user = {}
 
 	constructor( tweet ) {
-		const hashtags = ( tweet.entities && tweet.entities.hashtags ) || []
-		const mentions = ( tweet.entities && tweet.entities.mentions ) || []
+		const hashtags = ( tweet.entities?.hashtags || [] ).map(( hashtag ) => hashtag.tag )
+		const mentions = ( tweet.entities?.mentions || [] ).map(( mention ) => mention.username )
 		const text = tweet.text || ""
+		this.#concorso = new ConcorsoModel( hashtags )
 		this.#conversation_id = tweet.conversation_id
 		this.#date = tweet.created_at
 		this.#id = tweet.id
 		this.#geo = new GeoModel( tweet )
 		this.#media = new MediaModel( tweet )
-		this.#mentions = mentions.map(( mention ) => mention.username )
+		this.#mentions = mentions
 		this.#public_metrics = new PublicMetricsModel( tweet )
 		this.#reference = new ReferenceModel( tweet )
-		this.#tags = hashtags.map(( hashtag ) => hashtag.tag )
+		this.#tags = hashtags
 		this.#text = text
 		this.#user = new UserModel( tweet )
+	}
+
+	get concorso() {
+		return this.#concorso
 	}
 
 	get conversation_id() {
