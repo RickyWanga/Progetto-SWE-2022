@@ -1,8 +1,9 @@
 <template>
-	<div>
-		<p
+	<div
+		class="mt-2 mb-4"
+	>
+		<div
 			v-if="isConcorso"
-			style="padding-top: 5px;"
 		>
 			<v-btn
 				class="ma-2 pa-2"
@@ -17,25 +18,26 @@
 				</v-icon>
 			</v-btn>
 			<span class="custom_text">
-				Questo utente ha dato inizio al concorso
+				Concorso letterario
 			</span>
-			<span
-				v-for="( voto, i ) in getOrdinato"
-				:key="`${ voto.libro_id }_${ i }`"
+			<div
+				v-for="( libro, i ) in libri"
+				:key="`${ libro.id }_${ i }`"
+				@click="$nuxt.$emit( 'open-modal', libro.id )"
 			>
 				<v-progress-linear
 					class="ma-2"
 					color="#1D9BF0"
 					height="25"
-					:value="( voto.libro_voti * 100 ) / maxVoto"
+					:value="( libro.voti * 100 ) / maxVoto"
 				>
 					<span class="custom_text3">
-						{{ voto.libro_id }} {{ voto.libro_voti }}
+						{{ libro.label }}: {{ libro.voti }} vot{{ libro.voti === 1 ? "o" : "i" }}
 					</span>
 				</v-progress-linear>
-			</span>
-		</p>
-		<p
+			</div>
+		</div>
+		<div
 			v-else-if="isLibro"
 			style="padding-top: 5px;"
 		>
@@ -52,10 +54,10 @@
 				</v-icon>
 			</v-btn>
 			<span class="custom_text">
-				Questo è un libro da votare {{ voti.libro[ tweet.id ] }}
+				Libro votato da {{ libro.voti }} utent{{ libro.voti === 1 ? "e" : "i" }}
 			</span>
-		</p>
-		<p
+		</div>
+		<div
 			v-else-if="isVoto"
 			style="padding-top: 5px;"
 		>
@@ -72,9 +74,9 @@
 				</v-icon>
 			</v-btn>
 			<span class="custom_text">
-				L'utente ha votato
+				L'utente ha votato un libro iscritto al concorso
 			</span>
-		</p>
+		</div>
 		<v-btn
 			v-if="isLibro"
 			style="padding-top: 5px"
