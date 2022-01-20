@@ -101,6 +101,11 @@ export default {
 			}
 			return Object.entries( tags )
 		},
+		labelTwitterApiArchiveType() {
+			return "all" === this.client_configuration.TWITTER_API_SEARCH_ARCHIVE_TYPE
+				? LABEL_TWITTERAPIARCHIVETYPE_ALL
+				: LABEL_TWITTERAPIARCHIVETYPE_RECENT
+		},
 	},
 	mounted() {
 		this.initData()

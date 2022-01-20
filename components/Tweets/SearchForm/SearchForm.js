@@ -1,5 +1,5 @@
 export default {
-	props: [ "loading" ],
+	props: [ "loading", "search-button-message" ],
 	data() {
 		return {
 			query: null,
