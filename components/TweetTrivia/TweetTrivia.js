@@ -32,7 +32,7 @@ export default {
 				}
 			})
 		},
-		countPunti(){
+		countPunti() {
 			this.replies.forEach(( reply ) => {
 				if ( reply.trivia.is_punto ) {
 					this.num_p += 1

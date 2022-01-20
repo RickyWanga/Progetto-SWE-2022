@@ -1,4 +1,4 @@
-<template>
+ù<template>
 	<v-container fill-height>
 		<v-row style="height:100%">
 			<v-col cols="4">
@@ -63,6 +63,12 @@
 			</v-row>
 			<v-row>
 				<TweetConcorso
+					:tweet="tweet_modal.tweet"
+					:replies="tweet_modal.replies"
+				/>
+			</v-row>
+			<v-row>
+				<TweetTrivia
 					:tweet="tweet_modal.tweet"
 					:replies="tweet_modal.replies"
 				/>

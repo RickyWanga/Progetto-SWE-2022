@@ -1,0 +1,17 @@
+.custom_text{
+	font-size: 1.35rem !important;
+	font-weight: 800 !important;
+	line-height: 3.125rem;
+	letter-spacing:normal;
+	font-family: "Roboto", sans-serif !important;
+	color: #424242 !important;
+}
+
+.custom_text2{
+	font-size: 1rem !important;
+	font-weight: 800 !important;
+	line-height: 3.125rem;
+	letter-spacing:normal;
+	font-family: "Roboto", sans-serif !important;
+	color: white !important;
+}
