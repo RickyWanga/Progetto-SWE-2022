@@ -10,13 +10,21 @@ Twitter Extended Dashboard
 
 ## Environment variables
 
+### Required
+
+	TWITTER_BEARER_TOKEN=<ASK TWITTER>
+
+### Optional
+
 	TWITTER_API_BASEURL="https://api.twitter.com"
-	TWITTER_BEARER_TOKEN=<Token by Twitter>
 	TWITTER_PAGE_SIZE=100
+	TWITTER_SEARCH_ARCHIVE_TYPE=RECENT [RECENT|ALL]
+	SENTIMENT_PAGE_SIZE=5
+	SENTIMENT_PAGE_INTERVAL=1000
 
 ## Production
 
-HTTP server provided by Docker image
+HTTP Server and App provided via Docker image
 
 ## Development
 
@@ -30,4 +38,11 @@ $ npm run dev
 
 For detailed explanation on how things work, check out the [documentation](https://nuxtjs.org).
 
-Wireframe: https://wireframe.cc/WSmfNz
+## Documentation
+
+* Wiki: https://aminsep.disi.unibo.it/project/admin-progetto-2021-team-13/wiki/home
+* Wireframe: https://wireframe.cc/WSmfNz
+
+## License
+
+[MIT](https://aminsep.disi.unibo.it/gitlab/progetto-swe-gruppo-13/twitter-project/-/blob/main/LICENSE)
