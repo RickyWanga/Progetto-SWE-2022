@@ -10,6 +10,8 @@ const STREAM_ROUTE = "/api/twitter/stream"
 
 const LABEL_INFO_EMPTY = "Sorry, there are no results for this search"
 const LABEL_ERROR_UNKNOWN = "Unknown error"
+const LABEL_TWITTERAPIARCHIVETYPE_ALL = "Full-archive search"
+const LABEL_TWITTERAPIARCHIVETYPE_RECENT = "Recent search"
 
 export default {
 	data() {
