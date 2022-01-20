@@ -64,7 +64,7 @@
 			<v-row>
 				<TweetConcorso
 					:tweet="tweet_modal.tweet"
-					:replies="tweet_replies"
+					:replies="tweet_modal.replies"
 				/>
 			</v-row>
 			<v-row v-if="tweet_modal.tweet.media.images[0]">
@@ -82,7 +82,7 @@
 			<v-row>
 				<TweetReplies
 					:tweet="tweet_modal.tweet"
-					:replies="tweet_replies"
+					:replies="tweet_modal.replies"
 				/>
 			</v-row>
 		</TweetModal>

@@ -3,7 +3,7 @@ export default {
 	data() {
 		return {
 			libri: [],
-			utenti: {},
+			voti: {},
 		}
 	},
 	computed: {
@@ -40,19 +40,26 @@ export default {
 				}
 			})
 		},
+		initVoti() {
+			this.voti = {}
+			this.replies.forEach(( reply ) => {
+				if ( reply.concorso.is_voto ) {
+					const utente_id = reply.user.account
+					this.voti[ utente_id ] = []
+				}
+			})
+		},
 		countVoti() {
 			this.initLibri()
+			this.initVoti()
 			this.replies.forEach(( reply ) => {
 				if ( reply.concorso.is_voto ) {
 					const libro = this.libri.find( libro => reply.reference.id === libro.id )
 					if ( libro ) {
 						const libro_id = libro.id
 						const utente_id = reply.user.account
-						if ( !this.utenti[ utente_id ] ) {
-							this.utenti[ utente_id ] = []
-						}
-						if ( this.utenti[ utente_id ].length < 10 && !this.utenti[ utente_id ].includes( libro_id )) {
-							this.utenti[ utente_id ].push( libro_id )
+						if ( this.voti[ utente_id ].length < 10 && !this.voti[ utente_id ].includes( libro_id )) {
+							this.voti[ utente_id ].push( libro_id )
 							libro.voti += 1
 						}
 					}

@@ -35,18 +35,18 @@ export default {
 			},
 			stream: {
 				active: false,
-				modal: {
-					active: false,
-					module: null,
-				},
 				module: null,
 				query: "",
 			},
 			tweet_modal: {
+				replies: [],
 				show: false,
+				stream: {
+					active: false,
+					module: null,
+				},
 				tweet: null,
 			},
-			tweet_replies: [],
 			tweets: [],
 			tweets_loading: false,
 			tweets_max_results: 0,
@@ -166,26 +166,26 @@ export default {
 				onProgress: this.onStreamProgress,
 				onError: this.onStreamError
 			})
-			this.stream.modal.module = new Stream({
+			this.tweet_modal.stream.module = new Stream({
 				http_route: STREAM_ROUTE,
 				http_config: this.http_config,
 				onProgress: ( async_data ) => {
 					const replies = new Tweets( async_data )
-					this.tweet_replies = replies.list.concat( this.tweet_replies )
+					this.tweet_modal.replies = replies.list.concat( this.tweet_modal.replies )
 				},
 				onError: this.onStreamError
 			})
 		},
-		async initStreamConcorso( tweet ) {
-			if ( tweet.concorso.is_concorso ) {
+		async initStreamConcorso({ concorso, conversation_id }) {
+			if ( concorso.is_concorso ) {
 				if ( this.stream.active ) {
 					this.onStreamToggle( false )
 				}
-				if ( this.stream.modal.active ) {
-					await this.stream.modal.module.stop()
+				if ( this.tweet_modal.stream.active ) {
+					await this.tweet_modal.stream.module.stop()
 				}
-				this.stream.modal.module.start( "conversation_id:" + tweet.conversation_id )
-				this.stream.modal.active = true
+				this.tweet_modal.stream.module.start( "conversation_id:" + conversation_id )
+				this.tweet_modal.stream.active = true
 			}
 		},
 		loopNextResults({ query, async_data, max_results }) {
@@ -271,7 +271,7 @@ export default {
 			if ( tweet ) {
 				this.tweet_modal.show = false
 				this.$nextTick( async () => {
-					this.tweet_replies = await this.getReplies( tweet )
+					this.tweet_modal.replies = await this.getReplies( tweet )
 					this.tweet_modal.tweet = tweet
 					this.tweet_modal.show = true
 					this.initStreamConcorso( tweet )
@@ -279,9 +279,9 @@ export default {
 			}
 		},
 		async onTweetModalOff() {
-			if ( this.stream.modal.active ) {
-				await this.stream.modal.module.stop()
-				this.stream.modal.active = false
+			if ( this.tweet_modal.stream.active ) {
+				await this.tweet_modal.stream.module.stop()
+				this.tweet_modal.stream.active = false
 			}
 			this.tweet_modal.show = false
 		},
