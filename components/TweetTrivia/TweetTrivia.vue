@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<p
+		<div
 			v-if="isDomanda"
 			style="padding-top: 5px;"
 		>
@@ -17,11 +17,20 @@
 				</v-icon>
 			</v-btn>
 			<span class="custom_text">
-				Questo utente ha fatto una domanda
-				Il numero di risposte e': {{ num_r }}
+				Trivia Quiz
 			</span>
-		</p>
-		<p
+			<div class="custom_text pl-3">
+				Risposte
+				<v-icon
+					large
+					color="#DEA600"
+				>
+					mdi-account-arrow-right
+				</v-icon>
+				<span class="c_a">{{ num_r }}</span>
+			</div>
+		</div>
+		<div
 			v-else-if="isRisposta"
 			style="padding-top: 5px;"
 		>
@@ -34,20 +43,16 @@
 					color="white"
 					large
 				>
-					mdi-reply
+					mdi-check
 				</v-icon>
 			</v-btn>
 			<span class="custom_text">
-				Questa è una risposta
+				Punteggio di questa risposta: {{ num_p }}
 			</span>
-			<v-icon
-				color="black"
-				large
-			>
-				mdi-arrow-up
-			</v-icon>
-			{{ num_p }}
-		</p>
+			<div>
+				<br>
+			</div>
+		</div>
 		<v-btn
 			v-if="isRisposta"
 			style="padding-top: 5px"

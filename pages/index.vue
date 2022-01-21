@@ -1,4 +1,4 @@
-ù<template>
+<template>
 	<v-container fill-height>
 		<v-row style="height:100%">
 			<v-col cols="4">
