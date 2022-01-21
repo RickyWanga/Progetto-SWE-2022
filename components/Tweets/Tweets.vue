@@ -2,7 +2,10 @@
 	<v-container class="d-flex flex-column" style="height:100%">
 		<v-row class="flex-grow-0">
 			<v-col>
-				<TweetsSearchForm :loading="loading" />
+				<TweetsSearchForm
+					:loading="loading"
+					:search-button-message="searchButtonMessage"
+				/>
 			</v-col>
 		</v-row>
 		<v-row class="flex-grow-1">

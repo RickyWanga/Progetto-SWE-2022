@@ -11,11 +11,11 @@
 					class="expanding-search rounded-pill"
 					clearable
 					dense
+					hide-details
 					outlined
 					persistent-placeholder
 					placeholder="Search Tweets"
 					required
-					hide-details
 					:rules="queryRules"
 					@click:clear="$nuxt.$emit( 'query-cleared' )"
 				/>
@@ -29,6 +29,7 @@
 					x-large
 					:disabled="!valid"
 					:loading="loading"
+					:title="searchButtonMessage"
 				>
 					<v-icon>
 						mdi-magnify
