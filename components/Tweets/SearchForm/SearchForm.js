@@ -37,9 +37,15 @@ export default {
 				} else {
 					date = new Date( this.dateRange[0] )
 				}
-				date.setHours( 23 )
-				date.setMinutes( 59 )
-				date.setSeconds( 59 )
+				if ( !this.isToday( date )) {
+					// Set end-time to 23:59:59
+					date.setHours( 23 )
+					date.setMinutes( 59 )
+					date.setSeconds( 59 )
+				} else {
+					// Set end-date to now - 11s
+					date = new Date( Date.now() - 11000 )
+				}
 				twitter_date = date.toISOString()
 			}
 			return twitter_date
@@ -53,6 +59,12 @@ export default {
 		})
 	},
 	methods: {
+		isToday( date ) {
+			const now = new Date( Date.now() )
+			return now.getDate() === date.getDate() &&
+				now.getMonth() === date.getMonth() &&
+				now.getFullYear() === date.getFullYear()
+		},
 		submit() {
 			this.$nuxt.$emit( "query:submit", {
 				end_time: this.twitterDateTo,
