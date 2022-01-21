@@ -1,6 +1,7 @@
-import colors from 'vuetify/es5/util/colors'
+"use strict"
+const colors = require( "vuetify/es5/util/colors" ).default
 
-export default {
+module.exports = {
 
 	// Server-side rendering: https://go.nuxtjs.dev/ssr-mode
 	ssr: true,
@@ -70,7 +71,9 @@ export default {
 	],
 
 	// Axios module configuration: https://go.nuxtjs.dev/config-axios
-	axios: {},
+	axios: {
+		browserBaseURL: process.env.API_URL_BROWSER,
+	},
 
 	// Vuetify module configuration: https://go.nuxtjs.dev/config-vuetify
 	vuetify: {
