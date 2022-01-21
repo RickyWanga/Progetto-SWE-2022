@@ -2,7 +2,7 @@ import TWITTER_API_PARAMS from "./TwitterApiParams"
 import TWITTER_API_SEARCH_PARAMS_QUERY from "./TwitterApiSearchParamsQuery"
 
 const TWITTER_API_SEARCH_PARAMS = {
-	endpoint: `/2/tweets/search/${ "ALL" === TWITTER_API_PARAMS.search_archive?.toUpperCase()
+	endpoint: `/2/tweets/search/${ "ALL" === TWITTER_API_PARAMS.search_archive_type?.toUpperCase()
 		? "all"
 		: "recent"
 	}`,
