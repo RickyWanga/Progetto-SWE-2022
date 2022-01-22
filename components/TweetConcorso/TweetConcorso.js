@@ -2,10 +2,8 @@ export default {
 	props: [ "replies", "tweet" ],
 	data() {
 		return {
-			voti: {
-				utente: {},
-				libro: {},
-			},
+			libri: [],
+			voti: {},
 		}
 	},
 	computed: {
@@ -18,24 +16,12 @@ export default {
 		isVoto() {
 			return this.tweet.concorso.is_voto
 		},
-		maxVoto() {
-			let max = 0
-			Object.values( this.voti.libro ).forEach((libro) => {
-				if (libro > max) {
-					max = libro
-				}
-			})
-			return max
+		libro() {
+			return this.libri.find( libro => this.tweet.id === libro.id ) || { voti: 0 }
 		},
-		getOrdinato() {
-			const voti = Object.keys( this.voti.libro ).map(( libro_id ) => {
-				return {
-					libro_id,
-					libro_voti: this.voti.libro[ libro_id ],
-				}
-			})
-			voti.sort(( b, a ) => a.libro_voti - b.libro_voti )
-			return voti
+		maxVoto() {
+			const voti = this.libri.map( libro => libro.voti )
+			return Math.max( ...voti )
 		},
 	},
 	created() {
@@ -43,34 +29,43 @@ export default {
 	},
 	methods: {
 		initLibri() {
-			this.voti = {
-				utente: {},
-				libro: {},
-			}
+			this.libri = []
 			this.replies.forEach(( reply ) => {
 				if ( reply.concorso.is_libro ) {
-					const libro_id = reply.concorso.libro_id
-					this.voti.libro[ libro_id ] = 0
+					this.libri.push({
+						id: reply.id,
+						label: reply.concorso.libro_id || reply.id,
+						voti: 0,
+					})
+				}
+			})
+		},
+		initVoti() {
+			this.voti = {}
+			this.replies.forEach(( reply ) => {
+				if ( reply.concorso.is_voto ) {
+					const utente_id = reply.user.account
+					this.voti[ utente_id ] = []
 				}
 			})
 		},
 		countVoti() {
 			this.initLibri()
+			this.initVoti()
 			this.replies.forEach(( reply ) => {
 				if ( reply.concorso.is_voto ) {
-					const libro_id = reply.reference.id.toString()
-					const utente_id = reply.user.account
-					if ( "undefined" !== typeof this.voti.libro[ libro_id ] ) {
-						if ( !this.voti.utente[ utente_id ] ) {
-							this.voti.utente[ utente_id ] = []
-						}
-						if ( this.voti.utente[ utente_id ].length < 10 && !this.voti.utente[ utente_id ].includes( libro_id )) {
-							this.voti.utente[ utente_id ].push( libro_id )
-							this.voti.libro[ libro_id ] += 1
+					const libro = this.libri.find( libro => reply.reference.id === libro.id )
+					if ( libro ) {
+						const libro_id = libro.id
+						const utente_id = reply.user.account
+						if ( this.voti[ utente_id ].length < 10 && !this.voti[ utente_id ].includes( libro_id )) {
+							this.voti[ utente_id ].push( libro_id )
+							libro.voti += 1
 						}
 					}
 				}
 			})
+			this.libri.sort(( a, b ) => b.voti - a.voti )
 		},
 	},
 	watch: {

@@ -1,5 +1,5 @@
 .custom_text{
-	font-size: 1.5rem !important;
+	font-size: 1.35rem !important;
 	font-weight: 800 !important;
 	line-height: 3.125rem;
 	letter-spacing:normal;
@@ -16,11 +16,6 @@
 	color: white !important;
 }
 
-.custom_text3{
-	font-size: 1rem !important;
-	font-weight: 900 !important;
-	line-height: 3.125rem;
-	letter-spacing:normal;
-	font-family: "Roboto", sans-serif !important;
-	color: white;
+.c_a{
+	color: #DEA600 !important;
 }

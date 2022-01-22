@@ -4,6 +4,7 @@ import MediaModel from "./MediaModel"
 import PublicMetricsModel from "./PublicMetricsModel"
 import ReferenceModel from "./ReferenceModel"
 import UserModel from "./UserModel"
+import TriviaModel from "./TriviaModel"
 
 class TweetModel {
 	#concorso = {}
@@ -18,12 +19,14 @@ class TweetModel {
 	#tags = []
 	#text = ""
 	#user = {}
+	#trivia = {}
 
 	constructor( tweet ) {
 		const hashtags = ( tweet.entities?.hashtags || [] ).map(( hashtag ) => hashtag.tag )
 		const mentions = ( tweet.entities?.mentions || [] ).map(( mention ) => mention.username )
 		const text = tweet.text || ""
 		this.#concorso = new ConcorsoModel( hashtags )
+		this.#trivia = new TriviaModel( hashtags )
 		this.#conversation_id = tweet.conversation_id
 		this.#date = tweet.created_at
 		this.#id = tweet.id
@@ -35,6 +38,10 @@ class TweetModel {
 		this.#tags = hashtags
 		this.#text = text
 		this.#user = new UserModel( tweet )
+	}
+
+	get trivia() {
+		return this.#trivia
 	}
 
 	get concorso() {

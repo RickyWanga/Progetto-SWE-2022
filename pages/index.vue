@@ -3,7 +3,11 @@
 		<v-row style="height:100%">
 			<v-col cols="4">
 				<div style="height:70%">
-					<Tweets :loading="tweets_loading" :tweets="tweets">
+					<Tweets
+						:loading="tweets_loading"
+						:search-button-message="labelTwitterApiArchiveType"
+						:tweets="tweets"
+					>
 						<li
 							v-for="( tweetItem, i ) in tweets"
 							:key="`${ tweetItem.id }_${ i }`"
@@ -64,7 +68,13 @@
 			<v-row>
 				<TweetConcorso
 					:tweet="tweet_modal.tweet"
-					:replies="tweet_replies"
+					:replies="tweet_modal.replies"
+				/>
+			</v-row>
+			<v-row>
+				<TweetTrivia
+					:tweet="tweet_modal.tweet"
+					:replies="tweet_modal.replies"
 				/>
 			</v-row>
 			<v-row v-if="tweet_modal.tweet.media.images[0]">
@@ -82,7 +92,7 @@
 			<v-row>
 				<TweetReplies
 					:tweet="tweet_modal.tweet"
-					:replies="tweet_replies"
+					:replies="tweet_modal.replies"
 				/>
 			</v-row>
 		</TweetModal>

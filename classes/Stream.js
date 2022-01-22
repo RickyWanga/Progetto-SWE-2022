@@ -4,9 +4,19 @@ class Stream {
 	#old_seek = 0
 	#onErrorCallback = null
 	#onProgressCallback = null
+	#query = ""
 	#route = ""
+	#status = ""
+	#STATUS = {
+		ERROR: "error",
+		START: "start",
+		STARTING: "starting",
+		STOP: "stop",
+		STOPPING: "stopping",
+	}
 
 	#onError( message ) {
+		this.#status = this.#STATUS.ERROR
 		this.#onErrorCallback && this.#onErrorCallback( message )
 	}
 
@@ -26,27 +36,31 @@ class Stream {
 	}
 
 	setQuery( query ) {
+		this.#query = query
+		const params = { rules: { "add": [{ "value": query }]} }
 		return this.#http.module.get( this.#route, {
 			headers: this.#http_headers,
-			params: {
-				rules: { "add": [{ "value": query }]},
-			},
+			params,
 			withCredentials: true,
 		})
 	}
 
 	start( query ) {
-		const rules = query && { "add": [{ "value": query }]}
-		this.#http.module.get( this.#route, {
+		this.#status = this.#STATUS.STARTING
+		const params = { start: true }
+		if ( query ) {
+			this.#query = query
+			params.rules = { "add": [{ "value": query }]}
+		}
+		return this.#http.module.get( this.#route, {
 			headers: this.#http_headers,
 			onDownloadProgress: this.#onProgress.bind( this ),
-			params: {
-				rules,
-				start: true,
-			},
+			params,
 			withCredentials: true,
 		}).then(( response ) => {
-			if ( response.data.error ) {
+			if ( !response.data.error ) {
+				this.#status = this.#STATUS.START
+			} else {
 				this.#onError( "STREAM DATA ERROR: " + response.data.error.message )
 			}
 		}).catch(( error ) => {
@@ -55,10 +69,16 @@ class Stream {
 	}
 
 	stop() {
+		this.#status = this.#STATUS.STOPPING
+		const params = { stop: true }
 		return this.#http.module.get( this.#route, {
 			headers: this.#http_headers,
-			params: { stop: true },
+			params,
 			withCredentials: true,
+		}).then(() => {
+			this.#status = this.#STATUS.STOP
+		}).catch(( error ) => {
+			this.#onError( "STREAM ERROR: " + error.message )
 		})
 	}
 
@@ -69,6 +89,18 @@ class Stream {
 		this.#onErrorCallback = onError
 		this.#onProgressCallback = onProgress
 		this.#route = http_route
+	}
+
+	get query() {
+		return this.#query
+	}
+
+	get status() {
+		return this.#status
+	}
+
+	get STATUS() {
+		return this.#STATUS
 	}
 }
 

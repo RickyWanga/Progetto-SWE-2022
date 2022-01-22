@@ -24,6 +24,7 @@ module.exports = {
 		'indent': ['error', 'tab'],
 		'yoda': 'off',
 		'no-tabs': 'off',
+		'nuxt/no-cjs-in-config': 'off',
 		'object-curly-newline': 'off',
 		'object-curly-spacing': 'off',
 		'one-var': 'off',
