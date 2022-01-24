@@ -3,7 +3,11 @@
 		<v-row style="height:100%">
 			<v-col cols="4">
 				<div style="height:70%">
-					<Tweets :loading="tweets_loading" :tweets="tweets">
+					<Tweets
+						:loading="tweets_loading"
+						:search-button-message="labelTwitterApiArchiveType"
+						:tweets="tweets"
+					>
 						<li
 							v-for="( tweetItem, i ) in tweets"
 							:key="`${ tweetItem.id }_${ i }`"
